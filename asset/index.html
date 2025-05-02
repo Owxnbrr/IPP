@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceuil</title>
+    <style>
+        :root{
+            --color-primary: #4A90E2;
+            --color-secondary: #D4E8FF;
+            --color-light: #F7F9FC;
+            --color-dark: #2E2E2E;
+            --shadow: 0px 0px 13.5px 0px rgba(0, 0, 0, 0.25);
+            --title: 22px;
+            --subtitle: 17px;
+            --texte: 14px;
+        }
+        /*  Debut Header style */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--color-light);
+            padding-top: 150px;
+        }
+        
+        .header-container {
+            width: 100%;
+            background-color: var(--color-light);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .main-header {
+            background-color: white;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 5px 0px rgba(46, 46, 46, 0.25);;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .ipp {
+            color: #000;
+        }
+        
+        .and {
+            color: #555;
+            margin: 0 5px;
+        }
+        
+        .ippcom {
+            color: #000;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-item {
+            padding: 0px 30px;
+            color: #333;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+        
+        .contact-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 15px 15px;
+            border-radius: 66px;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+        .logo-img{
+            width: 100%;
+            height: 60px;
+        }
+        /* fin header style */
+
+        /* Debut carrousel */
+        .carousel-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .carousel-slide {
+            display: none;
+            position: relative;
+        }
+        
+        .carousel-slide.active {
+            display: block;
+        }
+        
+        .carousel-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .google-rating {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: white;
+            border-radius: 4px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+        }
+        
+        .rating-top {
+            display: flex;
+            align-items: center;
+        }
+        
+        .google-logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+        
+        .stars {
+            display: flex;
+            color: #fbbc05;
+            font-size: 18px;
+        }
+        
+        .rating-score {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .carousel-btn {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: var(--texte);
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .indicator.active {
+            background-color: #4285f4;
+        }
+        .carrousel-main{
+            padding-top: 50px;
+        }
+        /* Fin carrousel */
+
+        /* debut service */
+        .services-section {
+            padding: 60px 20px;
+            background-color: var(--color-light);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: var(--color-dark);
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            flex: 0 0 250px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            scroll-snap-align: start;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.2);
+        }
+
+        .service-title {
+            font-size: var(--subtitle);
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .service-text {
+            font-size: var(--texte);
+            color: #555;
+        }
+        .service-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }   
+        .services-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+            justify-content: center;
+        }
+        .services-slider::-webkit-scrollbar {
+            display: none;
+        }
+        .services-slider.dragging {
+            cursor: grabbing;
+            user-select: none;
+        }
+        .service-list {
+            padding-left: 20px;
+            margin: 15px 0 0;
+            list-style: none;
+        }
+
+        .service-list li {
+            position: relative;
+            font-size: var(--texte);
+            color: var(--color-dark);
+            margin-bottom: 10px;
+        }
+
+        .service-list li p {
+            margin: 0;
+        }
+
+        .service-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-primary); /* Puce colorée */
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1;
+        }
+        /* fin service */
+        /* debut presta */
+        .services-section1 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 30px;
+            padding: 40px 20px;
+            background-color: #F7F9FC;
+        }
+        .service-card1 {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card1:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-image1 {
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0; top: 0;
+        width: 100vw; height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        cursor: zoom-out;
+        }
+
+        .lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+        }
+
+
+        .service-content1 {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-title1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .section-title1{
+            display: flex;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--color-dark);
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+        .service-description1 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .service-benefits1 {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .service-benefits1 li {
+            font-size: 14px;
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+
+        .service-footer1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-price1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .cta-btn {
+            background-color: #4285f4;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #357ae8;
+        }
+                /* fin presta */
+
+        /* debut bandeau */
+        .realisations-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; /* espacement entre les blocs */
+            background-color: #D4E8FF;
+            padding: 60px 20px;
+            flex-wrap: wrap; /* Permet de s’adapter sur petits écrans */
+            text-align: center;
+        }
+
+        .realisations-content {
+            max-width: 320px;
+            padding: 20px;
+        }
+
+        .realisations-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2E2E2E;
+        }
+
+        .realisations-description {
+            font-size: 14px;
+            color: #333;
+        }
+        /* fin bandeau */
+        /* debut avis */
+        .carousel-slides {
+            position: relative;
+            height: 240px;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0 0 0;
+            margin-top: 10px;
+        }
+
+        .review-card {
+            position: absolute;
+            width: 30%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateX(100%) rotateY(15deg) rotateZ(3deg);
+            transform-origin: center;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .review-card.active {
+            opacity: 1;
+            transform: translateX(0) rotateY(0) rotateZ(0);
+            z-index: 2;
+        }
+
+        .review-card.prev {
+            opacity: 0.3;
+            transform: translateX(-80%) rotateY(-15deg) rotateZ(-3deg);
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .review-card.next {
+            opacity: 0.3;
+            transform: translateX(80%) rotateY(15deg) rotateZ(3deg);
+            z-index: 1;
+        }
+
+        .review-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .review-rating {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .review-text {
+            text-align: center;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            gap: 30px;
+
+        }
+
+        .nav-button {
+            background-color: #000;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .nav-button:hover {
+            background-color: #333;
+        }
+
+        .nav-button:focus {
+            outline: none;
+        }
+        .rating-google{
+            display: flex;
+            justify-content: center;
+            padding: 70px 0 0 0;
+            flex-direction: column;
+            align-items: center;
+        }
+        .star{
+            color: #fbbc05;
+            font-size: 25px;
+        }
+        .rating{
+            font-size: var(--title);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .avis{
+            font-size: var(--texte);
+            margin:0;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+        .star-container{
+            margin: 15px 0;
+        }
+        /* fin avis */
+        /* debut footer */
+        footer {
+            background: #4A90E2;
+            color: #fff;
+            padding: 50px 0 30px;
+            box-shadow: 0 -5px 15px rgba(74, 144, 226, 0.2);
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+        }
+        
+        .footer-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-section h4 {
+            position: relative;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding-left: 5px;
+            position: relative;
+        }
+        
+        .footer-links a::before {
+            content: '›';
+            position: absolute;
+            left: -8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            padding-left: 12px;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .social-icons img {
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 20px;
+            border-top: 1px solid #ffffff98;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 40px;
+                padding: 0;
+            }
+            
+            .footer-section:last-child {
+                margin-bottom: 10px;
+            }
+        }
+        /* fin footer */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="main-header">
+                <div class="logo">
+                    <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-item">Accueil</a>
+                    <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                    <a href="tarifs.html" class="nav-item">Tarifs</a>
+                    <a href="#" class="contact-btn">Contactez-nous</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="carrousel-main">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="./img/img1.png" alt="Image d'imprimerie 1" class="carousel-image">
+                    <div class="google-rating">
+                        <div class="rating-top">
+                            <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                            </svg>
+                            <div class="stars">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                        <div class="rating-score">4,5 / 5 · 68 avis</div>
+                    </div>
+                </div>
+                
+                <div class="carousel-slide">
+                    <img src="./img/img2.png" alt="Image d'imprimerie 2" class="carousel-image">
+                    <div class="google-rating">
+                        <div class="rating-top">
+                            <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                            </svg>
+                            <div class="stars">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                        <div class="rating-score">4,5 / 5 · 68 avis</div>
+                    </div>
+                </div>
+                
+                <div class="carousel-slide">
+                    <img src="./img/img3.png" alt="Image d'imprimerie 3" class="carousel-image">
+                    <div class="google-rating">
+                        <div class="rating-top">
+                            <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                            </svg>
+                            <div class="stars">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                        <div class="rating-score">4,5 / 5 · 68 avis</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-indicators">
+                <div class="indicator active" onclick="currentSlide(1)"></div>
+                <div class="indicator" onclick="currentSlide(2)"></div>
+                <div class="indicator" onclick="currentSlide(3)"></div>
+            </div>
+            
+            <div class="carousel-nav">
+                <button class="carousel-btn" onclick="prevSlide()">Précédent</button>
+                <button class="carousel-btn" onclick="nextSlide()">Suivant</button>
+            </div>
+        </div>
+        <section class="services-section">
+            <h2 class="section-title">Nos Services</h2>
+            <div class="services-slider">
+                <div class="service-card">
+                    <img src="/asset/img/01.png" alt="Service 1" class="service-img">
+                    <h3 class="service-title">Signalétique</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Bâches promotionnelles</p>
+                        </li>
+                        <li>
+                            <p>Panneaux extérieurs</p>
+                        </li>
+                        <li>
+                            <p>Autocollants personnalisées</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <img src="/asset/img/02.png" alt="Service 2" class="service-img">
+                    <h3 class="service-title">Mariages & événement privés</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Faire-part élégants</p>
+                        </li>
+                        <li>
+                            <p>Livrets de cérémonie</p>
+                        </li>
+                        <li>
+                            <p>Panneaux de bienvenue</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <img src="/asset/img/03.png" alt="Service 3" class="service-img">
+                    <h3 class="service-title">Publicité & événementielle</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Flyers et dépliants</p>
+                        </li>
+                        <li>
+                            <p>Affiches tous formats</p>
+                        </li>
+                        <li>
+                            <p>Brochures événementielles</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <img src="/asset/img/04.png" alt="Service 3" class="service-img">
+                    <h3 class="service-title">Supports d'entreprise</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Carte de visite personnalisées</p>
+                        </li>
+                        <li>
+                            <p>Papiers à en-tête professionnels</p>
+                        </li>
+                        <li>
+                            <p>Plaquette commerciales</p>
+                        </li>
+                    </ul>
+                </div>
+        </section>
+        <h2 class="section-title1">Nos Réalisations</h2>
+        <section class="services-section1">
+            
+            <div class="service-card1">
+                <img src="/asset/img/jesko.png" alt="Prestation 1" class="service-image1"  onclick="openLightbox(this)">
+                <div class="service-content1">
+                    <h3 class="service-title1">Affiche Jesko</h3>
+                    <p class="service-description1">L'ultime fusion entre performance et élégance. Conçue pour repousser les limites de la vitesse, la Jesko incarne l'innovation, la puissance et le design audacieux.</p>
+                    
+                    <ul class="service-benefits1">
+                        <li>Point fort 1</li>
+                        <li>Point fort 2</li>
+                        <li>Point fort 3</li>
+                    </ul>
+                    
+                    <div class="service-footer1">
+                        <span class="service-price1">À partir de 99€</span>
+                        <a href="#" class="cta-btn">Demander un devis</a>
+                    </div>
+                </div>
+            </div>
+            <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+                <img id="lightbox-img" src="" alt="Image agrandie">
+            </div>
+
+            <div class="service-card1">
+                <img src="/asset/img/jesko.png" alt="Prestation 1" class="service-image1"  onclick="openLightbox(this)">
+                <div class="service-content1">
+                    <h3 class="service-title1">Affiche Jesko</h3>
+                    <p class="service-description1">L'ultime fusion entre performance et élégance. Conçue pour repousser les limites de la vitesse, la Jesko incarne l'innovation, la puissance et le design audacieux.</p>
+                    
+                    <ul class="service-benefits1">
+                        <li>Point fort 1</li>
+                        <li>Point fort 2</li>
+                        <li>Point fort 3</li>
+                    </ul>
+                    
+                    <div class="service-footer1">
+                        <span class="service-price1">À partir de 99€</span>
+                        <a href="#" class="cta-btn">Demander un devis</a>
+                    </div>
+                </div>
+            </div>
+            <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+                <img id="lightbox-img" src="" alt="Image agrandie">
+            </div>
+            
+            <!-- Ajoute d'autres cartes de prestations si nécessaire -->
+        </section>
+        <div class="realisations-banner">
+            <div class="realisations-content">
+                <img src="/asset/img/phone 1.png" alt="">
+                <h2 class="realisations-title">Service client dédié</h2>
+                <p class="realisations-description">Assistance client disponible 7j/7 pour répondre à toutes vos questions. </p>
+            </div>
+            <div class="realisations-content">
+                <img src="/asset/img/quality 1.png" alt="">
+                <h2 class="realisations-title">Qualité garantie</h2>
+                <p class="realisations-description">Impression de qualité professionnelle, avec des matériaux durables.</p>
+            </div>
+            <div class="realisations-content">
+                <img src="/asset/img/france (1) 1.png" alt="">
+                <h2 class="realisations-title">Fabrication artisanal française</h2>
+                <p class="realisations-description">Chaque produit est conçu avec soin, dans le respect des traditions artisanales.</p>
+            </div>
+            <div class="realisations-content">
+                <img src="/asset/img/biodegradable 1.png" alt="">
+                <h2 class="realisations-title">écologique</h2>
+                <p class="realisations-description">Nous utilisons des encres écologiques pour un impact minimal sur l'environnement.</p>
+            </div>
+        </div>
+        <div class="rating-google">
+            <div class="google-logo1">
+                <svg width="100" height="100" viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
+            </div>
+            <div class="star-container">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+            </div>
+            <div>
+                <h4 class="rating">4,5 / 5</h4>
+                <p class="avis">18 avis</p>
+            </div>
+        </div>
+        <div class="carousel-slides">
+            <div class="review-card active">
+                <h3 class="review-title">Très Bonne Expérience</h3>
+                <div class="review-rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span style="margin-left: 10px;">5/5</span>
+                </div>
+                <p class="review-text">Service impeccable et rapide. Je recommande vivement cette entreprise pour la qualité de leurs prestations et leur professionnalisme.</p>
+            </div>
+
+            <div class="review-card next">
+                <h3 class="review-title">Service Exceptionnel</h3>
+                <div class="review-rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span style="margin-left: 10px;">5/5</span>
+                </div>
+                <p class="review-text">Une équipe à l'écoute et des solutions adaptées à mes besoins. Je suis très satisfait de ma collaboration avec eux.</p>
+            </div>
+
+            <div class="review-card">
+                <h3 class="review-title">Qualité-Prix Imbattable</h3>
+                <div class="review-rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">☆</span>
+                    <span style="margin-left: 10px;">4/5</span>
+                </div>
+                <p class="review-text">Prestations de qualité à un prix raisonnable. Quelques détails à améliorer mais globalement très satisfait.</p>
+            </div>
+
+            <div class="review-card">
+                <h3 class="review-title">Délais Respectés</h3>
+                <div class="review-rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span style="margin-left: 10px;">5/5</span>
+                </div>
+                <p class="review-text">Ponctualité et efficacité sont au rendez-vous. J'apprécie particulièrement leur respect des échéances promises.</p>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="nav-button prev-button">←</button>
+            <button class="nav-button next-button">→</button>
+        </div>
+    </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="/asset/img/Fichier-3.webp" alt="Logo" class="footer-logo">
+                <p>6 rue Jean Dupuy<br>BP 900032<br>Tél : 03 22 78 01 25<br>Mail : contact@ipp-imprimerie.fr</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Informations</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Mentions Légales</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Utilisation des cookies</a></li>
+                    <li><a href="#">Plan du site</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
+                <div class="social-icons">
+                    <a href="#"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2025 ipp-imprimerie.fr - Tous droits réservés
+        </div>
+    </footer>
+    <script>
+        // carrousel
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function prevSlide() {
+            showSlides(slideIndex -= 1);
+        }
+        
+        function nextSlide() {
+            showSlides(slideIndex += 1);
+        }
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            let indicators = document.getElementsByClassName("indicator");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            for (i = 0; i < indicators.length; i++) {
+                indicators[i].classList.remove("active");
+            }
+            
+            slides[slideIndex-1].classList.add("active");
+            indicators[slideIndex-1].classList.add("active");
+        }
+        
+        // Auto slide every 5 seconds
+        setInterval(function() {
+            nextSlide();
+        }, 5000);
+
+        const slider = document.querySelector('.services-slider');
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('dragging');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('dragging');
+        });
+
+        slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('dragging');
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5; // Vitesse du scroll
+        slider.scrollLeft = scrollLeft - walk;
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewCards = document.querySelectorAll('.review-card');
+            const prevButton = document.querySelector('.prev-button');
+            const nextButton = document.querySelector('.next-button');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                reviewCards.forEach((card, index) => {
+                    card.classList.remove('active', 'prev', 'next');
+                    
+                    if (index === currentIndex) {
+                        card.classList.add('active');
+                    } else if (index === getPrevIndex()) {
+                        card.classList.add('prev');
+                    } else if (index === getNextIndex()) {
+                        card.classList.add('next');
+                    }
+                    
+                    // Force DOM reflow to ensure transitions work properly
+                    void card.offsetWidth;
+                });
+            }
+
+            function getNextIndex() {
+                return (currentIndex + 1) % reviewCards.length;
+            }
+
+            function getPrevIndex() {
+                return (currentIndex - 1 + reviewCards.length) % reviewCards.length;
+            }
+
+            function goToNextSlide() {
+                currentIndex = getNextIndex();
+                updateCarousel();
+            }
+
+            function goToPrevSlide() {
+                currentIndex = getPrevIndex();
+                updateCarousel();
+            }
+
+            prevButton.addEventListener('click', goToPrevSlide);
+            nextButton.addEventListener('click', goToNextSlide);
+
+            // Initialize the carousel
+            updateCarousel();
+
+            // Auto-play functionality
+            let autoplayInterval = setInterval(goToNextSlide, 5000);
+
+            // Pause autoplay when hovering over the carousel
+            const carouselContainer = document.querySelector('.carousel-container');
+            carouselContainer.addEventListener('mouseenter', () => {
+                clearInterval(autoplayInterval);
+            });
+
+            carouselContainer.addEventListener('mouseleave', () => {
+                autoplayInterval = setInterval(goToNextSlide, 5000);
+            });
+        });
+        function openLightbox(img) {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        lightboxImg.src = img.src; // ou img.dataset.full si tu préfères une image HD
+        lightbox.style.display = "flex";
+        }
+
+        function closeLightbox() {
+        document.getElementById("lightbox").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
