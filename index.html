@@ -15,7 +15,7 @@
             --subtitle: 17px;
             --texte: 14px;
         }
-        /*  Debut Header style */
+        /*  ********************************************Debut Header style *********************************************/
         body {
             margin: 0;
             padding: 0;
@@ -35,7 +35,7 @@
         
         .main-header {
             background-color: white;
-            padding: 30px 20px;
+            padding: 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -80,11 +80,94 @@
             text-decoration: none;
             font-size: var(--subtitle);
         }
+
         .logo-img{
             width: 100%;
-            height: 60px;
+            height: 90px;
         }
-        /* fin header style */
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            body{
+                padding-top: 0px;
+            }
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 16px;
+            }
+
+            .contact-btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .secondary-banner {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .header-nav,
+            .header-logo {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .header-container {
+                position: static;
+            }
+        }
+
+        /* ********************************************fin header style******************************************** */
 
         /* Debut carrousel */
         .carousel-container {
@@ -184,13 +267,59 @@
         .carrousel-main{
             padding-top: 50px;
         }
+        @media screen and (max-width: 768px) {
+        .carousel-container {
+            max-width: 100%;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .carousel-image {
+            height: auto;
+        }
+
+        .google-rating {
+            bottom: 10px;
+            left: 10px;
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .google-logo {
+            width: 8px;
+            height: 8px;
+        }
+
+        .stars {
+            font-size: 7px;
+        }
+
+        .rating-score {
+            font-size: 6px;
+        }
+
+        .carousel-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        .carousel-indicators .indicator {
+            width: 10px;
+            height: 10px;
+            margin: 0 3px;
+        }
+
+        .carrousel-main {
+            padding-top: 30px;
+        }
+    }
+
         /* Fin carrousel */
 
         /* debut service */
         .services-section {
             padding: 60px 20px;
             background-color: var(--color-light);
-            text-align: center;
         }
 
         .section-title {
@@ -198,6 +327,8 @@
             color: var(--color-dark);
             margin-bottom: 40px;
             font-weight: 600;
+            display: flex;
+            justify-content: center;
         }
 
         .services-grid {
@@ -216,6 +347,8 @@
             box-shadow: var(--shadow);
             scroll-snap-align: start;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
         }
 
         .service-card:hover {
@@ -280,7 +413,62 @@
             font-weight: bold;
             font-size: 18px;
             line-height: 1;
+            margin: 0 -10px;
+
         }
+        @media screen and (max-width: 768px) {
+            .services-section {
+                padding: 40px 15px;
+            }
+
+            .section-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .service-card {
+                padding: 15px;
+            }
+
+            .service-title {
+                font-size: 18px;
+            }
+
+            .service-text {
+                font-size: 14px;
+            }
+
+            .service-img {
+                height: 120px;
+            }
+
+            .services-slider {
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .service-list {
+                padding-left: 15px;
+            }
+
+            .service-list li {
+                font-size: 14px;
+            }
+
+            .service-list li::before {
+                font-size: 16px;
+                margin-left: -10px;
+            }
+        }
+
+        
+
         /* fin service */
         /* debut presta */
         .services-section1 {
@@ -298,6 +486,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
+            height: 600px;
         }
 
         .service-card1:hover {
@@ -309,6 +498,7 @@
             width: 100%;
             object-fit: cover;
             border-bottom: 1px solid #E0E0E0;
+            height:200px ;
         }
         .lightbox {
         display: none;
@@ -323,8 +513,8 @@
         }
 
         .lightbox img {
-        max-width: 90%;
-        max-height: 90%;
+        max-width: 70%;
+        max-height: 70%;
         border-radius: 10px;
         }
 
@@ -333,7 +523,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            flex: 1;
         }
 
         .service-title1 {
@@ -355,6 +545,10 @@
             font-size: 16px;
             color: #666;
             margin-bottom: 20px;
+
+            max-height: 100px;
+            overflow: hidden;
+            word-break: break-word;
         }
 
         .service-benefits1 {
@@ -373,6 +567,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
         }
 
         .service-price1 {
@@ -424,6 +619,26 @@
             font-size: 14px;
             color: #333;
         }
+        @media screen and (max-width: 768px) {
+            .realisations-banner {
+                flex-direction: column;
+                padding: 40px 15px;
+            }
+
+            .realisations-content {
+                padding: 15px 10px;
+                max-width: 100%;
+            }
+
+            .realisations-title {
+                font-size: 18px;
+            }
+
+            .realisations-description {
+                font-size: 13px;
+            }
+        }
+
         /* fin bandeau */
         /* debut avis */
         .carousel-slides {
@@ -497,7 +712,7 @@
         .navigation-buttons {
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 40px;
             margin-bottom: 30px;
             gap: 30px;
 
@@ -552,6 +767,38 @@
         .star-container{
             margin: 15px 0;
         }
+        @media screen and (max-width: 768px) {
+            .carousel-slides {
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 16px;
+                padding: 20px;
+                margin-top: 0;
+            }
+
+            .review-card {
+                position: static;
+                min-width: 260px;
+                flex: 0 0 auto;
+                opacity: 1 !important;
+                transform: none !important;
+                display: flex;
+                scroll-snap-align: center;
+            }
+
+            .review-card.prev,
+            .review-card.next {
+                opacity: 1;
+                transform: none;
+            }
+
+            .navigation-buttons {
+                display: none;
+            }
+        }
+
         /* fin avis */
         /* debut footer */
         footer {
@@ -702,14 +949,21 @@
     <header>
         <div class="header-container">
             <div class="main-header">
-                <div class="logo">
-                    <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                <div class="header-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                    </div>
+                    <div class="secondary-banner">
+                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                    </div>
                 </div>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-item">Accueil</a>
-                    <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
-                    <a href="tarifs.html" class="nav-item">Tarifs</a>
-                    <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                <div class="header-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-item">Accueil</a>
+                        <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                        <a href="tarifs.html" class="nav-item">Tarifs</a>
+                        <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -718,7 +972,7 @@
         <div class="carrousel-main">
             <div class="carousel-container">
                 <div class="carousel-slide active">
-                    <img src="./img/img1.png" alt="Image d'imprimerie 1" class="carousel-image">
+                    <img src="./img/base_imagesite_01.png" alt="Image d'imprimerie 1" class="carousel-image" id="IMG_carrousel_1">
                     <div class="google-rating">
                         <div class="rating-top">
                             <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -735,12 +989,12 @@
                                 <span>★</span>
                             </div>
                         </div>
-                        <div class="rating-score">4,5 / 5 · 68 avis</div>
+                        <div class="rating-score">4,9 / 5 · 18 avis</div>
                     </div>
                 </div>
                 
                 <div class="carousel-slide">
-                    <img src="./img/img2.png" alt="Image d'imprimerie 2" class="carousel-image">
+                    <img src="./img/img2.png" alt="Image d'imprimerie 2" class="carousel-image" id="IMG_carrousel_2">
                     <div class="google-rating">
                         <div class="rating-top">
                             <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -757,12 +1011,12 @@
                                 <span>★</span>
                             </div>
                         </div>
-                        <div class="rating-score">4,5 / 5 · 68 avis</div>
+                        <div class="rating-score">4,9 / 5 · 18 avis</div>
                     </div>
                 </div>
                 
                 <div class="carousel-slide">
-                    <img src="./img/img3.png" alt="Image d'imprimerie 3" class="carousel-image">
+                    <img src="./img/img3.png" alt="Image d'imprimerie 3" class="carousel-image" id="IMG_carrousel_3">
                     <div class="google-rating">
                         <div class="rating-top">
                             <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -779,7 +1033,7 @@
                                 <span>★</span>
                             </div>
                         </div>
-                        <div class="rating-score">4,5 / 5 · 68 avis</div>
+                        <div class="rating-score">4,9 / 5 · 18 avis</div>
                     </div>
                 </div>
             </div>
@@ -798,9 +1052,39 @@
         <section class="services-section">
             <h2 class="section-title">Nos Services</h2>
             <div class="services-slider">
-                <div class="service-card">
+                <a href="imprimerie.html#Do" class="service-card">
+                    <img src="/asset/img/02.png" alt="Service 2" class="service-img">
+                    <h3 class="service-title">Création Graphique</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Logo</p>
+                        </li>
+                        <li>
+                            <p>Identité visuelle</p>
+                        </li>
+                        <li>
+                            <p>Catalogues</p>
+                        </li>
+                    </ul>
+                </a>
+                <a href="imprimerie.html#Do" class="service-card">
+                    <img src="/asset/img/03.png" alt="Service 3" class="service-img">
+                    <h3 class="service-title">Impression</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Flyers</p>
+                        </li>
+                        <li>
+                            <p>Affiches</p>
+                        </li>
+                        <li>
+                            <p>Cartes de visite</p>
+                        </li>
+                    </ul>
+                </a>
+                <a href="imprimerie.html#Do" class="service-card">
                     <img src="/asset/img/01.png" alt="Service 1" class="service-img">
-                    <h3 class="service-title">Signalétique</h3>
+                    <h3 class="service-title">Signalétique & Evénementiel</h3>
                     <ul class="service-list">
                         <li>
                             <p>Bâches promotionnelles</p>
@@ -812,40 +1096,10 @@
                             <p>Autocollants personnalisées</p>
                         </li>
                     </ul>
-                </div>
-                <div class="service-card">
-                    <img src="/asset/img/02.png" alt="Service 2" class="service-img">
-                    <h3 class="service-title">Mariages & événement privés</h3>
-                    <ul class="service-list">
-                        <li>
-                            <p>Faire-part élégants</p>
-                        </li>
-                        <li>
-                            <p>Livrets de cérémonie</p>
-                        </li>
-                        <li>
-                            <p>Panneaux de bienvenue</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <img src="/asset/img/03.png" alt="Service 3" class="service-img">
-                    <h3 class="service-title">Publicité & événementielle</h3>
-                    <ul class="service-list">
-                        <li>
-                            <p>Flyers et dépliants</p>
-                        </li>
-                        <li>
-                            <p>Affiches tous formats</p>
-                        </li>
-                        <li>
-                            <p>Brochures événementielles</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="service-card">
+                </a>
+                <a href="imprimerie.html#Do" class="service-card">
                     <img src="/asset/img/04.png" alt="Service 3" class="service-img">
-                    <h3 class="service-title">Supports d'entreprise</h3>
+                    <h3 class="service-title">Goodies & Textiles</h3>
                     <ul class="service-list">
                         <li>
                             <p>Carte de visite personnalisées</p>
@@ -857,56 +1111,28 @@
                             <p>Plaquette commerciales</p>
                         </li>
                     </ul>
-                </div>
+                </a>
+                <a href="imprimerie.html#Do" class="service-card">
+                    <img src="/asset/img/04.png" alt="Service 3" class="service-img">
+                    <h3 class="service-title">Particuliers</h3>
+                    <ul class="service-list">
+                        <li>
+                            <p>Invitations</p>
+                        </li>
+                        <li>
+                            <p>Faire-part de mariage</p>
+                        </li>
+                        <li>
+                            <p>Menu</p>
+                        </li>
+                    </ul>
+                </a>
         </section>
         <h2 class="section-title1">Nos Réalisations</h2>
-        <section class="services-section1">
-            
-            <div class="service-card1">
-                <img src="/asset/img/jesko.png" alt="Prestation 1" class="service-image1"  onclick="openLightbox(this)">
-                <div class="service-content1">
-                    <h3 class="service-title1">Affiche Jesko</h3>
-                    <p class="service-description1">L'ultime fusion entre performance et élégance. Conçue pour repousser les limites de la vitesse, la Jesko incarne l'innovation, la puissance et le design audacieux.</p>
-                    
-                    <ul class="service-benefits1">
-                        <li>Point fort 1</li>
-                        <li>Point fort 2</li>
-                        <li>Point fort 3</li>
-                    </ul>
-                    
-                    <div class="service-footer1">
-                        <span class="service-price1">À partir de 99€</span>
-                        <a href="#" class="cta-btn">Demander un devis</a>
-                    </div>
-                </div>
-            </div>
+        <section id="customInsertZone" class="services-section1">
             <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-                <img id="lightbox-img" src="" alt="Image agrandie">
+                <img style="padding-top: 120px;" id="lightbox-img" src="" alt="Image agrandie">
             </div>
-
-            <div class="service-card1">
-                <img src="/asset/img/jesko.png" alt="Prestation 1" class="service-image1"  onclick="openLightbox(this)">
-                <div class="service-content1">
-                    <h3 class="service-title1">Affiche Jesko</h3>
-                    <p class="service-description1">L'ultime fusion entre performance et élégance. Conçue pour repousser les limites de la vitesse, la Jesko incarne l'innovation, la puissance et le design audacieux.</p>
-                    
-                    <ul class="service-benefits1">
-                        <li>Point fort 1</li>
-                        <li>Point fort 2</li>
-                        <li>Point fort 3</li>
-                    </ul>
-                    
-                    <div class="service-footer1">
-                        <span class="service-price1">À partir de 99€</span>
-                        <a href="#" class="cta-btn">Demander un devis</a>
-                    </div>
-                </div>
-            </div>
-            <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-                <img id="lightbox-img" src="" alt="Image agrandie">
-            </div>
-            
-            <!-- Ajoute d'autres cartes de prestations si nécessaire -->
         </section>
         <div class="realisations-banner">
             <div class="realisations-content">
@@ -1021,10 +1247,9 @@
             <div class="footer-section">
                 <h4>Informations</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Mentions Légales</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                    <li><a href="#">Utilisation des cookies</a></li>
-                    <li><a href="#">Plan du site</a></li>
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
                 </ul>
             </div>
             
@@ -1032,8 +1257,8 @@
                 <h4>Suivez-nous</h4>
                 <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
                 <div class="social-icons">
-                    <a href="#"><img src="/asset/img/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
                 </div>
             </div>
         </div>
@@ -1079,41 +1304,10 @@
             indicators[slideIndex-1].classList.add("active");
         }
         
-        // Auto slide every 5 seconds
+        // Auto slide every 10 seconds
         setInterval(function() {
             nextSlide();
-        }, 5000);
-
-        const slider = document.querySelector('.services-slider');
-
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.classList.add('dragging');
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-        });
-
-        slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.classList.remove('dragging');
-        });
-
-        slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.classList.remove('dragging');
-        });
-
-        slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.5; // Vitesse du scroll
-        slider.scrollLeft = scrollLeft - walk;
-        });
+        }, 10000);
 
         document.addEventListener('DOMContentLoaded', function() {
             const reviewCards = document.querySelectorAll('.review-card');
@@ -1185,6 +1379,49 @@
         function closeLightbox() {
         document.getElementById("lightbox").style.display = "none";
         }
+        window.addEventListener('load', () => {
+        const hash = window.location.hash;
+        if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+        }
+    });
+
+    const imageIds = ["IMG_carrousel_1", "IMG_carrousel_2", "IMG_carrousel_3"];
+    imageIds.forEach(id => {
+        const savedImage = localStorage.getItem(id);
+        if (savedImage) {
+        const img = document.getElementById(id);
+        if (img) {
+            img.src = savedImage;
+        }
+        }
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+    const cards = JSON.parse(localStorage.getItem("cards") || "[]");
+    const container = document.getElementById("customInsertZone");
+
+    cards.forEach(card => {
+        const points = card.points.map(p => `<li>${p}</li>`).join("");
+        const html = `
+        <div class="service-card1">
+            <img src="${card.image}" alt="${card.title}" class="service-image1" onclick="openLightbox(this)">
+            <div class="service-content1">
+                <h3 class="service-title1">${card.title}</h3>
+                <p class="service-description1">${card.description}</p>
+                <ul class="service-benefits1">${points}</ul>
+                <div class="service-footer1">
+                <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
+                </div>
+            </div>
+        </div>
+        `;
+        container.innerHTML += html;
+    });
+    });
     </script>
 
 </body>

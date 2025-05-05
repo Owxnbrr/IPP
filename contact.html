@@ -35,7 +35,7 @@
         
         .main-header {
             background-color: white;
-            padding: 30px 20px;
+            padding: 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -83,14 +83,36 @@
 
         .logo-img{
             width: 100%;
-            height: 60px;
+            height: 90px;
+        }
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         /* ********************************************fin header style******************************************** */
         /* style */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 50px 20px;
         }
         
         .contact-header {
@@ -127,7 +149,6 @@
         p {
             color: #555;
             margin-bottom: 15px;
-            line-height: 1.5;
         }
         
         .important {
@@ -138,170 +159,173 @@
             display: inline-block;
             background-color: var(--color-primary);
             color: white;
-            padding: 10px 25px;
+            padding: 15px 25px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+            color: black;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .btn:hover {
             background-color: var(--color-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
         }
         
         .contact-grid {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .grid-item {
-            flex: 1;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .map-container {
-            height: 100%;
-        }
-        
-        .map-container img {
-            width: 400px;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .info-block {
-            padding: 20px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 200px
-        }
-        
-        .info-block h2 {
-            font-size: 22px;
-            margin: 15px 0;
-            color: #333;
-        }
-        
-        .find-us-container {
-            width: 350px;
-            background-color: var(--color-secondary);
-            border: 3px solid var(--color-primary);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
         }
 
-        .header-banner {
-            background-color: var(--color-primary);
-            color: white;
-            padding: 10px 20px;
-            font-weight: bold;
-            width: fit-content;
-        }
+.find-us-container,
+.info-block {
+    flex: 1;
+    min-width: 350px;
+    background-color: var(--color-secondary);
+    border: 3px solid var(--color-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-        .content {
-            padding: 30px;
-            text-align: center;
-        }
+.header-banner {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    width: fit-content;
+}
 
-        .icon-circle {
-            width: 70px;
-            height: 70px;
-            background-color: #333;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 20px;
-            border: 2px solid var(--color-primary);
-        }
+.content {
+    padding: 30px;
+    text-align: center;
+}
 
-        .icon-circle i {
-            color: var(--color-primary);
-            font-size: 36px;
-        }
-        
-        .address {
-            margin: 10px 0;
-        }
-        
-        .phone {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin: 10px 0;
-        }
-        
-        .schedule {
-            margin: 10px 0;
-        }
-        
-        .graph {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            height: 80px;
-            margin: 15px 0;
-            gap: 8px;
-        }
-        
-        .bar {
-            width: 15px;
-            background-color: var(--color-primary);
-            margin: 0 2px;
-            border-radius: 2px 2px 0 0;
-        }
-        
-        .bar-1 { height: 30%; }
-        .bar-2 { height: 40%; }
-        .bar-3 { height: 60%; }
-        .bar-4 { height: 80%; }
-        .bar-5 { height: 70%; }
-        .bar-6 { height: 40%; }
-        .bar-7 { height: 50%; }
-        .bar-8 { height: 60%; }
-        .bar-9 { height: 70%; }
-        .bar-10 { height: 60%; }
-        
-        .time-labels {
-            display: flex;
-            justify-content: space-between;
-            /* width: 100%; */
-            padding: 0 5px;
-            font-size: 12px;
-            color: #777;
-            gap: 5px;
-        }
-        
-        @media (max-width: 768px) {
-            .contact-header {
-                flex-direction: column;
-            }
-            
-            .contact-info, .contact-image {
-                width: 100%;
-            }
-            
-            .contact-image {
-                margin-top: 20px;
-            }
-            
-            .contact-grid {
-                flex-direction: column;
-            }
-        }
-        .map-container iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
-        }
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    background-color: #333;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    border: 2px solid var(--color-primary);
+}
+
+.icon-circle i {
+    color: var(--color-primary);
+    font-size: 36px;
+}
+
+.address {
+    margin: 10px 0;
+}
+
+.phone {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+.schedule {
+    margin: 10px 0;
+}
+
+.graph {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 80px;
+    margin: 15px 0;
+    gap: 8px;
+}
+
+.bar {
+    width: 15px;
+    background-color: var(--color-primary);
+    margin: 0 2px;
+    border-radius: 2px 2px 0 0;
+}
+
+.bar-1 { height: 30%; }
+.bar-2 { height: 40%; }
+.bar-3 { height: 60%; }
+.bar-4 { height: 80%; }
+.bar-5 { height: 70%; }
+.bar-6 { height: 40%; }
+.bar-7 { height: 50%; }
+.bar-8 { height: 60%; }
+.bar-9 { height: 70%; }
+.bar-10 { height: 60%; }
+
+.time-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #777;
+    gap: 5px;
+}
+
+.map-container {
+    height: 300px;
+    flex-grow: 1;
+    display: flex;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.info-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.info-block h2 {
+    font-size: 22px;
+    margin: 15px 0;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .contact-header {
+        flex-direction: column;
+    }
+
+    .contact-info,
+    .contact-image {
+        width: 100%;
+    }
+
+    .contact-image {
+        margin-top: 20px;
+    }
+
+    .contact-grid {
+        flex-direction: column;
+    }
+}
+
         /* ********************************************debut footer******************************************** */
     footer {
             background: var(--color-primary);
@@ -453,14 +477,21 @@
     <header>
         <div class="header-container">
             <div class="main-header">
-                <div class="logo">
-                    <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                <div class="header-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                    </div>
+                    <div class="secondary-banner">
+                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                    </div>
                 </div>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-item">Accueil</a>
-                    <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
-                    <a href="tarifs.html" class="nav-item">Tarifs</a>
-                    <a href="#" class="contact-btn">Contactez-nous</a>
+                <div class="header-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-item">Accueil</a>
+                        <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                        <a href="tarifs.html" class="nav-item">Tarifs</a>
+                        <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -475,39 +506,35 @@
                     Parlons de votre PROJET !</p>
                     <p>Vous souhaitez tout simplement nous rendre visite, ou échanger avec notre équipe commerciale ?<br>
                     Contactez-nous ou obtenez un devis !<br>
-                    Dans <span class="important">80% des cas, nous vous envoyons le devis en moins de 2 heures.</span></p>
-                    <a href="#" class="btn">Obtenir un devis</a>
+                    Dans <span class="important">80% des cas, nous vous envoyons le devis en moins de 48 heures.</span></p>
                 </div>
                 <div class="contact-image">
                     <img src="img/conatct.png" alt="Contact Icons">
                 </div>
             </div>
-            
+            <div>
+                <a href="tarifs.html#devis" class="btn">Obtenir un devis ici !</a>
+            </div>
             <!-- Section des informations de contact -->
             <div class="contact-grid">
-                <!-- Carte -->
-                <div class="map-container">
-                    <!-- Intégration de Google Maps pour l'adresse spécifiée -->
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2587.505276212939!2d2.5668169999999997!3d49.647850799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e7d9c1a7f0f141%3A0x7b7a424ea9b4ee09!2s6%20Rue%20Jean%20Dupuy%2C%2080500%20Montdidier!5e0!3m2!1sfr!2sfr!4v1651234567890!5m2!1sfr!2sfr" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
                 
                 <!-- Bloc Où nous trouver -->
                 <div class="find-us-container">
-                    <div class="header-banner">
-                        5j/7, 13h/24
-                    </div>
                     <div class="content">
                         <div class="icon-circle">
                             <i>ℹ</i>
                         </div>
                         <h2>Où nous trouver</h2>
                         <p class="address">6 Rue Jean Dupuy, 80500 Montdidier</p>
-                        <a href="#" class="btn">Faire un devis</a>
+                    </div>
+                    <div class="map-container">
+                        <!-- Intégration de Google Maps pour l'adresse spécifiée -->
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2587.505276212939!2d2.5668169999999997!3d49.647850799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e7d9c1a7f0f141%3A0x7b7a424ea9b4ee09!2s6%20Rue%20Jean%20Dupuy%2C%2080500%20Montdidier!5e0!3m2!1sfr!2sfr!4v1651234567890!5m2!1sfr!2sfr" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
                 
@@ -517,7 +544,7 @@
                         <img src="img/iphone.png" alt="">
                     </div>
                     <h2>Nous contacter par téléphone</h2>
-                    <p class="schedule">Du lundi au vendredi<br>De 8h30 à 19h</p>
+                    <p class="schedule">Du lundi au vendredi<br>De 8h à 12h / 14h à 18h </p>
                     <p class="phone">03 22 78 01 25</p>
                     
                     <div class="graph">
@@ -559,10 +586,9 @@
             <div class="footer-section">
                 <h4>Informations</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Mentions Légales</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                    <li><a href="#">Utilisation des cookies</a></li>
-                    <li><a href="#">Plan du site</a></li>
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
                 </ul>
             </div>
             
@@ -570,8 +596,8 @@
                 <h4>Suivez-nous</h4>
                 <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
                 <div class="social-icons">
-                    <a href="#"><img src="/asset/img/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
                 </div>
             </div>
         </div>

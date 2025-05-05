@@ -35,7 +35,7 @@
         
         .main-header {
             background-color: white;
-            padding: 30px 20px;
+            padding: 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -83,7 +83,88 @@
 
         .logo-img{
             width: 100%;
-            height: 60px;
+            height: 90px;
+        }
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            body{
+                padding-top: 0px;
+            }
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 16px;
+            }
+
+            .contact-btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .secondary-banner {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .header-nav,
+            .header-logo {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .header-container {
+                position: static;
+            }
         }
         /* ********************************************fin header style******************************************** */
         /* ********************************************debut frise******************************************** */
@@ -174,26 +255,84 @@
             z-index: 2;
             border: 4px solid white;
         }
-        
+
+        .double-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 200px;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px;
+        }
+
+        .timeline-container,
+        .eco-container {
+            flex: 1;
+            min-width: 450px;
+            max-width: 600px;
+        }
+        .eco-container{
+            background-color: var(--color-secondary);
+            padding: 15px;
+            border-radius: 7px;
+            border: 1px solid var(--color-primary);
+            margin: 0;
+        }
+
+        .title-imprim {
+            justify-content: center;
+            display: flex;
+            text-align: center;
+            margin-bottom: 30px;
+        }   
         @media (max-width: 768px) {
+            .timeline-item:nth-child(even) .timeline-content{
+                left: 10%;
+                margin: 0;
+            }
+            .timeline-item:nth-child(odd) .timeline-content{
+                left: 100%;
+            }
+            .timeline-item{
+                margin: 0;
+            }
+            .double-section {
+                flex-direction: column;
+                gap: 40px; /* Moins d’espace en version mobile */
+                padding: 20px;
+            }
+
+            .timeline-container,
+            .eco-container {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
             .timeline::before {
-                left: 40px;
+                left: 20px; /* Ligne plus proche du bord */
             }
-            
-            .timeline-content {
-                width: calc(100% - 80px);
-                margin-left: 80px;
-            }
-            
-            .timeline-item:nth-child(odd) .timeline-content,
-            .timeline-item:nth-child(even) .timeline-content {
-                left: 0;
-            }
-            
+
             .timeline-dot {
-                left: 40px;
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px); /* adaptatif */
+                margin-left: 50px; /* espace entre ligne et contenu */
+                padding: 20px;
+            }
+
+            .timeline-title {
+                font-size: 18px;
+            }
+
+            .timeline-date {
+                font-size: 14px;
+                padding: 6px 12px;
             }
         }
+
+
         /* ********************************************fin frise******************************************** */
 
         /* ********************************************debut savoir faire *********************************************/
@@ -216,12 +355,11 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 2px;
         }
 
         .container-card {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 2fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 2rem;
             padding: 2rem;
             background-color: var(--color-light);
@@ -236,7 +374,7 @@
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow);
         }
 
@@ -255,6 +393,36 @@
         h2{
             font-size: 36px;
         }
+        @media (max-width: 768px) {
+    .container-card {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .card h3 {
+        font-size: 1rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    h2 {
+        font-size: 28px; /* Réduction du titre principal */
+        text-align: center;
+    }
+
+    .contact-btn1 {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+
         /* ********************************************fin savoir faire *********************************************/
         /* ********************************************debut service *********************************************/
         
@@ -271,15 +439,15 @@
             background: var(--color-secondary);
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
+            /* box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.127); */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             margin: 0;
+            /* border: var(--color-primary) 1px solid; */
         }
 
-        .card-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
+        /* .card-item:hover {
+            transform: translateY(-1px);
+        } */
 
         .container-card1 {
             display: grid;
@@ -290,6 +458,10 @@
         }
         .service{
             padding-top: 8rem;
+            margin: 0;
+        }
+        .p{
+            margin: 2px;
         }
         .service-main{
             padding-bottom: 60px;
@@ -516,69 +688,100 @@
     <header>
         <div class="header-container">
             <div class="main-header">
-                <div class="logo">
-                    <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                <div class="header-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                    </div>
+                    <div class="secondary-banner">
+                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                    </div>
                 </div>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-item">Accueil</a>
-                    <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
-                    <a href="tarifs.html" class="nav-item">Tarifs</a>
-                    <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                <div class="header-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-item">Accueil</a>
+                        <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                        <a href="tarifs.html" class="nav-item">Tarifs</a>
+                        <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
     <main>
-        <div class="container">
-            <h1 class="title">Histoire de l'Entreprise</h1>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">1990</div>
-                        <h2 class="timeline-title">La naissance</h2>
-                        <p>C'est en 1990 que l'aventure commence avec la création de l'Imprimerie du Plateau Picard (IPP) par M. Claude Lerebourg. Passionné par les métiers de l'impression, Claude choisit de s'installer à Montdidier, ville historique des métiers de l'imprimerie.</p>
+        <div class="double-section">
+            <!-- Partie gauche : Frise chronologique -->
+            <div class="timeline-container">
+                <h1 class="title">Histoire de l'Entreprise</h1>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">1990</div>
+                            <h2 class="timeline-title">La naissance</h2>
+                            <p>C'est en 1990 que l'aventure commence avec la création de l'Imprimerie du Plateau Picard (IPP) par M. Claude Lerebourg...</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Héritage</div>
-                        <h2 class="timeline-title">Un savoir faire centenaire</h2>
-                        <p>En s'établissant dans les anciens locaux de la renommée Imprimerie Carpentier, présente depuis la fin du 19ème siècle, IPP perpétue une tradition d'excellence et de savoir-faire qui a marqué la région pendant plus d'un siècle.</p>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Héritage</div>
+                            <h2 class="timeline-title">Un savoir faire centenaire</h2>
+                            <p>En s'établissant dans les anciens locaux de la renommée Imprimerie Carpentier...</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2012</div>
-                        <h2 class="timeline-title">L'expansion et la diversification</h2>
-                        <p>La fille de Claude, Mélanie, rejoint l'équipe en 2012 et crée son agence de communication IPP COM. Forte de 10 ans d'expérience en agence événementielle et tourisme d'affaires, Mélanie apporte une nouvelle dimension à l'entreprise familiale.</p>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2012</div>
+                            <h2 class="timeline-title">L'expansion et la diversification</h2>
+                            <p>La fille de Claude, Mélanie, rejoint l'équipe en 2012...</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">Aujourd'hui</div>
-                        <h2 class="timeline-title">Une offre complète</h2>
-                        <p>IPP COM propose désormais des services complémentaires à la clientèle de l'Imprimerie en se spécialisant dans la communication par l'objet et par l'événement. Cette évolution naturelle nous permet d'offrir une solution globale à nos clients.</p>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Aujourd'hui</div>
+                            <h2 class="timeline-title">Une offre complète</h2>
+                            <p>IPP COM propose désormais des services complémentaires...</p>
+                        </div>
                     </div>
                 </div>
             </div>
+        
+            <!-- Partie droite : Engagement écologique -->
+            <div class="eco-container">
+                <h2 class="title-imprim">Notre Engagement Écologique : Certifiés Imprim'Vert</h2>
+                <div class="intro">
+                    <p>Nous sommes fiers d'être certifiés <strong>Imprim'Vert</strong>...</p>
+                </div>
+                <div class="content">
+                    <div class="eco-approach">
+                        <h2>Notre démarche écoresponsable au quotidien</h2>
+                        <p>Avec le label Imprim'Vert, nous nous engageons à :</p>
+                        <div class="eco-line">Éliminer correctement nos déchets dangereux...</div>
+                        <div class="eco-line">Sécuriser le stockage des produits et liquides...</div>
+                        <div class="eco-line">Utiliser des encres et consommables à faible impact...</div>
+                        <div class="eco-line">Optimiser notre consommation d’énergie et d’eau...</div>
+                        <div class="eco-line">Former régulièrement nos équipes...</div>
+                    </div>
+                    <div class="logo-imprim">
+                        <img src="img/imprim.png" alt="Logo Imprim'Vert">
+                    </div>
+                </div>
+                <div class="footer">
+                    En choisissant nos services d’impression, vous participez activement...
+                </div>
+            </div>
         </div>
+        
         <div class="Do">
             <h2 class="service">Notre savoir faire</h2>
-            <p class="p">Impression de qualité, à taille humaine</p>
-            <p>Imprimeurs passionnés, nous vous proposons un service sur mesure, de la création graphique à l’impression finale.</p>
-            <p><strong>Notre force</strong> : proximité, disponibilité et expertise à chaque étape de votre projet.</p>
+            <p class="p">Impression de qualité, à taille humaine. Imprimeurs passionnés, nous vous proposons un service sur mesure, de la création graphique à l’impression finale.</p>
+            <p class="p"><strong>Notre force</strong> : proximité, disponibilité et expertise à chaque étape de votre projet.</p>
         </div>
         <div class="container-card">
             <div class="card">
-                <h3>Qualité & Expertise</h3>
+                <h3>Qualité</h3>
                 <p>Des impressions haute définition accompagnées de conseils personnalisés pour un rendu optimal.</p>
             </div>
             <div class="card">
@@ -602,14 +805,14 @@
                 <p>Une équipe disponible tout au long de votre projet, de la demande de devis à la livraison.</p>
             </div>
         </div>
-        <a href="#" class="contact-btn1">Contactez-nous pour un projet !</a>
-        <div class="Do">
+        <a href="tarifs.html#devis" class="contact-btn1">Contactez-nous pour un projet !</a>
+        <div id="Do" class="Do">
             <h2 class="service">Nos services</h2>
         </div>
         <div class="service-main">
             <div class="SERV">
                 <p class="soustitre">Creation graphique & mise en page</p>
-                <p>Création graphique ou simple mise-en-page ?De la recherche du visuel (image, photo, illustration…) à la mise en page, notre graphiste en interne se charge de la réalisation de vos outils de communication. Parlons-en ensemble, nous sommes là pour vous !</p>
+                <p>Création graphique ou simple mise-en-page ? De la recherche du visuel (image, photo, illustration…) à la mise en page, notre graphiste en interne se charge de la réalisation de vos outils de communication. Parlons-en ensemble, nous sommes là pour vous !</p>
             </div>
             <div class="container-card1">
                 <p class="card-item">Identité Visuelle</p>
@@ -624,7 +827,7 @@
                 <p class="card-item">Trombinoscope</p>
             </div>
             <div class="SERV">
-                <p class="soustitre">Impression & finitions</p>
+                <p class="soustitre">Impression</p>
                 <p>Équipés d’une presse numérique et de deux presses offset, nous pouvons prendre en charge tout type d’impression et proposer une large gamme de finitions : découpe, vernis, pelliculage, dorure, pliage, reliure (wire O, dos carré collé, etc.).</p>
             </div>
             <div class="container-card1">
@@ -639,7 +842,7 @@
             </div>
             <div class="SERV">
                 <p class="soustitre">Événementiel & objets publicitaires</p>
-                <p>Nous saurons vous surprendre et créer votre événement sur-mesure !Organisation – Gestion – Location de matériel : nous avons la solution.IPP & IPP Com s’appuie sur un réseau de partenaires fiables pour vous proposer une vaste gamme de goodies et de vêtements personnalisés.</p>
+                <p>Nous saurons vous surprendre et créer votre événement sur-mesure! Organisation – Gestion – Location de matériel : nous avons la solution. IPP & IPP Com s’appuie sur un réseau de partenaires fiables pour vous proposer une vaste gamme de goodies et de vêtements personnalisés.</p>
             </div>
             <div class="container-card1">
                 <p class="card-item">Textiles</p>
@@ -649,33 +852,6 @@
                 <p class="card-item">Post-it</p>
                 <p class="card-item">Carnets personnalisés</p>
             </div>
-        </div>
-        <h2 class="title-imprim">Notre Engagement Écologique : Certifiés Imprim'Vert</h2>
-
-        <div class="intro">
-            <p>
-            Nous sommes fiers d'être certifiés <strong>Imprim'Vert</strong>, un label reconnu qui atteste de notre engagement concret pour réduire l'impact environnemental de notre activité d’impression.
-            Cette certification garantit que nous respectons un cahier des charges rigoureux en matière de développement durable et de protection de l’environnement.
-            </p>
-        </div>
-
-        <div class="content">
-            <div class="eco-approach">
-                <h2>Notre démarche écoresponsable au quotidien</h2>
-                <p>Avec le label Imprim'Vert, nous nous engageons à :</p>
-                <div class="eco-line">Éliminer correctement nos déchets dangereux selon les normes environnementales</div>
-                <div class="eco-line">Sécuriser le stockage des produits et liquides dangereux pour prévenir tout risque de pollution</div>
-                <div class="eco-line">Utiliser des encres et consommables à faible impact environnemental</div>
-                <div class="eco-line">Optimiser notre consommation d’énergie et d’eau dans nos processus d'impression</div>
-                <div class="eco-line">Former régulièrement nos équipes aux bonnes pratiques environnementales</div>
-            </div>
-            <div class="logo-imprim">
-            <img src="img/imprim.png" alt="Logo Imprim'Vert">
-            </div>
-        </div>
-
-        <div class="footer">
-            En choisissant nos services d’impression, vous participez activement à une démarche responsable et contribuez à la préservation de notre planète
         </div>
     </main>
     <footer>
@@ -688,10 +864,9 @@
             <div class="footer-section">
                 <h4>Informations</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Mentions Légales</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                    <li><a href="#">Utilisation des cookies</a></li>
-                    <li><a href="#">Plan du site</a></li>
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
                 </ul>
             </div>
             
@@ -699,8 +874,8 @@
                 <h4>Suivez-nous</h4>
                 <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
                 <div class="social-icons">
-                    <a href="#"><img src="/asset/img/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
                 </div>
             </div>
         </div>

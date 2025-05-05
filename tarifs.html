@@ -35,7 +35,7 @@
         
         .main-header {
             background-color: white;
-            padding: 30px 20px;
+            padding: 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -83,49 +83,153 @@
 
         .logo-img{
             width: 100%;
-            height: 60px;
+            height: 90px;
+        }
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            body{
+                padding-top: 0px;
+            }
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 16px;
+            }
+
+            .contact-btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .secondary-banner {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .header-nav,
+            .header-logo {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .header-container {
+                position: static;
+            }
         }
         /* ********************************************fin header style******************************************** */
         /* debut price */
-        .price-table {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 40px auto;
-        color: #000;
-        }
 
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 40px 80px;
+        }
+        
         .product-section {
-        margin-bottom: 40px;
+            width: calc(50% - 20px);
+            margin-bottom: 30px;
         }
-
-        .product-section h2 {
-        font-weight: bold;
-        font-size: 18px;
-        margin-bottom: 5px;
+        
+        h2 {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
         }
-
+        
         .subtitle {
-        font-size: 14px;
-        color: #555;
-        margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background-color: var(--color-secondary);
+            text-align: left;
+            padding: 10px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        
+        td {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .quantity {
+            font-weight: bold;
+        }
+        
+        /* Pour les écrans mobiles */
+        @media (max-width: 768px) {
+            .product-section {
+                width: 100%;
+            }
         }
 
-        .price-card {
-        background-color: var(--color-secondary);
-        border-radius: 8px;
-        padding: 15px 20px;
-        margin-bottom: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 14px;
-        }
-
-        .price {
-        text-align: right;
-        font-size: 13px;
-        color: #333;
-        }
         /* fin price */
         /* debut form */
         .steps-container {
@@ -262,6 +366,12 @@
             justify-content: center;
             flex-direction: column;
             align-items: center;
+        }
+        .form-title{
+            margin-top: 0;
+        }
+        textarea::placeholder {
+            white-space: pre-line;
         }
         /* fin form */
         /* ********************************************debut footer******************************************** */
@@ -414,131 +524,220 @@
     <header>
         <div class="header-container">
             <div class="main-header">
-                <div class="logo">
-                    <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                <div class="header-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                    </div>
+                    <div class="secondary-banner">
+                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                    </div>
                 </div>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-item">Accueil</a>
-                    <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
-                    <a href="tarifs.html" class="nav-item">Tarifs</a>
-                    <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                <div class="header-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-item">Accueil</a>
+                        <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                        <a href="tarifs.html" class="nav-item">Tarifs</a>
+                        <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
     <main>
-        <div class="price-table">
-            <section class="product-section">
+        <div class="container" data-product="cartesDeVisite">
+            <!-- Cartes de visite -->
+            <div class="product-section" data-csv="">
                 <h2>Cartes de visite 85×55mm</h2>
                 <p class="subtitle">Impression sur bristol 320g</p>
-                <div class="price-card">
-                    <span>50 exemplaires</span>
-                    <div class="price">Recto : 20€ HT<br>Recto/Verso : 25€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>100 exemplaires</span>
-                    <div class="price">Recto : 24€ HT<br>Recto/Verso : 30€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>250 exemplaires</span>
-                    <div class="price">Recto : 30€ HT<br>Recto/Verso : 40€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>500 exemplaires</span>
-                    <div class="price">Recto : 40€ HT<br>Recto/Verso : 48€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>1000 exemplaires</span>
-                    <div class="price">Recto : 54€ HT<br>Recto/Verso : 66€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>2500 exemplaires</span>
-                    <div class="price">Recto : 95€ HT<br>Recto/Verso : 114€ HT</div>
-                </div>
-            </section>
-            <section class="product-section">
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">50 ex</td>
+                            <td>20€ HT</td>
+                            <td>25€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>24€ HT</td>
+                            <td>30€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>30€ HT</td>
+                            <td>40€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>40€ HT</td>
+                            <td>48€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>54€ HT</td>
+                            <td>66€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>95€ HT</td>
+                            <td>114€ HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Flyers A6 -->
+            <div class="product-section">
                 <h2>Flyers A6 Format 105×148.5mm</h2>
                 <p class="subtitle">Impression sur couché 135gr</p>
-                <div class="price-card">
-                    <span>50 exemplaires</span>
-                    <div class="price">Recto : 16€ HT<br>Recto/Verso : 20€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>100 exemplaires</span>
-                    <div class="price">Recto : 18€ HT<br>Recto/Verso : 24€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>250 exemplaires</span>
-                    <div class="price">Recto : 24€ HT<br>Recto/Verso : 36€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>500 exemplaires</span>
-                    <div class="price">Recto : 30€ HT<br>Recto/Verso : 48€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>1000 exemplaires</span>
-                    <div class="price">Recto : 48€ HT<br>Recto/Verso : 72€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>2500 exemplaires</span>
-                    <div class="price">Recto : 84€ HT<br>Recto/Verso : 144€ HT</div>
-                </div>
-            </section>
-            <section class="product-section">
-                <h2>Affichettes A4 et A3</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">50 ex</td>
+                            <td>16€ HT</td>
+                            <td>20€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>18€ HT</td>
+                            <td>24€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>24€ HT</td>
+                            <td>36€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>30€ HT</td>
+                            <td>48€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>48€ HT</td>
+                            <td>72€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>84€ HT</td>
+                            <td>144€ HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Affichettes A4 -->
+            <div class="product-section">
+                <h2>Affichettes A4 & A3</h2>
                 <p class="subtitle">Impression sur couché 135gr</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                            <th>A3 Recto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">50 ex</td>
+                            <td>18€ HT</td>
+                            <td>24€ HT</td>
+                            <td>24€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>24€ HT</td>
+                            <td>36€ HT</td>
+                            <td>36€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>42€ HT</td>
+                            <td>60€ HT</td>
+                            <td>78€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>66€ HT</td>
+                            <td>108€ HT</td>
+                            <td>150€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>120€ HT</td>
+                            <td>204€ HT</td>
+                            <td>288€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>288€ HT</td>
+                            <td>372€ HT</td>
+                            <td>- HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
-                <div class="price-card">
-                    <span>50 exemplaires</span>
-                    <div class="price">Recto : 18€ HT<br>Recto/Verso : 24€ HT<br>A3 Recto : 24€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>100 exemplaires</span>
-                    <div class="price">Recto : 24€ HT<br>Recto/Verso : 36€ HT<br>A3 Recto : 36€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>250 exemplaires</span>
-                    <div class="price">Recto : 42€ HT<br>Recto/Verso : 60€ HT<br>A3 Recto : 78€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>500 exemplaires</span>
-                    <div class="price">Recto : 66€ HT<br>Recto/Verso : 108€ HT<br>A3 Recto : 150€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>1000 exemplaires</span>
-                    <div class="price">Recto : 120€ HT<br>Recto/Verso : 204€ HT<br>A3 Recto : 288€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>2500 exemplaires</span>
-                    <div class="price">Recto : 288€ HT<br>Recto/Verso : 372€ HT<br>A3 Recto : - € HT</div>
-                </div>
-            </section>
-            
-            <section class="product-section">
-                <h2>Cartes de visite 85×55mm</h2>
-                <p class="subtitle">Impression sur bristol 320g</p>
-            
-                <div class="price-card">
-                    <span>100 exemplaires</span>
-                    <div class="price">Recto : 18€ HT<br>Recto/Verso : 24€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>250 exemplaires</span>
-                    <div class="price">Recto : 30€ HT<br>Recto/Verso : 42€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>500 exemplaires</span>
-                    <div class="price">Recto : 42€ HT<br>Recto/Verso : 68€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>1000 exemplaires</span>
-                    <div class="price">Recto : 66€ HT<br>Recto/Verso : 114€ HT</div>
-                </div>
-                <div class="price-card">
-                    <span>2500 exemplaires</span>
-                    <div class="price">Recto : 115€ HT<br>Recto/Verso : 264€ HT</div>
-                </div>
-            </section>
+            <!-- Affichettes A3 -->
+            <div class="product-section">
+                <h2>Affichettes A5 148x210 mm</h2>
+                <p class="subtitle">Impression sur couché 135gr</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>18€ HT</td>
+                            <td>24€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>30€ HT</td>
+                            <td>42€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>42€ HT</td>
+                            <td>66€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>66€ HT</td>
+                            <td>114€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>156€ HT</td>
+                            <td>264€ HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="container-form">
             <div class="steps-container">
@@ -570,6 +769,10 @@
             <div class="form-container">
                 <form id="quote-form" name="devis" method="POST" data-netlify="true" action="index.html">
                     <div class="form-group">
+                        <h2 class="form-title">Faire votre devis</h2>
+                        
+                    </div>
+                    <div class="form-group">
                         <label for="name">Nom complet</label>
                         <input name="name" type="text" id="name" placeholder="Veuillez rentrer votre nom..." required>
                     </div>
@@ -586,7 +789,10 @@
                     
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea name="message" id="message" placeholder="Écrivez votre demande..." required></textarea>
+                        <textarea name="message" id="message" placeholder="Écrivez votre demande n'oubliez pas :
+                        - Format
+                        - Quantité souhaitée
+                        - Type d'impressions(Recto ou Recto/Verso)" required></textarea>
                     </div>
                     
                     <button type="submit">Confirmez la demande</button>
@@ -604,10 +810,9 @@
             <div class="footer-section">
                 <h4>Informations</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Mentions Légales</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                    <li><a href="#">Utilisation des cookies</a></li>
-                    <li><a href="#">Plan du site</a></li>
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
                 </ul>
             </div>
             
@@ -615,8 +820,8 @@
                 <h4>Suivez-nous</h4>
                 <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
                 <div class="social-icons">
-                    <a href="#"><img src="/asset/img/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
                 </div>
             </div>
         </div>
@@ -625,5 +830,36 @@
             © 2025 ipp-imprimerie.fr - Tous droits réservés
         </div>
     </footer>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const produits = [
+        { key: "cartesDeVisite", title: "Cartes de visite", columns: ["recto", "rectoVerso"] },
+        { key: "flyersA6", title: "Flyers A6", columns: ["recto", "rectoVerso"] },
+        { key: "affichettesA4", title: "Affichettes A4", columns: ["recto", "rectoVerso", "a3"] },
+        { key: "affichettesA5", title: "Affichettes A5", columns: ["recto", "rectoVerso"] }
+    ];
+
+    produits.forEach(({ key, title, columns }) => {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (!data) return;
+
+        // Cherche la section correspondant au titre
+        const section = Array.from(document.querySelectorAll(".product-section"))
+        .find(div => div.querySelector("h2")?.textContent.includes(title));
+        if (!section) return;
+
+        const rows = section.querySelectorAll("tbody tr");
+        data.forEach((entry, i) => {
+        const cells = rows[i]?.querySelectorAll("td");
+        if (!cells) return;
+
+        if (columns.includes("recto") && entry.recto)        cells[1].textContent = entry.recto;
+        if (columns.includes("rectoVerso") && entry.rectoVerso) cells[2].textContent = entry.rectoVerso;
+        if (columns.includes("a3") && entry.a3)              cells[3].textContent = entry.a3;
+        });
+    });
+    });
+    </script>
 </body>
+
 </html>

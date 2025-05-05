@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+    <html lang="fr">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentions Légales</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: auto;
+        padding-top: 180px;
+        }
+
+        h1, h2 {
+        color: #1a1a1a;
+        }
+
+        h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        }
+
+        h2 {
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 0.3rem;
+        margin-top: 2rem;
+        }
+
+        p, li {
+        margin-bottom: 1rem;
+        }
+
+        strong {
+        color: #000;
+        }
+
+        address {
+        font-style: normal;
+        }
+        :root{
+            --color-primary: #4A90E2;
+            --color-secondary: #D4E8FF;
+            --color-light: #F7F9FC;
+            --color-dark: #2E2E2E;
+            --shadow: 0px 0px 13.5px 0px rgba(0, 0, 0, 0.25);
+            --title: 22px;
+            --subtitle: 17px;
+            --texte: 14px;
+        }
+        /*  ********************************************Debut Header style *********************************************/
+        .header-container {
+            width: 100%;
+            background-color: var(--color-light);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .main-header {
+            background-color: white;
+            padding: 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 5px 0px rgba(46, 46, 46, 0.25);;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .ipp {
+            color: #000;
+        }
+        
+        .and {
+            color: #555;
+            margin: 0 5px;
+        }
+        
+        .ippcom {
+            color: #000;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-item {
+            padding: 0px 30px;
+            color: #333;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+        
+        .contact-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 15px 15px;
+            border-radius: 66px;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+
+        .logo-img{
+            width: 100%;
+            height: 90px;
+        }
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        /* ********************************************fin header style******************************************** */
+        /* debut footer */
+        footer {
+            background: #4A90E2;
+            color: #fff;
+            padding: 50px 0 30px;
+            box-shadow: 0 -5px 15px rgba(74, 144, 226, 0.2);
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+        }
+        
+        .footer-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-section h4 {
+            position: relative;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding-left: 5px;
+            position: relative;
+        }
+        
+        .footer-links a::before {
+            content: '›';
+            position: absolute;
+            left: -8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            padding-left: 12px;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .social-icons img {
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 20px;
+            border-top: 1px solid #ffffff98;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 40px;
+                padding: 0;
+            }
+            
+            .footer-section:last-child {
+                margin-bottom: 10px;
+            }
+        }
+        /* fin footer */
+        main{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <div class="header-container">
+                <div class="main-header">
+                    <div class="header-logo">
+                        <div class="logo">
+                            <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                        </div>
+                        <div class="secondary-banner">
+                            <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                        </div>
+                    </div>
+                    <div class="header-nav">
+                        <div class="nav-links">
+                            <a href="index.html" class="nav-item">Accueil</a>
+                            <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                            <a href="tarifs.html" class="nav-item">Tarifs</a>
+                            <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <h1>Mentions légales</h1>
+        
+            <h2>Informations légales</h2>
+            <p>Le site ipp-imprimerie.fr est édité par la société Ipp & Ippcom, société par actions simplifiée dont le siège social est situé 6 rue Jean Dupuy au registre du commerce et des sociétés de Amiens.</p>
+            <p><strong>Numéro SIRET :</strong></p>
+            <p><strong>Code NAF :</strong</p>
+            <p><strong>Numéro TVA intracommunautaire :</strong></p>
+            <p><strong>Directeur de la publication :</strong> Vincent Timon</p>
+            <p><strong>Numéro de téléphone :</strong> 03 22 78 01 25</p>
+            <p><strong>Adresse postale :</strong> 6 rue Jean Dupuy</p>
+            <p><strong>Adresse électronique :</strong> contact@ipp-imprimerie.fr</p>
+            <p>Ipp & Ippcom est enregistrée au registre national des metteurs en marché.</p>
+            <p>Les informations diffusées sur ce site sont la propriété de Ipp & Ippcom. Toute copie, partielle ou totale, par quelque moyen que ce soit, ne peut se faire sans l’accord préalable de Ipp & Ippcom.</p>
+        
+            <h2>Décharge de responsabilité</h2>
+            <p>Le site Ipp & Ippcom n’est tenu à aucune obligation de moyens concernant les informations qu’il met à disposition des personnes qui accèdent à son site internet. Même avec nos efforts pour garantir l’exactitude des informations, Ipp & Ippcom décline toute responsabilité quant aux dommages directs ou indirects résultant de l’accès ou de l’utilisation de ce site.</p>
+        
+            <h2>Droits d’auteur</h2>
+            <p>En application du Code français de la Propriété Intellectuelle, vous ne pouvez reproduire ou représenter, même partiellement, les contenus de ce site sans autorisation écrite. Cela inclut les textes, images, logos, etc.</p>
+        
+            <h2>Législation française relative au droit d'accès aux fichiers informatisés</h2>
+            <p>Ce site a fait l’objet d’une déclaration à la CNIL. Conformément à la loi « informatique et libertés », vous disposez d’un droit d’accès, de rectification et de suppression des données vous concernant.</p>
+            <address>
+                Ipp & Ippcom<br />
+                6 rue Jean Dupuy<br />
+                80500 Montdidier
+            </address>
+        
+            <h2>Collecte et traitement de vos données</h2>
+            <p>Dans le cadre de la relation commerciale, Ipp & Ippcom peut collecter vos données. Conformément au RGPD, vous avez des droits d’accès, de rectification et de suppression de vos données personnelles.</p>
+        </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="/asset/img/Fichier-3.webp" alt="Logo" class="footer-logo">
+                <p>6 rue Jean Dupuy<br>BP 900032<br>Tél : 03 22 78 01 25<br>Mail : contact@ipp-imprimerie.fr</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Informations</h4>
+                <ul class="footer-links">
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2025 ipp-imprimerie.fr - Tous droits réservés
+        </div>
+    </footer>
+    </body>
+    
+</html>
