@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root{
+            --color-primary: #da2d92;
+            --color-secondary: #fde5f3;
+            --color-light: #F7F9FC;
+            --color-dark: #2E2E2E;
+            --shadow: 0px 0px 13.5px 0px rgba(0, 0, 0, 0.25);
+            --title: 22px;
+            --subtitle: 17px;
+            --texte: 14px;
+        }
+        /*  ********************************************Debut Header style *********************************************/
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--color-light);
+            padding-top: 150px;
+        }
+        
+        .header-container {
+            width: 100%;
+            background-color: var(--color-light);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .main-header {
+            background-color: white;
+            padding: 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 5px 0px rgba(46, 46, 46, 0.25);;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .ipp {
+            color: #000;
+        }
+        
+        .and {
+            color: #555;
+            margin: 0 5px;
+        }
+        
+        .ippcom {
+            color: #000;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-item {
+            padding: 0px 30px;
+            color: #333;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+        
+        .contact-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 15px 15px;
+            border-radius: 66px;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+
+        .logo-img{
+            width: 100%;
+            height: 90px;
+        }
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            body{
+                padding-top: 0px;
+            }
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 16px;
+            }
+
+            .contact-btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .secondary-banner {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .header-nav,
+            .header-logo {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .header-container {
+                position: static;
+            }
+        }
+        /* ********************************************fin header style******************************************** */
+        /* debut price */
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 40px 80px;
+        }
+        
+        .product-section {
+            width: calc(50% - 20px);
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background-color: var(--color-secondary);
+            text-align: left;
+            padding: 10px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+        
+        td {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .quantity {
+            font-weight: bold;
+        }
+        
+        /* Pour les écrans mobiles */
+        @media (max-width: 768px) {
+            .product-section {
+                width: 100%;
+            }
+        }
+
+        /* fin price */
+        /* debut form */
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 50px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 22%;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step:nth-child(1) .step-number {
+            background-color: rgba(0, 153, 255, 0.15);
+            color: #09f;
+        }
+
+        .step:nth-child(2) .step-number {
+            background-color: rgba(255, 196, 0, 0.15);
+            color: #fc0;
+        }
+
+        .step:nth-child(3) .step-number {
+            background-color: rgba(255, 80, 80, 0.15);
+            color: #f55;
+        }
+
+        .step:nth-child(4) .step-number {
+            background-color: rgba(161, 102, 255, 0.15);
+            color: #a6f;
+        }
+
+        .step-title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .step-description {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding:30px 60px 30px 30px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #bbb;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 13px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto 0;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--color-primary);
+        }
+
+        @media (max-width: 768px) {
+            .steps-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 30px;
+            }
+        }
+        .container-form{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-title{
+            margin-top: 0;
+        }
+        textarea::placeholder {
+            white-space: pre-line;
+        }
+        /* fin form */
+        /* ********************************************debut footer******************************************** */
+        footer {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 50px 0 30px;
+            box-shadow: 0 -5px 15px rgba(74, 144, 226, 0.2);
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+        }
+        
+        .footer-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-section h4 {
+            position: relative;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding-left: 5px;
+            position: relative;
+        }
+        
+        .footer-links a::before {
+            content: '›';
+            position: absolute;
+            left: -8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            padding-left: 12px;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .social-icons img {
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 20px;
+            border-top: 1px solid #ffffff98;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 40px;
+                padding: 0;
+            }
+            
+            .footer-section:last-child {
+                margin-bottom: 10px;
+            }
+        }
+        /* ********************************************fin footer *********************************************/
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="main-header">
+                <div class="header-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                    </div>
+                    <div class="secondary-banner">
+                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                    </div>
+                </div>
+                <div class="header-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-item">Accueil</a>
+                        <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                        <a href="tarifs.html" class="nav-item">Tarifs</a>
+                        <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container" data-product="cartesDeVisite">
+            <!-- Cartes de visite -->
+            <div class="product-section" data-csv="">
+                <h2>Cartes de visite 85×55mm</h2>
+                <p class="subtitle">Impression sur bristol 320g</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">50 ex</td>
+                            <td>20€ HT</td>
+                            <td>25€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>24€ HT</td>
+                            <td>30€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>30€ HT</td>
+                            <td>40€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>40€ HT</td>
+                            <td>48€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>54€ HT</td>
+                            <td>66€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>95€ HT</td>
+                            <td>114€ HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Flyers A6 -->
+            <div class="product-section">
+                <h2>Flyers A6 Format 105×148.5mm</h2>
+                <p class="subtitle">Impression sur couché 135gr</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">50 ex</td>
+                            <td>16€ HT</td>
+                            <td>20€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>18€ HT</td>
+                            <td>24€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>24€ HT</td>
+                            <td>36€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>30€ HT</td>
+                            <td>48€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>48€ HT</td>
+                            <td>72€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>84€ HT</td>
+                            <td>144€ HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Affichettes A4 -->
+            <div class="product-section">
+                <h2>Affichettes A4 & A3</h2>
+                <p class="subtitle">Impression sur couché 135gr</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                            <th>A3 Recto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">50 ex</td>
+                            <td>18€ HT</td>
+                            <td>24€ HT</td>
+                            <td>24€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>24€ HT</td>
+                            <td>36€ HT</td>
+                            <td>36€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>42€ HT</td>
+                            <td>60€ HT</td>
+                            <td>78€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>66€ HT</td>
+                            <td>108€ HT</td>
+                            <td>150€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>120€ HT</td>
+                            <td>204€ HT</td>
+                            <td>288€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>288€ HT</td>
+                            <td>372€ HT</td>
+                            <td>- HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Affichettes A3 -->
+            <div class="product-section">
+                <h2>Affichettes A5 148x210 mm</h2>
+                <p class="subtitle">Impression sur couché 135gr</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantité</th>
+                            <th>Recto</th>
+                            <th>Recto/Verso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="quantity">100 ex</td>
+                            <td>18€ HT</td>
+                            <td>24€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">250 ex</td>
+                            <td>30€ HT</td>
+                            <td>42€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">500 ex</td>
+                            <td>42€ HT</td>
+                            <td>66€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">1000 ex</td>
+                            <td>66€ HT</td>
+                            <td>114€ HT</td>
+                        </tr>
+                        <tr>
+                            <td class="quantity">2500 ex</td>
+                            <td>156€ HT</td>
+                            <td>264€ HT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container-form">
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Demande</div>
+                    <div class="step-description">Remplissez le formulaire pour effectuer votre devis</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Contact rapide</div>
+                    <div class="step-description">Un conseiller vous rappelle rapidement pour valider la faisabilité de votre demande.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Devis personnalisé</div>
+                    <div class="step-description">Nous réalisons un devis sur-mesure adapté à vos besoins et contraintes.</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Lancement en production</div>
+                    <div class="step-description">Après validation, un fabricant dédié prend en charge votre commande.</div>
+                </div>
+            </div>
+            
+            <div class="form-container">
+                <form id="quote-form" name="devis" method="POST" data-netlify="true" action="index.html">
+                    <div class="form-group">
+                        <h2 class="form-title">Faire votre devis</h2>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input name="name" type="text" id="name" placeholder="Veuillez rentrer votre nom..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Adresse e-mail</label>
+                        <input name="email" type="email" id="email" placeholder="Veuillez rentrer votre Adresse e-mail..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input name="tel" type="tel" id="phone" placeholder="+33 6..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" placeholder="Écrivez votre demande n'oubliez pas :
+                        - Format
+                        - Quantité souhaitée
+                        - Type d'impressions(Recto ou Recto/Verso)" required></textarea>
+                    </div>
+                    
+                    <button type="submit">Confirmez la demande</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="/asset/img/Fichier-3.webp" alt="Logo" class="footer-logo">
+                <p>6 rue Jean Dupuy<br>BP 900032<br>Tél : 03 22 78 01 25<br>Mail : contact@ipp-imprimerie.fr</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Informations</h4>
+                <ul class="footer-links">
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2025 ipp-imprimerie.fr - Tous droits réservés
+        </div>
+    </footer>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const produits = [
+        { key: "cartesDeVisite", title: "Cartes de visite", columns: ["recto", "rectoVerso"] },
+        { key: "flyersA6", title: "Flyers A6", columns: ["recto", "rectoVerso"] },
+        { key: "affichettesA4", title: "Affichettes A4", columns: ["recto", "rectoVerso", "a3"] },
+        { key: "affichettesA5", title: "Affichettes A5", columns: ["recto", "rectoVerso"] }
+    ];
+
+    produits.forEach(({ key, title, columns }) => {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (!data) return;
+
+        // Cherche la section correspondant au titre
+        const section = Array.from(document.querySelectorAll(".product-section"))
+        .find(div => div.querySelector("h2")?.textContent.includes(title));
+        if (!section) return;
+
+        const rows = section.querySelectorAll("tbody tr");
+        data.forEach((entry, i) => {
+        const cells = rows[i]?.querySelectorAll("td");
+        if (!cells) return;
+
+        if (columns.includes("recto") && entry.recto)        cells[1].textContent = entry.recto;
+        if (columns.includes("rectoVerso") && entry.rectoVerso) cells[2].textContent = entry.rectoVerso;
+        if (columns.includes("a3") && entry.a3)              cells[3].textContent = entry.a3;
+        });
+    });
+    });
+    </script>
+</body>
+
+</html>

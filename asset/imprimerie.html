@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root{
+            --color-primary: #1a7d1c;
+            --color-secondary: #e4fce5;
+            --color-light: #F7F9FC;
+            --color-dark: #2E2E2E;
+            --shadow: 0px 0px 13.5px 0px rgba(0, 0, 0, 0.25);
+            --title: 22px;
+            --subtitle: 17px;
+            --texte: 14px;
+        }
+        /*  ********************************************Debut Header style *********************************************/
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--color-light);
+            padding-top: 150px;
+        }
+        
+        .header-container {
+            width: 100%;
+            background-color: var(--color-light);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .main-header {
+            background-color: white;
+            padding: 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 2px 5px 0px rgba(46, 46, 46, 0.25);;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .ipp {
+            color: #000;
+        }
+        
+        .and {
+            color: #555;
+            margin: 0 5px;
+        }
+        
+        .ippcom {
+            color: #000;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-item {
+            padding: 0px 30px;
+            color: #333;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+        
+        .contact-btn {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 15px 15px;
+            border-radius: 66px;
+            text-decoration: none;
+            font-size: var(--subtitle);
+        }
+
+        .logo-img{
+            width: 100%;
+            height: 90px;
+        }
+        .secondary-banner {
+            background-color: var(--color-secondary);
+            text-align: center;
+            padding: 3px 3px;
+            font-size: 16px;
+            font-style: italic;
+            color: var(--color-dark);
+            border-radius: 5px;
+        }
+        .secondary-banner p{
+            margin: 0;
+        }
+        .header-nav{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .header-logo{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            body{
+                padding-top: 0px;
+            }
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 16px;
+            }
+
+            .contact-btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .secondary-banner {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .header-nav,
+            .header-logo {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .header-container {
+                position: static;
+            }
+        }
+        /* ********************************************fin header style******************************************** */
+        /* ********************************************debut frise******************************************** */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--color-dark);
+            font-size: 36px;
+            font-weight: 600;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--color-primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 20px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 70px;
+            position: relative;
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            box-shadow: 0 15px 35px rgba(74, 144, 226, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 50%;
+            transform: translateX(-105%); /* décale vers la gauche au lieu de mettre left: 0 */
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 50%;
+            transform: translateX(5%);
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-title {
+            margin-bottom: 15px;
+            font-size: 22px;
+            color: var(--color-primary);
+        }
+        
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            z-index: 2;
+            border: 4px solid white;
+        }
+
+        .double-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 200px;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px;
+        }
+
+        .timeline-container,
+        .eco-container {
+            flex: 1;
+            min-width: 450px;
+            max-width: 600px;
+        }
+        .eco-container{
+            background-color: var(--color-secondary);
+            padding: 15px;
+            border-radius: 7px;
+            border: 1px solid var(--color-primary);
+            margin: 0;
+        }
+
+        .title-imprim {
+            justify-content: center;
+            display: flex;
+            text-align: center;
+            margin-bottom: 30px;
+        }   
+        @media (max-width: 768px) {
+            .timeline-item:nth-child(even) .timeline-content{
+                left: 10%;
+                margin: 0;
+            }
+            .timeline-item:nth-child(odd) .timeline-content{
+                left: 100%;
+            }
+            .timeline-item{
+                margin: 0;
+            }
+            .double-section {
+                flex-direction: column;
+                gap: 40px; /* Moins d’espace en version mobile */
+                padding: 20px;
+            }
+
+            .timeline-container,
+            .eco-container {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .timeline::before {
+                left: 20px; /* Ligne plus proche du bord */
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px); /* adaptatif */
+                margin-left: 50px; /* espace entre ligne et contenu */
+                padding: 20px;
+            }
+
+            .timeline-title {
+                font-size: 18px;
+            }
+
+            .timeline-date {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+        }
+
+
+        /* ********************************************fin frise******************************************** */
+
+        /* ********************************************debut savoir faire *********************************************/
+        .contact-btn1 {
+            background-color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: var(--subtitle);
+            margin: 0 auto; /* Centrage horizontal */
+            width: fit-content; /* S’adapte au contenu */
+        }
+
+        .Do{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .container-card {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background-color: var(--color-light);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--color-dark);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .card p {
+            color: var(--color-dark);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        h2{
+            font-size: 36px;
+        }
+        @media (max-width: 768px) {
+    .container-card {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+        padding: 1rem;
+        gap: 1.5rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .card h3 {
+        font-size: 1rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    h2 {
+        font-size: 28px; /* Réduction du titre principal */
+        text-align: center;
+    }
+
+    .contact-btn1 {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+
+        /* ********************************************fin savoir faire *********************************************/
+        /* ********************************************debut service *********************************************/
+        
+        .SERV{
+            padding-left: 2rem;
+        }
+        .soustitre{
+            border-left: 3px solid var(--color-primary);
+            padding-left: 10px;
+            font-size: var(--subtitle);
+            font-weight: 700;
+        }
+        .card-item {
+            background: var(--color-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            /* box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.127); */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0;
+            /* border: var(--color-primary) 1px solid; */
+        }
+
+        /* .card-item:hover {
+            transform: translateY(-1px);
+        } */
+
+        .container-card1 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 4fr));
+            gap: 20px;
+            padding: 0 4rem 0 4rem;
+            background-color: var(--color-light);
+        }
+        .service{
+            padding-top: 8rem;
+            margin: 0;
+        }
+        .p{
+            margin: 2px;
+        }
+        .service-main{
+            padding-bottom: 60px;
+        }
+        /* ********************************************fin service *********************************************/
+
+        /* debut label */
+        .title-imprim{
+            justify-content: center;
+            display: flex;
+        }
+
+        .intro {
+        max-width: 900px;
+        margin: 20px auto;
+        text-align: center;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1000px;
+            margin: 40px auto;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .eco-approach {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .eco-approach h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .eco-approach .eco-line {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .eco-approach .eco-line::before {
+            content: "✅";
+            color: var(--color-primary);
+            margin-right: 10px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .logo-imprim {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo-imprim img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .footer {
+            max-width: 900px;
+            margin: 30px auto 0;
+            font-style: italic;
+            border-left: 4px solid var(--color-primary);
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: #F7F7F7;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        /* fin label */
+        /* ********************************************debut footer******************************************** */
+        footer {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 50px 0 30px;
+            box-shadow: 0 -5px 15px rgba(74, 144, 226, 0.2);
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+        }
+        
+        .footer-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-section h4 {
+            position: relative;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding-left: 5px;
+            position: relative;
+        }
+        
+        .footer-links a::before {
+            content: '›';
+            position: absolute;
+            left: -8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            padding-left: 12px;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .social-icons img {
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 20px;
+            border-top: 1px solid #ffffff98;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+            }
+            
+            .footer-section {
+                margin-bottom: 40px;
+                padding: 0;
+            }
+            
+            .footer-section:last-child {
+                margin-bottom: 10px;
+            }
+        }
+        /* ********************************************fin footer *********************************************/
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="main-header">
+                <div class="header-logo">
+                    <div class="logo">
+                        <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
+                    </div>
+                    <div class="secondary-banner">
+                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
+                    </div>
+                </div>
+                <div class="header-nav">
+                    <div class="nav-links">
+                        <a href="index.html" class="nav-item">Accueil</a>
+                        <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
+                        <a href="tarifs.html" class="nav-item">Tarifs</a>
+                        <a href="contact.html" class="contact-btn">Contactez-nous</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="double-section">
+            <!-- Partie gauche : Frise chronologique -->
+            <div class="timeline-container">
+                <h1 class="title">Histoire de l'Entreprise</h1>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">1990</div>
+                            <h2 class="timeline-title">La naissance</h2>
+                            <p>C'est en 1990 que l'aventure commence avec la création de l'Imprimerie du Plateau Picard (IPP) par M. Claude Lerebourg...</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Héritage</div>
+                            <h2 class="timeline-title">Un savoir faire centenaire</h2>
+                            <p>En s'établissant dans les anciens locaux de la renommée Imprimerie Carpentier...</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2012</div>
+                            <h2 class="timeline-title">L'expansion et la diversification</h2>
+                            <p>La fille de Claude, Mélanie, rejoint l'équipe en 2012...</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Aujourd'hui</div>
+                            <h2 class="timeline-title">Une offre complète</h2>
+                            <p>IPP COM propose désormais des services complémentaires...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Partie droite : Engagement écologique -->
+            <div class="eco-container">
+                <h2 class="title-imprim">Notre Engagement Écologique : Certifiés Imprim'Vert</h2>
+                <div class="intro">
+                    <p>Nous sommes fiers d'être certifiés <strong>Imprim'Vert</strong>...</p>
+                </div>
+                <div class="content">
+                    <div class="eco-approach">
+                        <h2>Notre démarche écoresponsable au quotidien</h2>
+                        <p>Avec le label Imprim'Vert, nous nous engageons à :</p>
+                        <div class="eco-line">Éliminer correctement nos déchets dangereux...</div>
+                        <div class="eco-line">Sécuriser le stockage des produits et liquides...</div>
+                        <div class="eco-line">Utiliser des encres et consommables à faible impact...</div>
+                        <div class="eco-line">Optimiser notre consommation d’énergie et d’eau...</div>
+                        <div class="eco-line">Former régulièrement nos équipes...</div>
+                    </div>
+                    <div class="logo-imprim">
+                        <img src="img/imprim.png" alt="Logo Imprim'Vert">
+                    </div>
+                </div>
+                <div class="footer">
+                    En choisissant nos services d’impression, vous participez activement...
+                </div>
+            </div>
+        </div>
+        
+        <div class="Do">
+            <h2 class="service">Notre savoir faire</h2>
+            <p class="p">Impression de qualité, à taille humaine. Imprimeurs passionnés, nous vous proposons un service sur mesure, de la création graphique à l’impression finale.</p>
+            <p class="p"><strong>Notre force</strong> : proximité, disponibilité et expertise à chaque étape de votre projet.</p>
+        </div>
+        <div class="container-card">
+            <div class="card">
+                <h3>Qualité</h3>
+                <p>Des impressions haute définition accompagnées de conseils personnalisés pour un rendu optimal.</p>
+            </div>
+            <div class="card">
+                <h3>Rapidité & flexibilité</h3>
+                <p>Impression express possible sur simple demande, avec des délais tenus grâce à notre organisation réactive.</p>
+            </div>
+            <div class="card">
+                <h3>Engagement local</h3>
+                <p>Une imprimerie de proximité à l’écoute des entreprises comme des particuliers.</p>
+            </div>
+            <div class="card">
+                <h3>Studio graphique intégré</h3>
+                <p>Conception et mise en page pour une communication visuelle percutante et cohérente.</p>
+            </div>
+            <div class="card">
+                <h3>Services complets</h3>
+                <p>Impression offset/numérique, façonnage, routage, mise sous pli : un accompagnement de A à Z.</p>
+            </div>
+            <div class="card">
+                <h3>Accompagnement humain</h3>
+                <p>Une équipe disponible tout au long de votre projet, de la demande de devis à la livraison.</p>
+            </div>
+        </div>
+        <a href="tarifs.html#devis" class="contact-btn1">Contactez-nous pour un projet !</a>
+        <div id="Do" class="Do">
+            <h2 class="service">Nos services</h2>
+        </div>
+        <div class="service-main">
+            <div class="SERV">
+                <p class="soustitre">Creation graphique & mise en page</p>
+                <p>Création graphique ou simple mise-en-page ? De la recherche du visuel (image, photo, illustration…) à la mise en page, notre graphiste en interne se charge de la réalisation de vos outils de communication. Parlons-en ensemble, nous sommes là pour vous !</p>
+            </div>
+            <div class="container-card1">
+                <p class="card-item">Identité Visuelle</p>
+                <p class="card-item">Logo</p>
+                <p class="card-item">Emailing</p>
+                <p class="card-item">Cartes de visites</p>
+                <p class="card-item">Flyers</p>
+                <p class="card-item">Plaquettes</p>
+                <p class="card-item">Invitations</p>
+                <p class="card-item">Catalogue</p>
+                <p class="card-item">Rapport d’activité</p>
+                <p class="card-item">Trombinoscope</p>
+            </div>
+            <div class="SERV">
+                <p class="soustitre">Impression</p>
+                <p>Équipés d’une presse numérique et de deux presses offset, nous pouvons prendre en charge tout type d’impression et proposer une large gamme de finitions : découpe, vernis, pelliculage, dorure, pliage, reliure (wire O, dos carré collé, etc.).</p>
+            </div>
+            <div class="container-card1">
+                <p class="card-item">Plaquettes corporate</p>
+                <p class="card-item">Documents administratifs</p>
+                <p class="card-item">Communication interne</p>
+                <p class="card-item">Documents événementiels</p>
+                <p class="card-item">Documents commerciaux</p>
+                <p class="card-item">Signalétiques</p>
+                <p class="card-item">Documents touristiques</p>
+                <p class="card-item">Documents cafés-hôtels-restaurants</p>
+            </div>
+            <div class="SERV">
+                <p class="soustitre">Événementiel & objets publicitaires</p>
+                <p>Nous saurons vous surprendre et créer votre événement sur-mesure! Organisation – Gestion – Location de matériel : nous avons la solution. IPP & IPP Com s’appuie sur un réseau de partenaires fiables pour vous proposer une vaste gamme de goodies et de vêtements personnalisés.</p>
+            </div>
+            <div class="container-card1">
+                <p class="card-item">Textiles</p>
+                <p class="card-item">Cadeaux publicitaires</p>
+                <p class="card-item">Stylos</p>
+                <p class="card-item">Porte-clés</p>
+                <p class="card-item">Post-it</p>
+                <p class="card-item">Carnets personnalisés</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <img src="/asset/img/Fichier-3.webp" alt="Logo" class="footer-logo">
+                <p>6 rue Jean Dupuy<br>BP 900032<br>Tél : 03 22 78 01 25<br>Mail : contact@ipp-imprimerie.fr</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Informations</h4>
+                <ul class="footer-links">
+                    <li><a href="legal.html">Mentions Légales</a></li>
+                    <li><a href="politique.html">Politique de confidentialité</a></li>
+                    <li><a href="cookies.html">Utilisation des cookies</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Suivez-nous</h4>
+                <p>Restez informés de nos actualités et nouveautés en nous suivant sur les réseaux sociaux.</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IppMontdidier"><img src="/asset/img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/imprimerieplateaupicard/"><img src="/asset/img/insat.png" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            © 2025 ipp-imprimerie.fr - Tous droits réservés
+        </div>
+    </footer>
+</body>
+</html>
