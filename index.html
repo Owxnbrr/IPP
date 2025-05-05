@@ -343,7 +343,7 @@
             flex: 0 0 250px;
             background-color: white;
             border-radius: 12px;
-            padding: 20px;
+            padding: 10px;
             box-shadow: var(--shadow);
             scroll-snap-align: start;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -375,11 +375,8 @@
         }   
         .services-slider {
             display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding: 20px;
-            scroll-snap-type: x mandatory;
-            justify-content: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
         }
         .services-slider::-webkit-scrollbar {
             display: none;
