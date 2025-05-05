@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    }
+
+    #login, #adminPanel {
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #ccc;
+    padding-right: 40px;
+    }
+
+    input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    }
+
+    button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    th {
+      background-color: #f5f5f5;
+    }
+    h2 {
+      margin-top: 3rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="login">
+    <h2>Connexion admin</h2>
+    <input type="password" id="password" placeholder="Mot de passe">
+    <button onclick="checkPassword()">Se connecter</button>
+    <p id="error"></p>
+  </div>
+
+  <div id="adminPanel" style="display:none;">
+    <h3>Changer les images du carrousel :</h3>
+
+    <label>Image 1 :</label>
+    <input type="file" onchange="updateImage('IMG_carrousel_1', this.files[0])"><br><br>
+    
+    <label>Image 2 :</label>
+    <input type="file" onchange="updateImage('IMG_carrousel_2', this.files[0])"><br><br>
+    
+    <label>Image 3 :</label>
+    <input type="file" onchange="updateImage('IMG_carrousel_3', this.files[0])"><br><br>
+    
+    <button onclick="alert('Images enregistrées !')">Sauvegarder</button>
+
+    <button onclick="resetImages()">Réinitialiser les images</button>
+
+    <h2>Créer une nouvelle carte pour les réalisations</h2>
+    <form id="cardForm">
+      <input type="text" id="cardTitle" placeholder="Titre" required><br>
+      <input id="cardDescription" placeholder="Description" required></input><br>
+      <input type="file" id="cardImage" accept="image/*" required><br>
+      <input type="text" id="cardPoints" placeholder="Point1, Point2, Point3" required><br>
+      <button type="submit">Ajouter la card</button>
+    </form>
+    
+    <h2>Cards existantes</h2>
+    <div id="cardList"></div>
+    <h1>Admin - Modification des prix</h1>
+
+  <!-- Cartes de visite -->
+  <h1>Administration des tarifs</h1>
+
+  <!-- Cartes de visite -->
+  <h2>Cartes de visite 85×55mm</h2>
+  <table data-key="cartesDeVisite">
+    <thead>
+      <tr><th>Quantité</th><th>Recto</th><th>Recto/Verso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>50 ex</td><td><input value="20€ HT" type="text"></td><td><input value="25€ HT"  type="text"></td></tr>
+      <tr><td>100 ex</td><td><input value="24€ HT"  type="text"></td><td><input value="30€ HT"  type="text"></td></tr>
+      <tr><td>250 ex</td><td><input value="30€ HT"  type="text"></td><td><input value="40€ HT"  type="text"></td></tr>
+      <tr><td>500 ex</td><td><input value="40€ HT"  type="text"></td><td><input value="48€ HT"  type="text"></td></tr>
+      <tr><td>1000 ex</td><td><input value="54€ HT"  type="text"></td><td><input value="66€ HT"  type="text"></td></tr>
+      <tr><td>2500 ex</td><td><input value="95€ HT"  type="text"></td><td><input value="114€ HT"  type="text"></td></tr>
+    </tbody>
+  </table>
+  <button onclick="save('cartesDeVisite')">Enregistrer</button>
+
+  <!-- Flyers A6 -->
+  <h2>Flyers A6 Format 105×148.5mm</h2>
+  <table data-key="flyersA6">
+    <thead>
+      <tr><th>Quantité</th><th>Recto</th><th>Recto/Verso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>50 ex</td><td><input value="16€ HT" type="text"></td><td><input value="20€ HT" type="text"></td></tr>
+      <tr><td>100 ex</td><td><input value="18€ HT" type="text"></td><td><input value="24€ HT" type="text"></td></tr>
+      <tr><td>250 ex</td><td><input value="24€ HT" type="text"></td><td><input value="36€ HT" type="text"></td></tr>
+      <tr><td>500 ex</td><td><input value="30€ HT" type="text"></td><td><input value="48€ HT" type="text"></td></tr>
+      <tr><td>1000 ex</td><td><input value="48€ HT" type="text"></td><td><input value="72€ HT" type="text"></td></tr>
+      <tr><td>2500 ex</td><td><input value="84€ HT" type="text"></td><td><input value="144€ HT" type="text"></td></tr>
+    </tbody>
+  </table>
+  <button onclick="save('flyersA6')">Enregistrer</button>
+
+  <!-- Affichettes A4 & A3 -->
+  <h2>Affichettes A4 & A3</h2>
+  <table data-key="affichettesA4">
+    <thead>
+      <tr><th>Quantité</th><th>Recto</th><th>Recto/Verso</th><th>A3 Recto</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>50 ex</td><td><input value="18€ HT" type="text"></td><td><input value="24€ HT" type="text"></td><td><input value="24€ HT" type="text"></td></tr>
+      <tr><td>100 ex</td><td><input value="24€ HT" type="text"></td><td><input value="36€ HT" type="text"></td><td><input value="36€ HT" type="text"></td></tr>
+      <tr><td>250 ex</td><td><input value="42€ HT" type="text"></td><td><input value="60€ HT" type="text"></td><td><input value="78€ HT" type="text"></td></tr>
+      <tr><td>500 ex</td><td><input value="66€ HT" type="text"></td><td><input value="108€ HT" type="text"></td><td><input value="150€ HT" type="text"></td></tr>
+      <tr><td>1000 ex</td><td><input value="120€ HT" type="text"></td><td><input value="204€ HT" type="text"></td><td><input value="288€ HT" type="text"></td></tr>
+      <tr><td>2500 ex</td><td><input value="288€ HT" type="text"></td><td><input value="372€ HT" type="text"></td><td><input value="-€ HT" type="text"></td></tr>
+    </tbody>
+  </table>
+  <button onclick="save('affichettesA4')">Enregistrer</button>
+
+  <!-- Affichettes A5 -->
+  <h2>Affichettes A5 148x210 mm</h2>
+  <table data-key="affichettesA5">
+    <thead>
+      <tr><th>Quantité</th><th>Recto</th><th>Recto/Verso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>100 ex</td><td><input value="18€ HT" type="text"></td><td><input value="24€ HT" type="text"></td></tr>
+      <tr><td>250 ex</td><td><input value="30€ HT" type="text"></td><td><input value="42€ HT" type="text"></td></tr>
+      <tr><td>500 ex</td><td><input value="42€ HT" type="text"></td><td><input value="66€ HT" type="text"></td></tr>
+      <tr><td>1000 ex</td><td><input value="66€ HT" type="text"></td><td><input value="114€ HT" type="text"></td></tr>
+      <tr><td>2500 ex</td><td><input value="156€ HT" type="text"></td><td><input value="264€ HT" type="text"></td></tr>
+    </tbody>
+  </table>
+  <button onclick="save('affichettesA5')">Enregistrer</button>
+
+
+  <script>
+const PASSWORD = "123";
+
+function checkPassword() {
+  const input = document.getElementById("password").value;
+  const error = document.getElementById("error");
+
+  if (input === PASSWORD) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+  } else {
+    error.textContent = "Mot de passe incorrect";
+  }
+}
+
+function updateImage(imageId, file) {
+  const reader = new FileReader();
+  reader.onload = function () {
+    localStorage.setItem(imageId, reader.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetImages() {
+  localStorage.removeItem("IMG_carrousel_1");
+  localStorage.removeItem("IMG_carrousel_2");
+  localStorage.removeItem("IMG_carrousel_3");
+  alert("Images réinitialisées ! Recharge la page du carrousel.");
+}
+
+function getCards() {
+  return JSON.parse(localStorage.getItem("cards") || "[]");
+}
+
+function saveCards(cards) {
+  localStorage.setItem("cards", JSON.stringify(cards));
+}
+
+function renderCardList() {
+  const cards = getCards();
+  const container = document.getElementById("cardList");
+  container.innerHTML = "";
+
+  cards.forEach((card, index) => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <strong>${card.title}</strong><br>
+      <img src="${card.image}" width="100"><br>
+      <button onclick="deleteCard(${index})">Supprimer</button><hr>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function deleteCard(index) {
+  const cards = getCards();
+  cards.splice(index, 1);
+  saveCards(cards);
+  renderCardList();
+}
+
+document.getElementById("cardForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const fileInput = document.getElementById("cardImage");
+  const file = fileInput.files[0];
+
+  if (!file) return alert("Veuillez choisir une image.");
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const imageBase64 = event.target.result;
+
+    const newCard = {
+      title: document.getElementById("cardTitle").value,
+      description: document.getElementById("cardDescription").value,
+      image: imageBase64,
+      points: document.getElementById("cardPoints").value.split(",").map(p => p.trim()),
+    };
+
+    const cards = getCards();
+    cards.push(newCard);
+    saveCards(cards);
+    renderCardList();
+    document.getElementById("cardForm").reset();
+  };
+  reader.readAsDataURL(file);
+});
+
+renderCardList();
+function save(key) {
+      const table = document.querySelector(`table[data-key="${key}"]`);
+      const rows = table.querySelectorAll("tbody tr");
+      const data = [];
+
+      rows.forEach(row => {
+        const inputs = row.querySelectorAll("input");
+        const rowData = {};
+        if (inputs[0]) rowData.recto = inputs[0].value;
+        if (inputs[1]) rowData.rectoVerso = inputs[1].value;
+        if (inputs[2]) rowData.a3 = inputs[2].value;
+        data.push(rowData);
+      });
+
+      localStorage.setItem(key, JSON.stringify(data));
+      alert(`Tarifs enregistrés pour ${key}`);
+    }
+  </script>
+</body>
+</html>
