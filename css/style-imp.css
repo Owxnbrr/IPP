@@ -538,6 +538,18 @@
         .service-main{
             padding-bottom: 60px;
         }
+        @media (max-width: 768px) {
+            .SERV{
+                padding: 10px;
+            }
+            .container-card1{
+                padding: 10px;
+            }
+            .p{
+                margin: 10px;
+            }
+        }
+
         /* ********************************************fin service *********************************************/
 
         /* debut label */

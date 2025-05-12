@@ -153,6 +153,7 @@
         }
         @media screen and (max-width: 768px) {
             @import url('https://fonts.googleapis.com/css2?family=Rage&display=swap');
+            
             body{
                 padding-top: 0px;
             }
