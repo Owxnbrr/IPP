@@ -281,27 +281,23 @@
             font-weight: bold;
         }
         
-        .btn {
-            display: inline-block;
-            background-color: var(--color-primary);
+        button {
+            width: 1200px;
+            height: 60px;
+            border: 3px solid var(--color-primary);
+            border-radius: 45px;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: white;
+            font-size: 1.2em;
+            font-weight: 550;
+            }
+
+            button:hover {
+            background: var(--color-primary);
             color: white;
-            padding: 15px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            display: flex;
-            justify-content: center;
-            font-size: 30px;
-            color: black;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .btn:hover {
-            background-color: var(--color-primary);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow);
-        }
+            font-size: 1.5em;
+            }
         
         .contact-grid {
         display: flex;
@@ -460,6 +456,9 @@
             border-radius: 6px;
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 16px;
+        }
+        button{
+            width: 350px;
         }
     }
 
@@ -656,7 +655,7 @@
                 </div>
             </div>
             <div>
-                <a href="tarifs.html#devis" class="btn">Obtenir un devis ici !</a>
+                <button href="tarifs.html#devis" class="btn">Obtenir un devis ici !</button>
             </div>
             <!-- Section des informations de contact -->
             <div class="contact-grid">
