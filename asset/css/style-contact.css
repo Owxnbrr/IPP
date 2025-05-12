@@ -452,6 +452,8 @@
         }
         button{
             width: 350px;
+            color: black;
+            background-color: var(--color-secondary);
         }
     }
 
