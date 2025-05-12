@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inclusive+Sans:ital@0;1&display=swap');
         :root{
             --color-primary: #d6d43a;
             --color-secondary: #faf9e0;
@@ -66,10 +67,30 @@
         }
         
         .nav-item {
-            padding: 0px 30px;
+            position: relative;
+            padding: 0px 20px;
             color: #333;
             text-decoration: none;
-            font-size: var(--subtitle);
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 100;
+            font-size: 25px;
+        }
+        .nav-item::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0%;
+            height: 2px;
+            background-color: var(--color-primary); 
+            transition: width 0.3s ease;
+        }
+        .nav-item:hover::after {
+            width: 50%;
+        }
+        .nav-item.active::after {
+            width: 50%;
         }
         
         .contact-btn {
@@ -77,8 +98,17 @@
             color: white;
             padding: 15px 15px;
             border-radius: 66px;
+            font-family: "Bebas Neue", sans-serif;
+            font-weight: 100;
             text-decoration: none;
             font-size: var(--subtitle);
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: #8e8c0b;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .logo-img{
@@ -86,17 +116,24 @@
             height: 90px;
         }
         .secondary-banner {
-            background-color: var(--color-secondary);
-            text-align: center;
+            display: flex;
             padding: 3px 3px;
-            font-size: 16px;
-            font-style: italic;
+            font-size: 35px;
             color: var(--color-dark);
             border-radius: 5px;
+            align-items: center;
         }
+        @import url('https://fonts.googleapis.com/css2?family=Rage&display=swap');
         .secondary-banner p{
             margin: 0;
+            font-family: 'Rage', sans-serif;
+            white-space: nowrap;
         }
+        .secondary-banner img.locate{
+            width: 15%;
+            height: 50px;
+        }
+
         .header-nav{
             display: flex;
             flex-direction: column;
@@ -106,6 +143,95 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: black;
+            transition: all 0.3s ease;
+        }
+        @media screen and (max-width: 768px) {
+            body{
+                padding-top: 0px;
+            }
+            .main-header {
+                display: flex;;
+                justify-content: space-around;
+                gap: 10px;
+            }
+
+            .secondary-banner img.locate{
+                width: 7%;
+                height: 10px;
+
+            }
+            .logo {
+                font-size: 20px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .burger {
+                display: flex;
+                z-index: 1001;
+                position: relative;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background-color: white;
+                position: absolute;
+                top: 60px; /* Ajuste selon la hauteur de ta nav */
+                right: 0;
+                width: 100%;
+                padding: 1rem;
+                z-index: 1000; /* Met bien devant le contenu */
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 16px;
+            }
+
+            .contact-btn {
+                width: 80%;
+                text-align: center;
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .logo-img {
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .secondary-banner {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .header-nav,
+            .header-logo {
+                align-items: flex-start;
+            }
+
+            .header-container {
+                position: static;
+            }
         }
         /* ********************************************fin header style******************************************** */
         /* style */
@@ -185,146 +311,157 @@
         flex-wrap: wrap;
         }
 
-.find-us-container,
-.info-block {
-    flex: 1;
-    min-width: 350px;
-    background-color: var(--color-secondary);
-    border: 3px solid var(--color-primary);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.header-banner {
-    background-color: var(--color-primary);
-    color: white;
-    padding: 10px 20px;
-    font-weight: bold;
-    width: fit-content;
-}
-
-.content {
-    padding: 30px;
-    text-align: center;
-}
-
-.icon-circle {
-    width: 70px;
-    height: 70px;
-    background-color: #333;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 20px;
-    border: 2px solid var(--color-primary);
-}
-
-.icon-circle i {
-    color: var(--color-primary);
-    font-size: 36px;
-}
-
-.address {
-    margin: 10px 0;
-}
-
-.phone {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-}
-
-.schedule {
-    margin: 10px 0;
-}
-
-.graph {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    height: 80px;
-    margin: 15px 0;
-    gap: 8px;
-}
-
-.bar {
-    width: 15px;
-    background-color: var(--color-primary);
-    margin: 0 2px;
-    border-radius: 2px 2px 0 0;
-}
-
-.bar-1 { height: 30%; }
-.bar-2 { height: 40%; }
-.bar-3 { height: 60%; }
-.bar-4 { height: 80%; }
-.bar-5 { height: 70%; }
-.bar-6 { height: 40%; }
-.bar-7 { height: 50%; }
-.bar-8 { height: 60%; }
-.bar-9 { height: 70%; }
-.bar-10 { height: 60%; }
-
-.time-labels {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 5px;
-    font-size: 12px;
-    color: #777;
-    gap: 5px;
-}
-
-.map-container {
-    height: 300px;
-    flex-grow: 1;
-    display: flex;
-}
-
-.map-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-.info-block {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
-}
-
-.info-block h2 {
-    font-size: 22px;
-    margin: 15px 0;
-    color: #333;
-}
-
-@media (max-width: 768px) {
-    .contact-header {
+    .find-us-container,
+    .info-block {
+        flex: 1;
+        min-width: 350px;
+        background-color: var(--color-secondary);
+        border: 3px solid var(--color-primary);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
         flex-direction: column;
+        justify-content: space-between;
     }
 
-    .contact-info,
-    .contact-image {
+    .header-banner {
+        background-color: var(--color-primary);
+        color: white;
+        padding: 10px 20px;
+        font-weight: bold;
+        width: fit-content;
+    }
+
+    .content {
+        padding: 30px;
+        text-align: center;
+    }
+
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        background-color: #333;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 20px;
+        border: 2px solid var(--color-primary);
+    }
+
+    .icon-circle i {
+        color: var(--color-primary);
+        font-size: 36px;
+    }
+
+    .address {
+        margin: 10px 0;
+    }
+
+    .phone {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 10px 0;
+    }
+
+    .schedule {
+        margin: 10px 0;
+    }
+
+    .graph {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        height: 80px;
+        margin: 15px 0;
+        gap: 8px;
+    }
+
+    .bar {
+        width: 15px;
+        background-color: var(--color-primary);
+        margin: 0 2px;
+        border-radius: 2px 2px 0 0;
+    }
+
+    .bar-1 { height: 30%; }
+    .bar-2 { height: 40%; }
+    .bar-3 { height: 60%; }
+    .bar-4 { height: 80%; }
+    .bar-5 { height: 70%; }
+    .bar-6 { height: 40%; }
+    .bar-7 { height: 50%; }
+    .bar-8 { height: 60%; }
+    .bar-9 { height: 70%; }
+    .bar-10 { height: 60%; }
+
+    .time-labels {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 5px;
+        font-size: 12px;
+        color: #777;
+        gap: 5px;
+    }
+
+    .map-container {
+        height: 300px;
+        flex-grow: 1;
+        display: flex;
+    }
+
+    .map-container iframe {
         width: 100%;
+        height: 100%;
+        border: none;
     }
 
-    .contact-image {
-        margin-top: 20px;
-    }
-
-    .contact-grid {
+    .info-block {
+        text-align: center;
+        display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
     }
-}
+
+    .info-block h2 {
+        font-size: 22px;
+        margin: 15px 0;
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
+        .contact-header {
+            flex-direction: column;
+        }
+
+        .contact-info,
+        .contact-image {
+            width: 100%;
+        }
+
+        .contact-image {
+            margin-top: 20px;
+        }
+
+        .contact-grid {
+            flex-direction: column;
+        }
+
+        .find-us-container,
+        .info-block{
+            width: 100%;
+            min-width: auto; /* évite de forcer une largeur minimum trop grande */
+            box-sizing: border-box; /* pour que padding/border ne dépassent pas */
+            border-width: 2px;
+            border-radius: 6px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+        }
+    }
 
         /* ********************************************debut footer******************************************** */
     footer {
@@ -481,12 +618,18 @@
                     <div class="logo">
                         <img class="logo-img" src="/asset/img/slogan logo.png" alt="Logo">
                     </div>
-                    <div class="secondary-banner">
-                        <p>L'une des dernières imprimeries traditionnelles en Picardie</p>
-                    </div>
+                </div>
+                <div class="secondary-banner">
+                    <img class="locate" src="/asset/img/locate fr.png" alt="">
+                    <p>Votre imprimeur en Picardie</p>
                 </div>
                 <div class="header-nav">
-                    <div class="nav-links">
+                    <div class="burger" id="burger">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="nav-links" id="navLinks">
                         <a href="index.html" class="nav-item">Accueil</a>
                         <a href="imprimerie.html" class="nav-item">L'imprimerie</a>
                         <a href="tarifs.html" class="nav-item">Tarifs</a>
@@ -606,5 +749,13 @@
             © 2025 ipp-imprimerie.fr - Tous droits réservés
         </div>
     </footer>
+    <script>
+        const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+
+    burger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    });
+    </script>
 </body>
 </html>
