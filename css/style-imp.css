@@ -4,6 +4,7 @@
             --color-primary: #1a7d1c;
             --color-secondary: #e4fce5;
             --color-light: #F7F9FC;
+            --color-hover:#146915;
             --color-dark: #2E2E2E;
             --shadow: 0px 0px 13.5px 0px rgba(0, 0, 0, 0.25);
             --title: 22px;
@@ -59,7 +60,6 @@
             display: flex;
             align-items: center;
         }
-        
         .nav-item {
             position: relative;
             padding: 0px 20px;
@@ -92,15 +92,15 @@
             color: white;
             padding: 15px 15px;
             border-radius: 66px;
+            text-decoration: none;
             font-family: "Bebas Neue", sans-serif;
             font-weight: 100;
-            text-decoration: none;
             font-size: var(--subtitle);
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .contact-btn:hover {
-            background-color: #0a610b;
+            background-color: var(--color-hover);
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
@@ -117,7 +117,6 @@
             border-radius: 5px;
             align-items: center;
         }
-        
         .secondary-banner p{
             margin: 0;
             font-family: 'Rage Italic', sans-serif;
@@ -153,7 +152,49 @@
             background-color: black;
             transition: all 0.3s ease;
         }
+        @media screen and (max-width: 1024px) {
+            .main-header {
+                align-items: flex-start;
+                padding: 15px 20px;
+                align-items: center;
+            }
+
+            .header-logo {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .burger {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                display: none;
+                padding-top: 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-item {
+                padding: 10px 0;
+                font-size: 22px;
+            }
+
+            .contact-btn {
+                align-self: flex-start;
+                margin-top: 10px;
+                font-size: var(--texte);
+                padding: 12px 20px;
+            }
+        }
+
         @media screen and (max-width: 768px) {
+            
             body{
                 padding-top: 0px;
             }
@@ -227,6 +268,7 @@
                 position: static;
             }
         }
+
         /* ********************************************fin header style******************************************** */
         /* ********************************************debut frise******************************************** */
         .container {
