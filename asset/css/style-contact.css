@@ -651,3 +651,20 @@
             }
         }
         /* ********************************************fin footer *********************************************/
+    @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-header, button,
+        .contact-grid{
+            margin-bottom: 30px;
+            opacity: 0; /* Initial state */
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
