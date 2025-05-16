@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inclusive+Sans:ital@0;1&display=swap');
+@import url('https://fonts.cdnfonts.com/css/rage-italic');
         :root{
             --color-primary: #da2d92;
             --color-secondary: #fde5f3;
@@ -116,10 +117,9 @@
             border-radius: 5px;
             align-items: center;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Rage&display=swap');
         .secondary-banner p{
             margin: 0;
-            font-family: 'Rage', sans-serif;
+            font-family: 'Rage Italic', sans-serif;
             white-space: nowrap;
         }
         .secondary-banner img.locate{
