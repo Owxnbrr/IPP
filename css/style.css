@@ -774,6 +774,7 @@
             opacity: 1;
             transform: translateX(0) rotateY(0) rotateZ(0);
             z-index: 2;
+            background-color: white;
         }
 
         .review-card.prev {
