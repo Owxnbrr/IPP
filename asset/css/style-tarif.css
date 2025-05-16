@@ -261,11 +261,12 @@
         }
         
         th {
-            background-color: var(--color-secondary);
+            background-color: var(--color-primary);
             text-align: left;
             padding: 10px;
             font-weight: bold;
             border: 1px solid #ddd;
+            color: white;
             font-size: 14px;
         }
         
