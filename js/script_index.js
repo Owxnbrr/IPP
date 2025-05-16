@@ -185,3 +185,4 @@
         currentIndex = (currentIndex + 1) % document.querySelectorAll('.review-card').length;
         updateCarousel(currentIndex);
     });
+ 
