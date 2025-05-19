@@ -588,7 +588,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            width: 400px;
+            width: 350px;
         }
 
         .service-card1:hover {
