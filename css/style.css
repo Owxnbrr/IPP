@@ -573,11 +573,12 @@
         /* debut presta */
         .services-section1 {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            grid-template-columns: repeat(5, 1fr);
             gap: 30px;
             padding: 40px 20px;
             background-color: #F7F9FC;
         }
+        
         .service-card1 {
             background-color: white;
             border-radius: 10px;
@@ -594,14 +595,117 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
+        .service-image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
         .service-image1 {
             width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-bottom: 1px solid #E0E0E0;
-            height:200px ;
+            display: none;
         }
+
+        .service-image1.active {
+            display: block;
+        }
+
+        .image-nav {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .image-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-dot.active {
+            background-color: white;
+        }
+
+        .image-arrows {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 4;
+        }
+
+        .image-arrow {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .service-content1 {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-title1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .service-description1 {
+            color: #666;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .service-footer1 {
+            margin-top: 20px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #0056b3;
+        }
+
         #lightbox {
-            position: fixed; /* reste fixé à l'écran */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
@@ -610,92 +714,76 @@
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 999999; /* Très au-dessus de tout */
-            }
+            z-index: 999999;
+        }
 
-            #lightbox-img {
-            max-width: 90%;
-            max-height: 90%;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            pointer-events: none; /* important pour éviter de bloquer le clic */
-            }
-
-            body.noscroll {
-            overflow: hidden;
-            }
-
-
-
-
-        .service-content1 {
-            padding: 20px;
+        .lightbox-content {
+            position: relative;
+            width: 90%;
+            height: 90%;
             display: flex;
             flex-direction: column;
-            flex: 1;
+            align-items: center;
         }
 
-        .service-title1 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
+        #lightbox-img {
+            max-width: 100%;
+            max-height: 85%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        .section-title1{
+        .lightbox-nav {
+            position: absolute;
+            bottom: 20px;
             display: flex;
-            justify-content: center;
-            font-size: 36px;
-            color: var(--color-dark);
-            margin-bottom: 40px;
-            font-weight: 600;
-        }
-        .service-description1 {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
-
-            max-height: 100px;
-            overflow: hidden;
-            word-break: break-word;
+            gap: 10px;
         }
 
-        .service-benefits1 {
-            list-style-type: none;
-            padding: 0;
-            margin-bottom: 20px;
+        .lightbox-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
         }
 
-        .service-benefits1 li {
-            font-size: 14px;
-            color: #4A90E2;
-            margin-bottom: 10px;
+        .lightbox-dot.active {
+            background-color: white;
         }
 
-        .service-footer1 {
+        .lightbox-arrows {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
             display: flex;
             justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .lightbox-arrow {
+            background-color: rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            margin-top: auto;
-        }
-
-        .service-price1 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .cta-btn {
-            background-color: #4285f4;
+            cursor: pointer;
+            font-size: 24px;
             color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
         }
 
-        .cta-btn:hover {
-            background-color: #357ae8;
+        .lightbox-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        body.noscroll {
+            overflow: hidden;
         }
                 /* fin presta */
 

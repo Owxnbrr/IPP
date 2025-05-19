@@ -198,21 +198,123 @@
                 </a>
         </section>
         <h2 class="section-title1">Nos Réalisations</h2>
-        
-        <section id="customInsertZone" class="services-section1">
-            <div class="service-card1">
-                <img src="./img/carde de visite 8_page-0001.jpg" alt="carte de visite" class="service-image1" onclick="openLightbox(this)">
+        <section id="customInsertZone" >
+            <div class="services-section1">
+            <div class="service-card1" data-id="service1">
+                <div class="service-image-container">
+                    <img src="./img/image1.jpeg" alt="carte de visite 1" class="service-image1 active" data-index="0">
+                    <img src="./img/guess.jpg" alt="carte de visite 2" class="service-image1" data-index="1">
+                    
+                    <div class="image-arrows">
+                        <div class="image-arrow prev" onclick="prevImage(this)">&lt;</div>
+                        <div class="image-arrow next" onclick="nextImage(this)">&gt;</div>
+                    </div>
+                    
+                    <div class="image-nav">
+                        <div class="image-dot active" onclick="showImage(this.parentNode.parentNode, 0)"></div>
+                        <div class="image-dot" onclick="showImage(this.parentNode.parentNode, 1)"></div>
+                    </div>
+                </div>
+                
                 <div class="service-content1">
-                    <h3 class="service-title1">Carte de visite AC2M Métallerie & Serrurerie</h3>
-                    <p class="service-description1">Découvrez la carte de visite de l’entreprise AC2M, spécialisée en métallerie et serrurerie à Moreuil (80).</p>
-                    <ul class="service-benefits1"></ul>
+                    <h3 class="service-title1">Pose d'adhésif micro-perforé pour vitrine commerciale</h3>
+                    <p class="service-description1">Pose d'adhésif micro-perforé sur la vitrine Krys, assurant visibilité extérieure, transparence intérieure, intimité et lumière naturelle optimisée.</p>
                     <div class="service-footer1">
-                    <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
+                        <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
                     </div>
                 </div>
             </div>
+            
+                
+                <!-- Deuxième carte avec d'autres images -->
+            <div class="service-card1" data-id="service2">
+                <div class="service-image-container">
+                    <img src="./img/mcdo.jpg" alt="autre service 1" class="service-image1 active" data-index="0">
+                    <img src="./img/mcdo1.jpeg" alt="autre service 2" class="service-image1" data-index="1">
+                    <img src="./img/macdo2.jpeg" alt="autre service 3" class="service-image1" data-index="2">
+                    <img src="./img/mcdo3.jpeg" alt="autre service 4" class="service-image1" data-index="3">
+                        
+                    <div class="image-arrows">
+                        <div class="image-arrow prev" onclick="prevImage(this)">&lt;</div>
+                            <div class="image-arrow next" onclick="nextImage(this)">&gt;</div>
+                    </div>
+                        
+                    <div class="image-nav">
+                        <div class="image-dot active" onclick="showImage(this.parentNode.parentNode, 0)"></div>
+                        <div class="image-dot" onclick="showImage(this.parentNode.parentNode, 1)"></div>
+                        <div class="image-dot" onclick="showImage(this.parentNode.parentNode, 2)"></div>
+                        <div class="image-dot" onclick="showImage(this.parentNode.parentNode, 3)"></div>
+                    </div>
+                </div>
+                    
+                <div class="service-content1">
+                    <h3 class="service-title1">Autre service</h3>
+                    <p class="service-description1">Description d'un autre service que vous proposez.</p>
+                    <div class="service-footer1">
+                        <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
+                    </div>
+                </div>
+            </div>
+            <div class="service-card1" data-id="service3">
+                <div class="service-image-container">
+                    <img src="./img/pole1.jpg" alt="autre service 1" class="service-image1 active" data-index="0">
+                    <img src="./img/pole2.jpg" alt="autre service 2" class="service-image1" data-index="1">
+                    <img src="./img/pole3.jpg" alt="autre service 3" class="service-image1" data-index="2">
+                        
+                    <div class="image-arrows">
+                        <div class="image-arrow prev" onclick="prevImage(this)">&lt;</div>
+                            <div class="image-arrow next" onclick="nextImage(this)">&gt;</div>
+                    </div>
+                        
+                    <div class="image-nav">
+                        <div class="image-dot active" onclick="showImage(this.parentNode.parentNode, 0)"></div>
+                        <div class="image-dot" onclick="showImage(this.parentNode.parentNode, 1)"></div>
+                        <div class="image-dot" onclick="showImage(this.parentNode.parentNode, 2)"></div>
+                    </div>
+                </div>
+                    
+                <div class="service-content1">
+                    <h3 class="service-title1">Autre service</h3>
+                    <p class="service-description1">Description d'un autre service que vous proposez.</p>
+                    <div class="service-footer1">
+                        <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
+                    </div>
+                </div>
+            </div>
+            <div class="service-card1" data-id="service4">
+                <div class="service-image-container">
+                    <img src="./img/patate.jpg" alt="autre service 1" class="service-image1 active" data-index="0">
+                        
+                    <div class="image-arrows">
+                        <div class="image-arrow prev" onclick="prevImage(this)">&lt;</div>
+                            <div class="image-arrow next" onclick="nextImage(this)">&gt;</div>
+                    </div>
+                        
+                    <div class="image-nav">
+                        <div class="image-dot active" onclick="showImage(this.parentNode.parentNode, 0)"></div>
+                    </div>
+                </div>
+                    
+                <div class="service-content1">
+                    <h3 class="service-title1">Autre service</h3>
+                    <p class="service-description1">Description d'un autre service que vous proposez.</p>
+                    <div class="service-footer1">
+                        <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
+                    </div>
+                </div>
+            </div>
+
             <div id="lightbox" onclick="closeLightbox(event)">
-                <img id="lightbox-img" src="" alt="Aperçu image">
+                <div class="lightbox-content">
+                    <img id="lightbox-img" src="" alt="Aperçu image">
+                    <div class="lightbox-counter">1 / 4</div>
+                    <div class="lightbox-arrows">
+                        <div class="lightbox-arrow prev" onclick="lightboxPrev(event)">&lt;</div>
+                        <div class="lightbox-arrow next" onclick="lightboxNext(event)">&gt;</div>
+                    </div>
+                    <div class="lightbox-nav">
+                    </div>
+                </div>
             </div>
         </section>
         <div class="realisations-banner">
