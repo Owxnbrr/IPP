@@ -195,7 +195,7 @@
             
             // Afficher la lightbox
             lightbox.style.display = "flex";
-            document.body.classList.add("noscroll");
+            // document.body.classList.add("noscroll");
         }
         
         // Fonction pour fermer la lightbox
