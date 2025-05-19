@@ -446,26 +446,26 @@
                 margin-bottom: 15px;
             }
             label {
-        font-size: 16px !important;
-        margin-bottom: 6px !important;
-    }
+                font-size: 16px !important;
+                margin-bottom: 6px !important;
+            }
 
-    input, textarea {
-        font-size: 14px !important;
-        padding: 10px 12px !important;
-        width: 290px !important;
-    }
+            input, textarea {
+                font-size: 14px !important;
+                padding: 10px 12px !important;
+                width: 290px !important;
+            }
 
-    textarea {
-        min-height: 100px !important;
-    }
-    table{
-        width: 20px;
-    }
-    body{
-        overflow-x: hidden;
-    }
-        }
+            textarea {
+                min-height: 100px !important;
+            }
+            table{
+                width: 20px;
+            }
+            body{
+                overflow-x: hidden;
+            }
+                }
 
             
 
@@ -542,6 +542,7 @@
         textarea::placeholder {
             white-space: pre-line;
         }
+        
         /* fin form */
         /* ********************************************debut footer******************************************** */
         footer {
