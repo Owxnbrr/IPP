@@ -226,11 +226,11 @@
                 flex-direction: column;
                 background-color: white;
                 position: absolute;
-                top: 60px; /* Ajuste selon la hauteur de ta nav */
+                top: 60px;
                 right: 0;
                 width: 100%;
-                padding: 1rem;
-                z-index: 1000; /* Met bien devant le contenu */
+                padding: 20px 0 20px 0;
+                z-index: 1000;
             }
 
             .nav-links.open {
@@ -245,8 +245,8 @@
             .contact-btn {
                 width: 80%;
                 text-align: center;
-                padding: 12px;
                 font-size: 16px;
+                margin-left: 15px;
             }
 
             .logo-img {
@@ -810,6 +810,10 @@
         }
         @media screen and (max-width: 576px) {
             .services-section1 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
                 grid-template-columns: 1fr;
                 gap: 15px;
                 padding: 20px 10px;
@@ -818,6 +822,8 @@
             .service-card1 {
                 height: auto;
                 min-height: 450px;
+                display: flex;
+                justify-content: center;
             }
             
             .service-image-container {
@@ -850,7 +856,7 @@
             .cta-btn {
                 padding: 8px 16px;
                 font-size: 14px;
-                width: 100%;
+                width: 90%;
                 text-align: center;
             }
             
