@@ -585,18 +585,19 @@
             font-weight: 700;
         }
         .card-item {
-            background: var(--color-secondary);
+            /* background: var(--color-secondary); */
             border-radius: 12px;
             padding: 1.5rem;
-            /* box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.127); */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             margin: 0;
-            /* border: var(--color-primary) 1px solid; */
+        }
+        p.card-item {
+            font-weight: bold;
+            font-size: 20px;
+            align-items: center;
+            display: flex;
         }
 
-        /* .card-item:hover {
-            transform: translateY(-1px);
-        } */
 
         .container-card1 {
             display: grid;
