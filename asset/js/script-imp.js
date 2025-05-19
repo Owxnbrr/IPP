@@ -9,13 +9,15 @@ const burger = document.querySelector('.burger');
     const timeline = document.querySelector('.timeline');
 
     window.addEventListener('scroll', () => {
-        const timelineTop = timeline.offsetTop;
-        const timelineHeight = timeline.offsetHeight;
-        const scrollY = window.scrollY + window.innerHeight;
+    const timeline = document.querySelector('.timeline');
+    const progressBar = document.querySelector('.timeline-progress');
 
-        // Calcul du pourcentage de scroll dans la timeline
-        const distance = scrollY - timelineTop;
-        const progress = Math.min(distance / timelineHeight, 1);
+    const rect = timeline.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
 
-        progressBar.style.height = `${progress * 100}%`;
+    const totalScrollable = windowHeight + timeline.offsetHeight;
+    const visiblePart = windowHeight - rect.top;
+
+    const progress = Math.max(0, Math.min(visiblePart / totalScrollable, 1));
+    progressBar.style.height = `${progress * 100}%`;
     });

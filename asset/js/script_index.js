@@ -102,22 +102,30 @@
         function openLightbox(img) {
         const lightbox = document.getElementById("lightbox");
         const lightboxImg = document.getElementById("lightbox-img");
-        lightboxImg.src = img.src; // ou img.dataset.full si tu préfères une image HD
+        lightboxImg.src = img.src;
         lightbox.style.display = "flex";
+        document.body.classList.add("noscroll");
         }
 
-        function closeLightbox() {
-        document.getElementById("lightbox").style.display = "none";
+        function closeLightbox(event) {
+        const lightboxImg = document.getElementById("lightbox-img");
+        if (!lightboxImg.contains(event.target)) {
+            document.getElementById("lightbox").style.display = "none";
+            document.body.classList.remove("noscroll");
         }
+        }
+
+        // Scroll auto vers un élément au chargement
         window.addEventListener('load', () => {
         const hash = window.location.hash;
         if (hash) {
-        const target = document.querySelector(hash);
-        if (target) {
+            const target = document.querySelector(hash);
+            if (target) {
             target.scrollIntoView({ behavior: 'smooth' });
+            }
         }
-        }
-    });
+        });
+
 
     const imageIds = ["IMG_carrousel_1", "IMG_carrousel_2", "IMG_carrousel_3"];
     imageIds.forEach(id => {
