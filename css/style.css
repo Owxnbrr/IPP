@@ -577,6 +577,7 @@
             gap: 30px;
             padding: 40px 20px;
             background-color: #F7F9FC;
+            justify-content: center;
         }
         
         .service-card1 {
@@ -611,6 +612,11 @@
 
         .service-image1.active {
             display: block;
+        }
+
+        .section-title1{
+            display: flex;
+            justify-content: center;
         }
 
         .image-nav {
@@ -784,6 +790,72 @@
 
         body.noscroll {
             overflow: hidden;
+        }
+        @media screen and (max-width: 768px) {
+            .services-section1 {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 30px 15px;
+            }
+            
+            .service-card1 {
+                height: 550px;
+            }
+            
+            .service-image-container {
+                height: 180px;
+            }
+        }
+        @media screen and (max-width: 576px) {
+            .services-section1 {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px 10px;
+            }
+            
+            .service-card1 {
+                height: auto;
+                min-height: 450px;
+            }
+            
+            .service-image-container {
+                height: 200px;
+            }
+            
+            .image-arrow {
+                width: 25px;
+                height: 25px;
+                font-size: 16px;
+            }
+            
+            .image-dot {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .service-content1 {
+                padding: 15px;
+            }
+            
+            .service-title1 {
+                font-size: 18px;
+            }
+            
+            .service-description1 {
+                font-size: 14px;
+            }
+            
+            .cta-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .lightbox-arrow {
+                width: 35px;
+                height: 35px;
+            }
         }
                 /* fin presta */
 
