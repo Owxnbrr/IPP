@@ -601,6 +601,7 @@
             height: 200px;
             overflow: hidden;
             border-bottom: 1px solid #E0E0E0;
+            cursor: pointer;
         }
 
         .service-image1 {
@@ -612,6 +613,7 @@
 
         .service-image1.active {
             display: block;
+            cursor: pointer;
         }
 
         .section-title1{
