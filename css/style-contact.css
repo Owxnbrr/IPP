@@ -99,7 +99,7 @@
         }
 
         .contact-btn:hover {
-            background-color: #2373cf;
+            background-color:var(--color-hover);
             transform: scale(1.05);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
