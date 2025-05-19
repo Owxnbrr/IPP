@@ -573,7 +573,7 @@
         /* debut presta */
         .services-section1 {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             padding: 40px 20px;
             background-color: #F7F9FC;
@@ -788,7 +788,7 @@
             font-size: 14px;
         }
 
-        body.noscroll {
+        .noscroll {
             overflow: hidden;
         }
         @media screen and (max-width: 768px) {
