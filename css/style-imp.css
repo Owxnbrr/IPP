@@ -291,12 +291,12 @@
         .timeline-progress {
             position: absolute;
             width: 4px;
-            background-color: var(--color-primary); /* couleur remplie */
+            background-color: var(--color-primary); 
             top: 0;
             left: 50%;
             transform: translateX(-50%);
             border-radius: 20px;
-            height: 0;
+            /* height: 0; */
             z-index: 1;
         }
         
@@ -304,7 +304,7 @@
             content: '';
             position: absolute;
             width: 4px;
-            background-color: #ccc; /* une ligne grise claire par exemple */
+            background-color: #ccc; 
             top: 0;
             bottom: 0;
             left: 50%;
@@ -335,7 +335,7 @@
         
         .timeline-item:nth-child(odd) .timeline-content {
             left: 50%;
-            transform: translateX(-105%); /* décale vers la gauche au lieu de mettre left: 0 */
+            transform: translateX(-105%); 
         }
 
         .timeline-item:nth-child(even) .timeline-content {

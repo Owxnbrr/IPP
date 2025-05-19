@@ -600,23 +600,31 @@
             border-bottom: 1px solid #E0E0E0;
             height:200px ;
         }
-        .lightbox {
-        display: none;
-        position: fixed;
-        z-index: 999;
-        left: 0; top: 0;
-        width: 100vw; height: 100vh;
-        background-color: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-        cursor: zoom-out;
-        }
+        #lightbox {
+            position: fixed; /* reste fixé à l'écran */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999; /* Très au-dessus de tout */
+            }
 
-        .lightbox img {
-        max-width: 70%;
-        max-height: 70%;
-        border-radius: 10px;
-        }
+            #lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            pointer-events: none; /* important pour éviter de bloquer le clic */
+            }
+
+            body.noscroll {
+            overflow: hidden;
+            }
+
+
 
 
         .service-content1 {

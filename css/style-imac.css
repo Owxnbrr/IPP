@@ -1,0 +1,28 @@
+@media screen and (min-width: 1200px) and (max-width: 1440px) {
+    body{
+        background-color: red;
+    }
+    .carousel-container,
+    .services-grid,
+    .services-slider,
+    .services-section1 {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .main-header {
+        padding: 20px 40px;
+    }
+
+    .contact-btn {
+        font-size: 22px;
+    }
+
+    .nav-item {
+        font-size: 28px;
+    }
+
+    .logo-img {
+        height: 100px;
+    }
+}
