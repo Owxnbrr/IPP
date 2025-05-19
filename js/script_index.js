@@ -200,7 +200,7 @@
         
         // Fonction pour fermer la lightbox
         function closeLightbox(event) {
-            const lightboxContent = document.querySelector('.lightbox-content');
+            const lightboxContent = document.querySelector('.service-image-container');
             if (!lightboxContent.contains(event.target) || event.target.id === 'lightbox') {
                 document.getElementById("lightbox").style.display = "none";
                 document.body.classList.remove("noscroll");
