@@ -574,7 +574,7 @@
         .services-section1 {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
+            gap: 20px;
             padding: 40px 20px;
             background-color: #F7F9FC;
             justify-content: center;
@@ -588,7 +588,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            height: 600px;
+            width: 400px;
         }
 
         .service-card1:hover {
