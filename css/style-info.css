@@ -26,10 +26,13 @@
         p, li {
         margin-bottom: 1rem;
         }
-
-        strong {
-        color: #000;
+        p{
+            font-weight: 500;
         }
+        a{
+            font-weight: 500;
+        }
+    
         :root{
             --color-primary: #4A90E2;
             --color-secondary: #D4E8FF;
