@@ -577,15 +577,17 @@
         /* fin service */
         /* debut presta */
         .services-section1 {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            display: flex;
+            flex-wrap: nowrap;
             gap: 20px;
             padding: 40px 20px;
             background-color: #F7F9FC;
-            justify-content: center;
+            overflow-x: auto;
         }
-        
+
         .service-card1 {
+            flex: 0 0 auto; 
+            width: 350px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
@@ -593,7 +595,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            width: 350px;
+            scroll-snap-align: start; 
         }
 
         .service-card1:hover {
