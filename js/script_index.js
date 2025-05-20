@@ -346,13 +346,6 @@
     });
 }
 
-    // Exemple d'appel (à adapter selon ton système de navigation)
-    let currentIndex = 0;
-    document.querySelector('#next-button').addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % document.querySelectorAll('.review-card').length;
-        updateCarousel(currentIndex);
-    });
-
     window.addEventListener("scroll", function () {
         const header = document.querySelector(".header-container");
         if (window.scrollY > 50) {
