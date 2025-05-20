@@ -161,6 +161,10 @@
             height: 60px;
             transition: height 0.3s ease;
         }
+        .header-container.shrink .secondary-banner img.locate {
+            height: 30px;
+            transition: height 0.3s ease;
+        }
 
         .header-container.shrink .secondary-banner {
             font-size: 25px;
@@ -169,7 +173,7 @@
 
         .header-container .main-header,
         .logo-img,
-        .secondary-banner {
+        .secondary-banner, .locate{
             transition: all 0.3s ease;
         }
 
