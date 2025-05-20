@@ -19,7 +19,6 @@
             background-color: var(--color-light);
             padding-top: 150px;
         }
-        
         .header-container {
             width: 100%;
             background-color: var(--color-light);
@@ -152,6 +151,26 @@
             background-color: black;
             transition: all 0.3s ease;
         }
+        .header-container.shrink .main-header {
+            padding: 10px 20px;
+            transition: padding 0.3s ease;
+        }
+
+        .header-container.shrink .logo-img {
+            height: 60px;
+            transition: height 0.3s ease;
+        }
+
+        .header-container.shrink .secondary-banner {
+            font-size: 25px;
+            transition: font-size 0.3s ease;
+        }
+
+        .header-container .main-header,
+        .logo-img,
+        .secondary-banner {
+            transition: all 0.3s ease;
+        }
         @media screen and (max-width: 1024px) {
             .main-header {
                 align-items: flex-start;
@@ -226,11 +245,11 @@
                 flex-direction: column;
                 background-color: white;
                 position: absolute;
-                top: 60px; /* Ajuste selon la hauteur de ta nav */
+                top: 60px;
                 right: 0;
                 width: 100%;
-                padding: 1rem;
-                z-index: 1000; /* Met bien devant le contenu */
+                padding: 20px 0 20px 0;
+                z-index: 1000;
             }
 
             .nav-links.open {
@@ -241,12 +260,16 @@
                 padding: 10px 0;
                 font-size: 16px;
             }
+            .nav-item.active::after {
+                width: 70%;
+                margin: 0px 0 15px 0;
+            }
 
             .contact-btn {
                 width: 80%;
                 text-align: center;
-                padding: 12px;
                 font-size: 16px;
+                margin-left: 15px;
             }
 
             .logo-img {
@@ -449,7 +472,9 @@
                 padding: 2px;
             }
             
-
+            .timeline-progress{
+                left: 5.7%;
+            }
             .timeline::before {
                 left: 20px; /* Ligne plus proche du bord */
             }

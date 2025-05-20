@@ -152,6 +152,27 @@
             background-color: black;
             transition: all 0.3s ease;
         }
+        .header-container.shrink .main-header {
+            padding: 10px 20px;
+            transition: padding 0.3s ease;
+        }
+
+        .header-container.shrink .logo-img {
+            height: 60px;
+            transition: height 0.3s ease;
+        }
+
+        .header-container.shrink .secondary-banner {
+            font-size: 25px;
+            transition: font-size 0.3s ease;
+        }
+
+        .header-container .main-header,
+        .logo-img,
+        .secondary-banner {
+            transition: all 0.3s ease;
+        }
+
         @media screen and (max-width: 1024px) {
             .main-header {
                 align-items: flex-start;
@@ -219,6 +240,7 @@
                 display: flex;
                 z-index: 1001;
                 position: relative;
+                padding: 0;
             }
 
             .nav-links {
@@ -226,11 +248,11 @@
                 flex-direction: column;
                 background-color: white;
                 position: absolute;
-                top: 60px; /* Ajuste selon la hauteur de ta nav */
+                top: 60px;
                 right: 0;
                 width: 100%;
-                padding: 1rem;
-                z-index: 1000; /* Met bien devant le contenu */
+                padding: 20px 0 20px 0;
+                z-index: 1000;
             }
 
             .nav-links.open {
@@ -241,12 +263,16 @@
                 padding: 10px 0;
                 font-size: 16px;
             }
+            .nav-item.active::after {
+                width: 70%;
+                margin: 0px 0 15px 0;
+            }
 
             .contact-btn {
                 width: 80%;
                 text-align: center;
-                padding: 12px;
                 font-size: 16px;
+                margin-left: 15px;
             }
 
             .logo-img {
@@ -383,7 +409,7 @@
         .google-rating {
             bottom: 10px;
             left: 10px;
-            padding: 6px 10px;
+            padding: 5px 5px;
             font-size: 12px;
         }
 
@@ -572,14 +598,17 @@
         /* fin service */
         /* debut presta */
         .services-section1 {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 30px;
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
             padding: 40px 20px;
             background-color: #F7F9FC;
+            overflow-x: auto;
         }
-        
+
         .service-card1 {
+            flex: 0 0 auto; 
+            width: 350px;
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
@@ -587,7 +616,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            height: 600px;
+            scroll-snap-align: start; 
         }
 
         .service-card1:hover {
@@ -600,6 +629,7 @@
             height: 200px;
             overflow: hidden;
             border-bottom: 1px solid #E0E0E0;
+            cursor: pointer;
         }
 
         .service-image1 {
@@ -611,6 +641,12 @@
 
         .service-image1.active {
             display: block;
+            cursor: pointer;
+        }
+
+        .section-title1{
+            display: flex;
+            justify-content: center;
         }
 
         .image-nav {
@@ -696,7 +732,7 @@
             background-color: #007BFF;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius:55px;
             transition: background-color 0.3s ease;
         }
 
@@ -782,8 +818,80 @@
             font-size: 14px;
         }
 
-        body.noscroll {
+        .noscroll {
             overflow: hidden;
+        }
+        @media screen and (max-width: 768px) {
+            .services-section1 {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 30px 15px;
+            }
+            
+            .service-card1 {
+                height: 550px;
+            }
+            
+            .service-image-container {
+                height: 180px;
+            }
+        }
+        @media screen and (max-width: 576px) {
+            .services-section1 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px 10px;
+            }
+            
+            .service-card1 {
+                height: auto;
+                min-height: 450px;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .service-image-container {
+                height: 200px;
+            }
+            
+            .image-arrow {
+                width: 25px;
+                height: 25px;
+                font-size: 16px;
+            }
+            
+            .image-dot {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .service-content1 {
+                padding: 15px;
+            }
+            
+            .service-title1 {
+                font-size: 18px;
+            }
+            
+            .service-description1 {
+                font-size: 14px;
+            }
+            
+            .cta-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+                width: 90%;
+                text-align: center;
+            }
+            
+            .lightbox-arrow {
+                width: 35px;
+                height: 35px;
+            }
         }
                 /* fin presta */
 

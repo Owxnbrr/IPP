@@ -195,12 +195,12 @@
             
             // Afficher la lightbox
             lightbox.style.display = "flex";
-            document.body.classList.add("noscroll");
+            // document.body.classList.add("noscroll");
         }
         
         // Fonction pour fermer la lightbox
         function closeLightbox(event) {
-            const lightboxContent = document.querySelector('.lightbox-content');
+            const lightboxContent = document.querySelector('.service-image-container');
             if (!lightboxContent.contains(event.target) || event.target.id === 'lightbox') {
                 document.getElementById("lightbox").style.display = "none";
                 document.body.classList.remove("noscroll");
@@ -346,10 +346,12 @@
     });
 }
 
-    // Exemple d'appel (à adapter selon ton système de navigation)
-    let currentIndex = 0;
-    document.querySelector('#next-button').addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % document.querySelectorAll('.review-card').length;
-        updateCarousel(currentIndex);
+    window.addEventListener("scroll", function () {
+        const header = document.querySelector(".header-container");
+        if (window.scrollY > 50) {
+            header.classList.add("shrink");
+        } else {
+            header.classList.remove("shrink");
+        }
     });
- 
+

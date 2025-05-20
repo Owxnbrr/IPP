@@ -21,3 +21,4 @@ const burger = document.querySelector('.burger');
     const progress = Math.max(0, Math.min(visiblePart / totalScrollable, 1));
     progressBar.style.height = `${progress * 100}%`;
     });
+    

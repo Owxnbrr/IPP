@@ -178,6 +178,26 @@
             background-color: black;
             transition: all 0.3s ease;
         }
+        .header-container.shrink .main-header {
+            padding: 10px 20px;
+            transition: padding 0.3s ease;
+        }
+
+        .header-container.shrink .logo-img {
+            height: 60px;
+            transition: height 0.3s ease;
+        }
+
+        .header-container.shrink .secondary-banner {
+            font-size: 25px;
+            transition: font-size 0.3s ease;
+        }
+
+        .header-container .main-header,
+        .logo-img,
+        .secondary-banner {
+            transition: all 0.3s ease;
+        }
         @media screen and (max-width: 768px) {
             @import url('https://fonts.googleapis.com/css2?family=Rage&display=swap');
             body{
@@ -225,6 +245,10 @@
             .nav-item {
                 padding: 10px 0;
                 font-size: 16px;
+            }
+            .nav-item.active::after {
+                width: 70%;
+                margin: 0px 0 15px 0;
             }
 
             .contact-btn {
