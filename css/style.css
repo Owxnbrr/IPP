@@ -455,8 +455,8 @@
         }
 
         .section-title {
-            display: block;          /* passe en bloc */
-            margin: 0 auto 40px;     /* auto à gauche et droite le centre */
+            display: block;        
+            margin: 0 auto 40px;  
             position: relative;
             font-size: 2.25rem;
             color: var(--color-dark);
@@ -1005,6 +1005,42 @@
                 gap: 20px;
             }
             }
+
+            /* Section réalisations */
+                #realisations {
+                    padding: 60px 20px;
+                    background-color: #f9f9f9;
+                    text-align: center;
+                }
+
+                #realisations .section-title {
+                    font-size: 2rem;
+                    margin-bottom: 20px;
+                    color: #333;
+                }
+
+                .realisations-content p {
+                    font-size: 1.1rem;
+                    margin-bottom: 20px;
+                    color: #555;
+                }
+
+                /* Style du bouton/lien */
+                .btn-link {
+                    display: inline-block;
+                    padding: 12px 24px;
+                    background-color: #0077cc;
+                    color: #fff;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    transition: background-color 0.3s ease;
+                }
+
+                .btn-link:hover {
+                    background-color: #005fa3;
+                }
+
         /* fin nouvaute */
         /* debut bandeau */
         .realisations-banner {
