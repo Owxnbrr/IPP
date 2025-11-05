@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Boutique — 4 produits</title>
+<!-- ton styles.css global existant -->
+<link rel="stylesheet" href="./css/styles.css" />
+<!-- styles spécifiques boutique -->
+<link rel="stylesheet" href="./css/shop.css" />
+<script type="module" src="./js/shop.js" defer></script>
+</head>
+<body style="background:#0b0d10;color:#e8ecf1;">
+<div class="shop-container">
+<header class="shop-header">
+<div class="shop-brand">Ma Boutique</div>
+<nav>
+<a class="shop-btn secondary" href="auth.html" id="authLink">Se connecter</a>
+<button class="shop-btn" id="logoutBtn" style="display:none">Se déconnecter</button>
+</nav>
+</header>
+
+
+<div class="shop-layout">
+<main>
+<h1>Nos 4 produits</h1>
+<div class="shop-grid" id="products"></div>
+</main>
+
+
+<aside class="shop-cart">
+<h3>Mon panier</h3>
+<div class="shop-alert" id="authGuard">
+Vous devez être connecté pour payer. <a class="shop-link" href="auth.html">Connexion / Inscription</a>
+</div>
+<ul class="shop-list" id="cartList"></ul>
+<div class="shop-row" style="margin-top:8px">
+<strong>Total</strong>
+<strong id="cartTotal">0,00 €</strong>
+</div>
+<button class="shop-btn" id="checkoutBtn" style="width:100%; margin-top:12px">Payer avec Stripe</button>
+</aside>
+</div>
+
+
+<p class="shop-footer">Fait avec Supabase (auth) et Stripe (Checkout). Hébergé sur Netlify.</p>
+</div>
+</body>
+</html>

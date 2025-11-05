@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connexion / Inscription</title>
+
+    <!-- ton CSS global (dans ton projet c’est bien "style.css" au singulier) -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- styles spécifiques boutique -->
+    <link rel="stylesheet" href="./css/shop.css" />
+  </head>
+  <body>
+    <div class="shop-container">
+      <header class="shop-header">
+        <div class="shop-brand">Ma Boutique</div>
+        <nav><a class="shop-btn secondary" href="shop.html">← Retour à la boutique</a></nav>
+      </header>
+
+      <main style="max-width:480px; margin:24px auto;">
+        <h1>Connexion / Inscription</h1>
+        <div class="shop-card">
+          <label for="email">Email</label>
+          <input id="email" class="shop-qty" style="width:100%" type="email" placeholder="vous@exemple.com" />
+
+          <label for="password">Mot de passe</label>
+          <input id="password" class="shop-qty" style="width:100%" type="password" placeholder="••••••••" />
+
+          <div class="shop-row" style="margin-top:8px">
+            <button id="signin" class="shop-btn" style="flex:1">Se connecter</button>
+            <button id="signup" class="shop-btn secondary" style="flex:1">Créer un compte</button>
+          </div>
+
+          <button id="reset" class="shop-btn secondary" style="margin-top:8px">Mot de passe oublié</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts à la fin du body -->
+    <script type="module">
+      import { getSupabase } from './js/supabase-init.js';
+
+      // Attendre que le DOM soit prêt
+      document.addEventListener('DOMContentLoaded', () => {
+        const emailEl = document.getElementById('email');
+        const passEl  = document.getElementById('password');
+        const signup  = document.getElementById('signup');
+        const signin  = document.getElementById('signin');
+        const reset   = document.getElementById('reset');
+
+        const toast = (msg) => alert(msg);
+
+        // Garde anti-null : si l’un manque, on sort avec un message clair
+        if (!emailEl || !passEl || !signup || !signin || !reset) {
+          console.error('Un ou plusieurs éléments du formulaire sont introuvables (IDs email, password, signup, signin, reset).');
+          return;
+        }
+
+        signup.addEventListener('click', async () => {
+          const supabase = await getSupabase();
+          const { error } = await supabase.auth.signUp({
+            email: emailEl.value,
+            password: passEl.value,
+          });
+          if (error) return toast(error.message);
+          toast('Vérifiez vos emails pour confirmer votre inscription.');
+        });
+
+        signin.addEventListener('click', async () => {
+          const supabase = await getSupabase();
+          const { error } = await supabase.auth.signInWithPassword({
+            email: emailEl.value,
+            password: passEl.value,
+          });
+          if (error) return toast(error.message);
+          // Reviens vers la boutique
+          window.location.href = 'shop.html';
+        });
+
+        reset.addEventListener('click', async () => {
+          const supabase = await getSupabase();
+          const { error } = await supabase.auth.resetPasswordForEmail(emailEl.value, {
+            // quand tu seras sur Netlify, ce chemin peut être /auth.html
+            redirectTo: window.location.origin + 'auth.html',
+          });
+          if (error) return toast(error.message);
+          toast('Si un compte existe, un email de réinitialisation a été envoyé.');
+        });
+      });
+    </script>
+  </body>
+</html>
