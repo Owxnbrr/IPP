@@ -10,17 +10,17 @@ const PRODUCTS = [
     { id: 'p2', 
         name: 'Bodywarmer matelassé homme', 
         price: 2999, 
-        image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop' 
+        image: './asset/img/shop/Bodywarmer matelassé homme.png' 
     },
     { id: 'p3', 
         name: 'Sweat-shirt zippé capuche contrastée', 
         price: 3999, 
-        image: 'https://images.unsplash.com/photo-1515169067865-5387ec356754?q=80&w=800&auto=format&fit=crop' 
+        image: './asset/img/shop/Sweat-shirt zippé capuche contrastée.png' 
     },
     { id: 'p4', 
         name: 'Sweat-shirt capuche contrastée homme', 
         price: 4999, 
-        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop' 
+        image: './asset/img/shop/Sweat-shirt capuche contrastée homme.png' 
     },
 ]
 
