@@ -34,7 +34,6 @@
             indicators[slideIndex-1].classList.add("active");
         }
         
-        // Auto slide every 10 seconds
         setInterval(function() {
             nextSlide();
         }, 10000);
