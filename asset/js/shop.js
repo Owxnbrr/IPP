@@ -4,23 +4,23 @@ import { getSupabase } from './supabase-init.js'
 const PRODUCTS = [
     { id: 'p1', 
         name: 'Polo homme manches courtes à liserés contrastés', 
-        price: 1999, 
-        image: './asset/img/shop/Polo homme manches courtes à liserés contrastés.png' 
+        price: 2160, 
+        image: '/img/shop/Polo homme manches courtes à liserés contrastés.png' 
     },
     { id: 'p2', 
         name: 'Bodywarmer matelassé homme', 
-        price: 2999, 
-        image: './asset/img/shop/Bodywarmer matelassé homme.png' 
+        price: 3840, 
+        image: '/img/shop/Bodywarmer matelassé homme.png' 
     },
     { id: 'p3', 
         name: 'Sweat-shirt zippé capuche contrastée', 
-        price: 3999, 
-        image: './asset/img/shop/Sweat-shirt zippé capuche contrastée.png' 
+        price: 4224, 
+        image: '/img/shop/Sweat-shirt zippé capuche contrastée.png' 
     },
     { id: 'p4', 
         name: 'Sweat-shirt capuche contrastée homme', 
-        price: 4999, 
-        image: './asset/img/shop/Sweat-shirt capuche contrastée homme.png' 
+        price: 3792, 
+        image: '/img/shop/Sweat-shirt capuche contrastée homme.png' 
     },
 ]
 
