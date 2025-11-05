@@ -81,7 +81,7 @@
           const supabase = await getSupabase();
           const { error } = await supabase.auth.resetPasswordForEmail(emailEl.value, {
             // quand tu seras sur Netlify, ce chemin peut être /auth.html
-            redirectTo: window.location.origin + '/asset/auth.html',
+            redirectTo: window.location.origin + 'auth.html',
           });
           if (error) return toast(error.message);
           toast('Si un compte existe, un email de réinitialisation a été envoyé.');
