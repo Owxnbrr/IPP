@@ -1,23 +1,7 @@
 [build]
-  publish = "code/asset"
+  publish = "CODE/asset"   
   functions = "netlify/functions"
 
-# Redirections utiles pour les pages de retour Stripe
-[[redirects]]
-  from = "/success"
-  to = "/success.html"
-  status = 200
-
-[[redirects]]
-  from = "/cancel"
-  to = "/cancel.html"
-  status = 200
-```toml
-[build]
-  publish = "public"
-  functions = "netlify/functions"
-
-# Redirections utiles pour les pages de retour Stripe
 [[redirects]]
   from = "/success"
   to = "/success.html"
