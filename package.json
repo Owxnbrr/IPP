@@ -4,6 +4,7 @@
   "type": "module",
   "engines": { "node": ">=18" },
   "dependencies": {
-    "stripe": "^15.0.0"
+    "stripe": "^15.0.0",
+    "@supabase/supabase-js": "^2.45.4"
   }
 }
