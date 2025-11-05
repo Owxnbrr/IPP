@@ -2,13 +2,29 @@
 import { getSupabase } from './supabase-init.js'
 
 const PRODUCTS = [
-  { id: 'p1', name: 'Produit 1', price: 1999, image: 'https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?q=80&w=800&auto=format&fit=crop' },
-  { id: 'p2', name: 'Produit 2', price: 2999, image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop' },
-  { id: 'p3', name: 'Produit 3', price: 3999, image: 'https://images.unsplash.com/photo-1515169067865-5387ec356754?q=80&w=800&auto=format&fit=crop' },
-  { id: 'p4', name: 'Produit 4', price: 4999, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop' },
+    { id: 'p1', 
+        name: 'Polo homme manches courtes à liserés contrastés', 
+        price: 1999, 
+        image: './asset/img/shop/Polo homme manches courtes à liserés contrastés.png' 
+    },
+    { id: 'p2', 
+        name: 'Bodywarmer matelassé homme', 
+        price: 2999, 
+        image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop' 
+    },
+    { id: 'p3', 
+        name: 'Sweat-shirt zippé capuche contrastée', 
+        price: 3999, 
+        image: 'https://images.unsplash.com/photo-1515169067865-5387ec356754?q=80&w=800&auto=format&fit=crop' 
+    },
+    { id: 'p4', 
+        name: 'Sweat-shirt capuche contrastée homme', 
+        price: 4999, 
+        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop' 
+    },
 ]
 
-const SIZES = ['S','M','L','XL']  // tailles proposées
+const SIZES = ['XS','S','M','L','XL','XXL','3XL','4XL']
 
 const fmt = (cents) => (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 
