@@ -1,5 +1,5 @@
 [build]
-  publish = "CODE/asset"   
+  publish = "./asset"   
   functions = "netlify/functions"
 
 [[redirects]]
