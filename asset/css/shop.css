@@ -27,3 +27,12 @@
 .shop-alert { background: #16202c; border: 1px solid #263044; color: var(--muted); padding: 10px 12px; border-radius: 12px; }
 .shop-link { color: #93c5fd; text-decoration: none; }
 .shop-footer { opacity: 0.7; font-size: 14px; margin-top: 40px; }
+
+@media (max-width: 768px){
+  main{
+    padding-bottom: 15px;
+  }
+  .shop-layout{
+    display: contents;
+  }
+}
