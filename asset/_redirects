@@ -1,0 +1,10 @@
+/                   /shop.html    301
+/shop               /shop.html    200
+/success            /success.html 200
+/cancel             /cancel.html  200
+/asset/*            /asset/:splat 200
+/img/*              /img/:splat   200
+/css/*              /css/:splat   200
+/js/*               /js/:splat    200
+/.netlify/*         /.netlify/:splat 200
+/*                  /shop.html    200
