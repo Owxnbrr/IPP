@@ -1,0 +1,58 @@
+[build]
+  publish = "CODE/asset"
+  functions = "netlify/functions"
+
+# Arriver sur la racine => shop
+[[redirects]]
+  from = "/"
+  to = "/shop.html"
+  status = 301
+
+# URL courte /shop
+[[redirects]]
+  from = "/shop"
+  to = "/shop.html"
+  status = 200
+
+# Laisse passer les retours Stripe
+[[redirects]]
+  from = "/success"
+  to = "/success.html"
+  status = 200
+
+[[redirects]]
+  from = "/cancel"
+  to = "/cancel.html"
+  status = 200
+
+# Laisse passer les assets et fonctions
+[[redirects]]
+  from = "/asset/*"
+  to = "/asset/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/img/*"
+  to = "/img/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/css/*"
+  to = "/css/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/js/*"
+  to = "/js/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/.netlify/*"
+  to = "/.netlify/:splat"
+  status = 200
+
+# Tout le reste => shop (empêche d'aller ailleurs)
+[[redirects]]
+  from = "/*"
+  to = "/shop.html"
+  status = 200
