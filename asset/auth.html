@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connexion / Inscription</title>
+    <link rel="stylesheet" href="./css/shop.css" />
+  </head>
+  <body style="background-color:#0b0d10;color:white;">
+    <div class="shop-container">
+      <header class="shop-header">
+        <div class="shop-brand">
+          <img src="asset/img/shop/logo ipp blanc.webp" alt="" style="width: 140px;height: 100%;">
+        </div>
+        <nav><a class="shop-btn secondary" href="shop.html">← Retour à la boutique</a></nav>
+      </header>
+
+      <main style="max-width:480px;margin:24px auto;">
+        <h1>Connexion / Inscription</h1>
+        <div class="shop-card">
+          <label for="email">Email</label>
+          <input id="email" class="shop-qty" style="width:96%" type="email" placeholder="vous@exemple.com" />
+
+          <label for="password">Mot de passe</label>
+          <input id="password" class="shop-qty" style="width:96%" type="password" placeholder="••••••••" />
+
+          <div class="shop-row" style="margin-top:8px">
+            <button id="signin" class="shop-btn" style="flex:1">Se connecter</button>
+            <button id="signup" class="shop-btn secondary" style="flex:1">Créer un compte</button>
+          </div>
+
+          <button id="reset" class="shop-btn secondary" style="margin-top:8px">Mot de passe oublié</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+      import { getSupabase } from './js/supabase-init.js';
+
+      const REDIRECT_AFTER_CONFIRM = 'https://ipp-imprimerie.netlify.app/shop';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const emailEl = document.getElementById('email');
+        const passEl  = document.getElementById('password');
+        const signup  = document.getElementById('signup');
+        const signin  = document.getElementById('signin');
+        const reset   = document.getElementById('reset');
+
+        const toast = (msg) => alert(msg);
+
+        if (!emailEl || !passEl || !signup || !signin || !reset) {
+          console.error('IDs manquants: email, password, signup, signin, reset.');
+          return;
+        }
+
+        // Inscription : envoie l’e-mail + redirige vers /shop après clic sur le lien
+        signup.addEventListener('click', async () => {
+          const supabase = await getSupabase();
+          const email = emailEl.value.trim();
+          const password = passEl.value;
+
+          if (!email || !password) return toast('Renseigne e-mail et mot de passe.');
+
+          const { error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: { emailRedirectTo: REDIRECT_AFTER_CONFIRM }
+          });
+
+          if (error) return toast(error.message);
+          toast('E-mail de confirmation envoyé ! Vérifie ta boîte de réception.');
+        });
+
+        // Connexion
+        signin.addEventListener('click', async () => {
+          const supabase = await getSupabase();
+          const email = emailEl.value.trim();
+          const password = passEl.value;
+
+          if (!email || !password) return toast('Renseigne e-mail et mot de passe.');
+
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) return toast(error.message);
+
+          window.location.href = 'shop.html';
+        });
+
+        // Mot de passe oublié
+        reset.addEventListener('click', async () => {
+          const supabase = await getSupabase();
+          const email = emailEl.value.trim();
+          if (!email) return toast('Renseigne ton e-mail.');
+
+          const { error } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/auth.html`
+          });
+
+          if (error) return toast(error.message);
+          toast('Si un compte existe, un e-mail de réinitialisation a été envoyé.');
+        });
+      });
+    </script>
+  </body>
+</html>
