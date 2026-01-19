@@ -1422,32 +1422,6 @@
             animation: fadeInUp 0.6s ease-out forwards;
         }
 
-        /* Section globale */
-#podcast.services-section {
-  padding: clamp(48px, 6vw, 90px) 20px;
-  background: #f6f7fb;
-}
-
-/* Titre */
-#podcast .section-title {
-  text-align: center;
-  font-size: clamp(28px, 3vw, 44px);
-  font-weight: 800;
-  margin: 0;
-  color: #1f2937;
-  position: relative;
-}
-
-/* petit soulignement propre */
-#podcast .section-title::after {
-  content: "";
-  display: block;
-  width: 120px;
-  height: 4px;
-  margin: 14px auto 0;
-  border-radius: 999px;
-  background: #3b82f6;
-}
 
 /* Contenu (card centrée) */
 #podcast .podcast-content {
