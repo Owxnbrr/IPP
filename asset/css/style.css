@@ -316,6 +316,11 @@
         
         .carousel-slide.active {
             display: block;
+            width: 100%;
+            height: auto;
+            display: block;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
         }
         
         .carousel-image {
