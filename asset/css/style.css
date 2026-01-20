@@ -308,8 +308,6 @@
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            box-shadow: var(--shadow);
-            background-color: red;
         }
         
         .carousel-slide {
@@ -325,6 +323,7 @@
             width: 100%;
             height: auto;
             display: block;
+            box-shadow: var(--shadow);
         }
         
         .google-rating {
