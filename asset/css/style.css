@@ -306,7 +306,6 @@
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
-            overflow: hidden;
         }
         
         .carousel-slide {
