@@ -307,7 +307,6 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
         }
         
         .carousel-slide {
@@ -324,6 +323,7 @@
             height: auto;
             display: block;
             box-shadow: var(--shadow);
+            border-radius: 8px;
         }
         
         .google-rating {
