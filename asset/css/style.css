@@ -309,6 +309,7 @@
             overflow: hidden;
             border-radius: 8px;
             box-shadow: var(--shadow);
+            background-color: red;
         }
         
         .carousel-slide {
