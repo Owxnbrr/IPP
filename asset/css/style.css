@@ -19,6 +19,10 @@
             background-color: var(--color-light);
             padding-top: 150px;
         }
+        html {
+            scroll-behavior: smooth;
+        }
+
         
         .header-container {
             width: 100%;
