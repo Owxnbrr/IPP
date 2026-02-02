@@ -500,21 +500,45 @@
             margin: 0 auto;
         }
 
-        .service-card {
-            flex: 0 0 250px;
+        .service-card{
             background-color: white;
             border-radius: 12px;
-            padding: 10px;
+            padding: 14px;
             box-shadow: var(--shadow);
-            scroll-snap-align: start;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             text-decoration: none;
-        }
+            display: flex;
+            flex-direction: column;
+            }
 
         .service-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(74, 144, 226, 0.2);
+        }
+        .service-actions{
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+        }
+
+        .btn{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: var(--color-primary);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        }
+
+        .btn--ghost{
+        background: transparent;
+        color: var(--color-primary);
+        border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
         }
 
         .service-title {
@@ -547,34 +571,31 @@
             cursor: grabbing;
             user-select: none;
         }
-        .service-list {
-            padding-left: 20px;
-            margin: 15px 0 0;
+        .service-list{
             list-style: none;
-        }
+            padding: 0;
+            margin: 15px 0 0;
+            display: grid;
+            gap: 10px;
+            }
 
-        .service-list li {
-            position: relative;
+        .service-list li{
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
             font-size: var(--texte);
             color: var(--color-dark);
-            margin-bottom: 10px;
+            line-height: 1.4;
         }
 
-        .service-list li p {
-            margin: 0;
-        }
-
-        .service-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--color-primary); /* Puce colorée */
-            font-weight: bold;
-            font-size: 18px;
+        .service-list li::before{
+            content: "✓";
+            color: var(--color-primary);
+            font-weight: 700;
             line-height: 1;
-            margin: 0 -10px;
-
+            margin-top: 2px;
         }
+
         @media screen and (max-width: 768px) {
             .services-section {
                 padding: 40px 15px;
