@@ -473,7 +473,7 @@
             }
             
             .timeline-progress{
-                left: 5.7%;
+                left: 6%;
             }
             .timeline::before {
                 left: 20px; /* Ligne plus proche du bord */
