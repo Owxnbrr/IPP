@@ -968,14 +968,15 @@
             }
 
             #services-digitaux .service-card {
-            background: #fff;
+            background-color: white;
             border-radius: 12px;
-            overflow: hidden;
+            padding: 14px;
             box-shadow: var(--shadow);
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
             }
             /* Staggered delays */
             #services-digitaux .service-card:nth-child(1) { animation-delay: 0.4s; }
@@ -997,6 +998,30 @@
             font-size: var(--subtitle);
             color: var(--color-primary);
             margin: 0 16px 12px;
+            }
+            .service-actions{
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+            }
+
+            .btn{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: var(--color-primary);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            }
+
+            .btn--ghost{
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
             }
 
             #services-digitaux .service-card .service-list {
