@@ -547,31 +547,34 @@
             cursor: grabbing;
             user-select: none;
         }
-        .service-list{
-            list-style: none;
-            padding: 0;
+        .service-list {
+            padding-left: 20px;
             margin: 15px 0 0;
-            display: grid;
-            gap: 10px;
-            }
+            list-style: none;
+        }
 
-        .service-list li{
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
+        .service-list li {
+            position: relative;
             font-size: var(--texte);
             color: var(--color-dark);
-            line-height: 1.4;
+            margin-bottom: 10px;
         }
 
-        .service-list li::before{
-            content: "✓";
-            color: var(--color-primary);
-            font-weight: 700;
+        .service-list li p {
+            margin: 0;
+        }
+
+        .service-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-primary); /* Puce colorée */
+            font-weight: bold;
+            font-size: 18px;
             line-height: 1;
-            margin-top: 2px;
-        }
+            margin: 0 -10px;
 
+        }
         @media screen and (max-width: 768px) {
             .services-section {
                 padding: 40px 15px;
