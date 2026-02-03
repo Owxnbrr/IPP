@@ -417,6 +417,7 @@
             max-width: 100%;
             border-radius: 0;
             box-shadow: none;
+            padding: 5px;
         }
 
         .carousel-image {
