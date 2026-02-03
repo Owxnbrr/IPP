@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = JSON.parse(localStorage.getItem(key));
         if (!data) return;
 
-        // Cherche la section correspondant au titre
         const section = Array.from(document.querySelectorAll(".product-section"))
         .find(div => div.querySelector("h2")?.textContent.includes(title));
         if (!section) return;

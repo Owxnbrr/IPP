@@ -1,7 +1,5 @@
-// Boutique + panier + checkout Stripe (tailles + livraison 15€ + collecte adresse)
 import { getSupabase } from './supabase-init.js'
 
-// --- Catalogue (prix en centimes) ---
 const PRODUCTS = [
   { id: 'p1',
     name: 'Polo homme manches courtes à liserés contrastés',
@@ -28,11 +26,9 @@ const PRODUCTS = [
 const SIZES = ['XS','S','M','L','XL','XXL','3XL','4XL']
 const fmt = (cents) => (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 
-// --- Livraison ---
 const SHIPPING_FEE = 1500 // 15,00 €
 let wantShipping = false
 
-// --- DOM ---
 const productsEl  = document.getElementById('products')
 const cartList    = document.getElementById('cartList')
 const cartTotal   = document.getElementById('cartTotal')
@@ -42,8 +38,6 @@ const authLink    = document.getElementById('authLink')
 const logoutBtn   = document.getElementById('logoutBtn')
 const shippingToggle = document.getElementById('shippingToggle')
 
-// --- Etat ---
-/** Le panier contient des lignes { id, size, quantity } */
 let cart = []
 let currentUser = null
 
@@ -84,7 +78,6 @@ function renderProducts() {
   })
 }
 
-/** Panier */
 function addToCart(id, size, qty) {
   const row = cart.find(i => i.id === id && i.size === size)
   if (row) row.quantity += qty
@@ -121,7 +114,6 @@ function renderCart() {
   })
 }
 
-// --- Auth UI ---
 async function syncAuthUI() {
   const supabase = await getSupabase()
   const { data: { session } } = await supabase.auth.getSession()
@@ -137,13 +129,11 @@ logoutBtn?.addEventListener('click', async () => {
   await syncAuthUI()
 })
 
-// --- Livraison checkbox ---
 shippingToggle?.addEventListener('change', () => {
   wantShipping = !!shippingToggle.checked
   renderCart()
 })
 
-// --- Paiement Stripe ---
 checkoutBtn.addEventListener('click', async () => {
   if (!currentUser) return alert('Veuillez vous connecter avant de payer.')
   if (cart.length === 0) return alert('Votre panier est vide.')
@@ -160,7 +150,7 @@ checkoutBtn.addEventListener('click', async () => {
         items: cart,
         customerEmail: email,
         userId: session?.user?.id,
-        shipping: { enabled: wantShipping } // <= IMPORTANT
+        shipping: { enabled: wantShipping } 
       }),
     })
 

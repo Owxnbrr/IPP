@@ -3,16 +3,13 @@ import { getSupabase } from './supabase-init.js';
 
 const supabase = await getSupabase();
 
-// Cible tes éléments (adapte les sélecteurs si tes IDs diffèrent)
 const emailInput    = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
-const loginBtn      = document.querySelector('#loginBtn');   // bouton "Se connecter"
-const signupBtn     = document.querySelector('#signupBtn');  // bouton "Créer un compte"
+const loginBtn      = document.querySelector('#loginBtn');  
+const signupBtn     = document.querySelector('#signupBtn');  
 
-// Où rediriger après clic sur le lien de confirmation reçu par e-mail
 const REDIRECT_URL = 'https://ipp-imprimerie.netlify.app/shop';
 
-// Création de compte (envoi de l'e-mail de confirmation)
 signupBtn?.addEventListener('click', async (e) => {
   e.preventDefault();
   const email = (emailInput?.value || '').trim();
@@ -27,7 +24,7 @@ signupBtn?.addEventListener('click', async (e) => {
     email,
     password,
     options: {
-      emailRedirectTo: REDIRECT_URL, // <-- c'est ici que se fait la redirection finale
+      emailRedirectTo: REDIRECT_URL,
     },
   });
 
@@ -39,7 +36,6 @@ signupBtn?.addEventListener('click', async (e) => {
   }
 });
 
-// Connexion classique
 loginBtn?.addEventListener('click', async (e) => {
   e.preventDefault();
   const email = (emailInput?.value || '').trim();
@@ -55,7 +51,6 @@ loginBtn?.addEventListener('click', async (e) => {
     console.error(error);
     alert('Connexion impossible : ' + error.message);
   } else {
-    // connecté -> on peut renvoyer vers la boutique
     window.location.href = '/shop';
   }
 });

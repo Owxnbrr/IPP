@@ -6,7 +6,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2024-06-
 const CURRENCY = process.env.CURRENCY || 'eur'
 const SHIPPING_FEE = 1500 // 15,00 €
 
-// Catalogue sécurisé côté serveur (centimes)
 const CATALOG = {
   p1: { name: process.env.PRODUCT_P1_NAME || 'Polo homme manches courtes à liserés contrastés', amount: Number(process.env.PRODUCT_P1_AMOUNT || 2160) },
   p2: { name: process.env.PRODUCT_P2_NAME || 'Bodywarmer matelassé homme', amount: Number(process.env.PRODUCT_P2_AMOUNT || 3840) },
@@ -14,7 +13,6 @@ const CATALOG = {
   p4: { name: process.env.PRODUCT_P4_NAME || 'Sweat-shirt capuche contrastée homme', amount: Number(process.env.PRODUCT_P4_AMOUNT || 3790) },
 }
 
-// helper: interpréter “true”, “1”, etc.
 function asBool(v) {
   return v === true || v === 1 || v === '1' || String(v).toLowerCase() === 'true'
 }

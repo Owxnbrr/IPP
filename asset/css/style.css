@@ -11,7 +11,6 @@
             --subtitle: 17px;
             --texte: 14px;
         }
-        /*  ********************************************Debut Header style *********************************************/
         body {
             margin: 0;
             padding: 0;
@@ -302,10 +301,6 @@
                 position: static;
             }
         }
-
-        /* ********************************************fin header style******************************************** */
-
-        /* Debut carrousel */
         .carousel-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -463,10 +458,6 @@
             padding-top: 30px;
         }
     }
-
-        /* Fin carrousel */
-
-        /* debut service */
         .services-section {
             padding: 60px 20px;
             background-color: var(--color-light);
@@ -568,7 +559,7 @@
             content: "•";
             position: absolute;
             left: 0;
-            color: var(--color-primary); /* Puce colorée */
+            color: var(--color-primary); 
             font-weight: bold;
             font-size: 18px;
             line-height: 1;
@@ -626,10 +617,6 @@
             }
         }
 
-        
-
-        /* fin service */
-        /* debut presta */
         .services-section1 {
             display: flex;
             flex-wrap: nowrap;
@@ -926,9 +913,6 @@
                 height: 35px;
             }
         }
-                /* fin presta */
-        /* debut nouvaute */
-        /* ———————— Nos services digitaux ———————— */
             #services-digitaux {
             padding: 60px 20px;
             text-align: center;
@@ -937,8 +921,8 @@
             }
 
             #services-digitaux .section-title {
-            display: inline-block;     /* largeur du bloc = largeur du texte */
-            margin: 0  auto 40px;      /* centre horizontalement + espace sous */
+            display: inline-block;     
+            margin: 0  auto 40px;     
             position: relative;
             font-size: 2.25rem;
             color: var(--color-dark);
@@ -978,7 +962,6 @@
             display: flex;
             flex-direction: column;
             }
-            /* Staggered delays */
             #services-digitaux .service-card:nth-child(1) { animation-delay: 0.4s; }
             #services-digitaux .service-card:nth-child(2) { animation-delay: 0.6s; }
 
@@ -1038,7 +1021,6 @@
             margin-left: -16px;
             }
 
-            /* Responsive */
             @media (max-width: 768px) {
             #services-digitaux {
                 padding: 40px 15px;
@@ -1049,7 +1031,6 @@
             }
             }
 
-            /* Section réalisations */
                 #realisations {
                     padding: 60px 20px;
                     background-color: #f9f9f9;
@@ -1071,7 +1052,6 @@
                     color: #555;
                 }
 
-                /* Style du bouton/lien */
                 .btn-link {
                     display: inline-block;
                     padding: 12px 24px;
@@ -1087,16 +1067,13 @@
                     background-color: #005fa3;
                 }
 
-        /* fin nouvaute */
-        /* debut bandeau */
         .realisations-banner {
             display: flex;
             justify-content: center;
             align-items: center;
-            /* gap: 40px; espacement entre les blocs */
             background-color: #D4E8FF;
             padding: 60px 20px;
-            flex-wrap: wrap; /* Permet de s’adapter sur petits écrans */
+            flex-wrap: wrap; 
             text-align: center;
         }
 
@@ -1136,8 +1113,6 @@
             }
         }
 
-        /* fin bandeau */
-        /* debut avis */
         .carousel-slides {
             position: relative;
             height: 240px;
@@ -1272,7 +1247,7 @@
             flex-direction: row;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
-            scroll-padding-left: 90px; /* <- Ajouté ici au bon endroit */
+            scroll-padding-left: 90px;
             gap: 16px;
             padding: 20px;
             margin-top: 0;
@@ -1299,11 +1274,6 @@
             display: none;
         }
     }
-
-        
-
-        /* fin avis */
-        /* debut footer */
         footer {
             background: #4A90E2;
             color: #fff;
@@ -1445,7 +1415,6 @@
                 margin-bottom: 10px;
             }
         }
-        /* fin footer */
 
         @keyframes fadeInUp {
             0% {
@@ -1461,12 +1430,11 @@
         .carrousel-main, .services-slider,
         .services-section1{
             margin-bottom: 30px;
-            opacity: 0; /* Initial state */
+            opacity: 0;
             animation: fadeInUp 0.6s ease-out forwards;
         }
 
 
-/* Contenu (card centrée) */
 #podcast .podcast-content {
   max-width: 900px;
   margin: 40px auto 0;
@@ -1483,20 +1451,17 @@
   text-align: center;
 }
 
-/* Texte */
 #podcast .podcast-content p {
   margin: 0;
   font-size: 16px;
   color: #4b5563;
 }
 
-/* Player */
 #podcast audio {
   width: min(560px, 100%);
   border-radius: 12px;
 }
 
-/* Focus propre accessibilité */
 #podcast audio:focus {
   outline: 3px solid rgba(59, 130, 246, 0.35);
   outline-offset: 4px;

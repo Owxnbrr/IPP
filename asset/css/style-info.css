@@ -43,7 +43,6 @@
             --subtitle: 17px;
             --texte: 14px;
         }
-        /*  ********************************************Debut Header style *********************************************/
         
         .header-container {
             width: 100%;
@@ -231,11 +230,11 @@
                 flex-direction: column;
                 background-color: white;
                 position: absolute;
-                top: 60px; /* Ajuste selon la hauteur de ta nav */
+                top: 60px; 
                 right: 0;
                 width: 100%;
                 padding: 1rem;
-                z-index: 1000; /* Met bien devant le contenu */
+                z-index: 1000;  
             }
 
             .nav-links.open {
@@ -277,8 +276,6 @@
                 position: static;
             }
         }
-        /* ********************************************fin header style******************************************** */
-        /* debut footer */
         footer {
             background: #4A90E2;
             color: #fff;
@@ -420,7 +417,6 @@
                 margin-bottom: 10px;
             }
         }
-        /* fin footer */
         main{
             display: flex;
             flex-direction: column;

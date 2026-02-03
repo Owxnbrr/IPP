@@ -1,4 +1,3 @@
-// carrousel
         let slideIndex = 1;
         showSlides(slideIndex);
         
@@ -56,7 +55,6 @@
                         card.classList.add('next');
                     }
                     
-                    // Force DOM reflow to ensure transitions work properly
                     void card.offsetWidth;
                 });
             }
@@ -82,13 +80,10 @@
             prevButton.addEventListener('click', goToPrevSlide);
             nextButton.addEventListener('click', goToNextSlide);
 
-            // Initialize the carousel
             updateCarousel();
 
-            // Auto-play functionality
             let autoplayInterval = setInterval(goToNextSlide, 5000);
 
-            // Pause autoplay when hovering over the carousel
             const carouselContainer = document.querySelector('.carousel-container');
             carouselContainer.addEventListener('mouseenter', () => {
                 clearInterval(autoplayInterval);
@@ -98,20 +93,16 @@
                 autoplayInterval = setInterval(goToNextSlide, 5000);
             });
         });
-        // Variables globales pour la gestion du lightbox
         let currentServiceId = '';
         let currentLightboxIndex = 0;
         
-        // Fonctions pour naviguer entre les images dans la carte
         function showImage(container, index) {
             const images = container.querySelectorAll('.service-image1');
             const dots = container.querySelectorAll('.image-dot');
             
-            // Désactiver toutes les images et points
             images.forEach(img => img.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
             
-            // Activer l'image et le point sélectionnés
             if (images[index]) {
                 images[index].classList.add('active');
                 dots[index].classList.add('active');
@@ -124,14 +115,12 @@
             const images = container.querySelectorAll('.service-image1');
             let currentIndex = 0;
             
-            // Trouver l'index actuel
             images.forEach((img, i) => {
                 if (img.classList.contains('active')) {
                     currentIndex = i;
                 }
             });
             
-            // Calculer le nouvel index
             const nextIndex = (currentIndex + 1) % images.length;
             showImage(container, nextIndex);
         }
@@ -142,22 +131,18 @@
             const images = container.querySelectorAll('.service-image1');
             let currentIndex = 0;
             
-            // Trouver l'index actuel
             images.forEach((img, i) => {
                 if (img.classList.contains('active')) {
                     currentIndex = i;
                 }
             });
             
-            // Calculer le nouvel index
             const prevIndex = (currentIndex - 1 + images.length) % images.length;
             showImage(container, prevIndex);
         }
         
-        // Ajouter des événements de clic aux images pour ouvrir la lightbox
         document.querySelectorAll('.service-image-container').forEach(container => {
             container.addEventListener('click', function(e) {
-                // Ne pas ouvrir la lightbox si on a cliqué sur une flèche ou un point
                 if (e.target.closest('.image-arrow') || e.target.closest('.image-dot')) {
                     return;
                 }
@@ -171,33 +156,25 @@
             });
         });
         
-        // Fonction pour ouvrir la lightbox
         function openLightbox(serviceId, imageIndex) {
             const lightbox = document.getElementById("lightbox");
             const lightboxImg = document.getElementById("lightbox-img");
             const serviceCard = document.querySelector(`.service-card1[data-id="${serviceId}"]`);
             const images = serviceCard.querySelectorAll('.service-image1');
             
-            // Sauvegarder les informations actuelles
             currentServiceId = serviceId;
             currentLightboxIndex = imageIndex;
             
-            // Définir l'image
             lightboxImg.src = images[imageIndex].src;
             lightboxImg.alt = images[imageIndex].alt;
             
-            // Mettre à jour le compteur
             updateLightboxCounter(imageIndex, images.length);
             
-            // Générer les points de navigation
             generateLightboxDots(images.length, imageIndex);
             
-            // Afficher la lightbox
             lightbox.style.display = "flex";
-            // document.body.classList.add("noscroll");
         }
         
-        // Fonction pour fermer la lightbox
         function closeLightbox(event) {
             const lightboxContent = document.querySelector('.service-image-container');
             if (!lightboxContent.contains(event.target) || event.target.id === 'lightbox') {
@@ -206,7 +183,6 @@
             }
         }
         
-        // Navigation dans la lightbox
         function lightboxNext(event) {
             event.stopPropagation();
             const serviceCard = document.querySelector(`.service-card1[data-id="${currentServiceId}"]`);
@@ -228,14 +204,11 @@
         function updateLightbox(images) {
             const lightboxImg = document.getElementById("lightbox-img");
             
-            // Mettre à jour l'image
             lightboxImg.src = images[currentLightboxIndex].src;
             lightboxImg.alt = images[currentLightboxIndex].alt;
             
-            // Mettre à jour le compteur
             updateLightboxCounter(currentLightboxIndex, images.length);
             
-            // Mettre à jour les points de navigation
             updateLightboxDots();
         }
         
@@ -273,7 +246,6 @@
             });
         }
         
-        // Scroll auto vers un élément au chargement
         window.addEventListener('load', () => {
             const hash = window.location.hash;
             if (hash) {
@@ -329,7 +301,6 @@
     function updateCarousel(index) {
     const cards = document.querySelectorAll('.review-card');
 
-    // Ne fais rien si on est sur mobile
     if (window.innerWidth <= 768) return;
 
     cards.forEach((card, i) => {
