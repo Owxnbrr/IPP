@@ -338,6 +338,37 @@
             display: block;
         }
 
+        /* Conteneur des slides générées depuis Appwrite : porte le badge
+           Google unique en surimpression (position absolue). */
+        .carousel-track {
+            position: relative;
+        }
+
+        /* Titre / sous-titre optionnels d'une slide (renseignés dans l'admin) */
+        .carousel-caption {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            max-width: 55%;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 4px;
+            padding: 10px 14px;
+            box-shadow: var(--shadow);
+            line-height: 1.4;
+        }
+
+        .carousel-caption h2 {
+            margin: 0;
+            font-size: var(--subtitle);
+            color: var(--color-dark);
+        }
+
+        .carousel-caption p {
+            margin: 4px 0 0;
+            font-size: var(--texte);
+            color: #555;
+        }
+
         
         .google-rating {
             position: absolute;
@@ -429,6 +460,13 @@
             left: 10px;
             padding: 5px 5px;
             font-size: 12px;
+        }
+
+        .carousel-caption {
+            bottom: 10px;
+            right: 10px;
+            max-width: 70%;
+            padding: 6px 10px;
         }
 
         .google-logo {

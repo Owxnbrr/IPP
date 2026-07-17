@@ -1,41 +1,79 @@
         let slideIndex = 1;
-        showSlides(slideIndex);
-        
+        let carouselAutoplayTimer = null;
+        let carouselInitialized = false;
+
         function prevSlide() {
             showSlides(slideIndex -= 1);
         }
-        
+
         function nextSlide() {
             showSlides(slideIndex += 1);
         }
-        
+
         function currentSlide(n) {
             showSlides(slideIndex = n);
         }
-        
+
         function showSlides(n) {
             let i;
             let slides = document.getElementsByClassName("carousel-slide");
             let indicators = document.getElementsByClassName("indicator");
-            
+
+            if (!slides.length) return;
+
             if (n > slides.length) {slideIndex = 1}
             if (n < 1) {slideIndex = slides.length}
-            
+
             for (i = 0; i < slides.length; i++) {
                 slides[i].classList.remove("active");
             }
-            
+
             for (i = 0; i < indicators.length; i++) {
                 indicators[i].classList.remove("active");
             }
-            
+
             slides[slideIndex-1].classList.add("active");
-            indicators[slideIndex-1].classList.add("active");
+            if (indicators[slideIndex-1]) {
+                indicators[slideIndex-1].classList.add("active");
+            }
         }
-        
-        setInterval(function() {
-            nextSlide();
-        }, 10000);
+
+        // Initialisation du carrousel, appelée par public-carousel.js une fois
+        // les slides définitives rendues (Appwrite ou fallback statique).
+        // Idempotente : ré-appelable sans empiler les setInterval.
+        function initCarousel() {
+            carouselInitialized = true;
+
+            const slides = document.getElementsByClassName("carousel-slide");
+            const nav = document.querySelector(".carousel-nav");
+            const indicators = document.querySelector(".carousel-indicators");
+
+            if (carouselAutoplayTimer) {
+                clearInterval(carouselAutoplayTimer);
+                carouselAutoplayTimer = null;
+            }
+
+            const several = slides.length > 1;
+            if (nav) nav.style.display = several ? "" : "none";
+            if (indicators) indicators.style.display = several ? "" : "none";
+
+            if (!slides.length) return;
+
+            slideIndex = 1;
+            showSlides(slideIndex);
+
+            // Autoplay uniquement s'il y a plusieurs slides.
+            if (several) {
+                carouselAutoplayTimer = setInterval(nextSlide, 10000);
+            }
+        }
+        window.initCarousel = initCarousel;
+
+        // Filet de sécurité : si le module public-carousel.js ne s'exécute pas
+        // (CDN bloqué, très vieux navigateur), le carrousel statique démarre seul.
+        setTimeout(function () {
+            if (!carouselInitialized) initCarousel();
+        }, 3000);
 
         document.addEventListener('DOMContentLoaded', function() {
             const reviewCards = document.querySelectorAll('.review-card');
@@ -257,16 +295,9 @@
         });
 
 
-    const imageIds = ["IMG_carrousel_1", "IMG_carrousel_2", "IMG_carrousel_3"];
-    imageIds.forEach(id => {
-        const savedImage = localStorage.getItem(id);
-        if (savedImage) {
-        const img = document.getElementById(id);
-        if (img) {
-            img.src = savedImage;
-        }
-        }
-    });
+    // (Supprimé : l'ancien remplacement des images du carrousel depuis
+    // localStorage, hérité du vieil admin. Il aurait écrasé les images
+    // Appwrite chez les navigateurs ayant utilisé l'ancienne page admin.)
 
     window.addEventListener("DOMContentLoaded", () => {
     const cards = JSON.parse(localStorage.getItem("cards") || "[]");
