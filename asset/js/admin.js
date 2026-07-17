@@ -48,9 +48,17 @@ function handleSessionExpired() {
   redirectToLogin();
 }
 
+// Écran global « Vérification de la session… ».
+// Le style inline double l'attribut hidden : même si un ancien admin.css en
+// cache force encore display:flex, l'écran disparaît sans laisser d'espace.
+function setSessionLoading(visible) {
+  loadingEl.hidden = !visible;
+  loadingEl.style.display = visible ? '' : 'none';
+}
+
 function showDashboard(user) {
   isAuthenticated = true;
-  loadingEl.hidden = true;
+  setSessionLoading(false);
   dashboardView.hidden = false;
   userEmailEl.textContent = user && user.email ? user.email : '';
   loadSlides();
@@ -61,12 +69,17 @@ function showDashboardMessage(message) {
   dashboardMessage.hidden = !message;
 }
 
-// Le tableau de bord n'est jamais affiché avant la validation de la session.
+// Le tableau de bord n'est jamais affiché avant la validation de la session,
+// et l'écran de vérification ne reste jamais affiché en même temps que lui :
+// session valide → chargement masqué puis dashboard ; sinon → redirection.
 async function checkSession() {
+  setSessionLoading(true);
   try {
     const user = await account.get();
     showDashboard(user);
   } catch (err) {
+    // Session absente/expirée ou erreur réseau : on ne laisse pas l'écran
+    // tourner indéfiniment, on repart sur la page de connexion.
     logNetworkDiagnostic(err);
     redirectToLogin();
   }
