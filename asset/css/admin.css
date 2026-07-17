@@ -470,6 +470,51 @@
   color: #5a6b7c;
 }
 
+/* Éditeur de prestations du formulaire des services */
+
+.admin-items-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.admin-items-list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.admin-item-row input {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--admin-dark);
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+}
+
+.admin-item-row input:focus {
+  outline: 3px solid var(--admin-secondary);
+  border-color: var(--admin-primary);
+}
+
 .admin-preview img {
   display: block;
   max-width: 320px;
@@ -661,5 +706,13 @@
   .admin-gallery-actions {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .admin-item-row {
+    flex-wrap: wrap;
+  }
+
+  .admin-item-row input {
+    flex: 1 1 100%;
   }
 }

@@ -18,11 +18,13 @@ import {
   APPWRITE_DATABASE_ID,
   APPWRITE_CAROUSEL_TABLE_ID,
   APPWRITE_PROJECTS_TABLE_ID,
+  APPWRITE_SERVICES_TABLE_ID,
   APPWRITE_BUCKET_ID,
 } from './appwrite-config.js';
 
 import { migrateStaticCarousel } from './carousel-migration.js';
 import { migrateStaticProjects } from './projects-migration.js';
+import { migrateStaticServices } from './services-migration.js';
 
 const LOGIN_PAGE = './login.html';
 
@@ -63,8 +65,9 @@ function showDashboard(user) {
   setSessionLoading(false);
   dashboardView.hidden = false;
   userEmailEl.textContent = user && user.email ? user.email : '';
-  // Chargements indépendants et non bloquants l'un pour l'autre.
+  // Chargements indépendants et non bloquants les uns pour les autres.
   loadSlides();
+  loadServices();
   loadProjects();
 }
 
@@ -774,6 +777,676 @@ async function deleteSlide(slide) {
     showCarouselMessage('error', friendlyOperationError(err, 'La suppression a échoué. Réessaie.'));
   } finally {
     setListBusy(false);
+  }
+}
+
+/* ==========================================================================
+   Gestion des services (table services + bucket Storage)
+   ========================================================================== */
+
+const serviceAddBtn = document.getElementById('serviceAddBtn');
+const serviceForm = document.getElementById('serviceForm');
+const serviceFormTitle = document.getElementById('serviceFormTitle');
+const serviceTitleInput = document.getElementById('serviceTitle');
+const serviceAltInput = document.getElementById('serviceAlt');
+const serviceImageInput = document.getElementById('serviceImage');
+const serviceImageHint = document.getElementById('serviceImageHint');
+const servicePreviewWrap = document.getElementById('servicePreviewWrap');
+const servicePreview = document.getElementById('servicePreview');
+const serviceItemsList = document.getElementById('serviceItemsList');
+const serviceItemAddBtn = document.getElementById('serviceItemAddBtn');
+const serviceActiveInput = document.getElementById('serviceActive');
+const serviceSaveBtn = document.getElementById('serviceSaveBtn');
+const serviceCancelBtn = document.getElementById('serviceCancelBtn');
+const servicesMessage = document.getElementById('servicesMessage');
+const servicesImportRetry = document.getElementById('servicesImportRetry');
+const servicesLoading = document.getElementById('servicesLoading');
+const servicesLoadingText = servicesLoading.querySelector('p');
+const servicesEmpty = document.getElementById('servicesEmpty');
+const servicesList = document.getElementById('servicesList');
+
+let services = [];
+let editingService = null;
+let serviceSaving = false;
+let servicesListBusy = false;
+let servicesMigrationAttempted = false;
+let servicePreviewUrl = null;
+let serviceItems = []; // prestations du formulaire, dans l'ordre
+
+/* ---------- Messages et états ---------- */
+
+function showServicesMessage(kind, message) {
+  servicesMessage.textContent = message;
+  servicesMessage.classList.remove('admin-message-success', 'admin-message-error');
+  servicesMessage.classList.add(kind === 'success' ? 'admin-message-success' : 'admin-message-error');
+  servicesMessage.hidden = false;
+}
+
+function clearServicesMessage() {
+  servicesMessage.textContent = '';
+  servicesMessage.hidden = true;
+}
+
+function setServicesLoading(visible, text) {
+  servicesLoading.hidden = !visible;
+  servicesLoadingText.textContent = text || 'Chargement des services…';
+  if (visible) {
+    servicesEmpty.hidden = true;
+    servicesList.hidden = true;
+  }
+}
+
+/* ---------- Aperçu image ---------- */
+
+function clearServicePreview() {
+  if (servicePreviewUrl) {
+    URL.revokeObjectURL(servicePreviewUrl);
+    servicePreviewUrl = null;
+  }
+  servicePreview.removeAttribute('src');
+  servicePreviewWrap.hidden = true;
+}
+
+function showServicePreviewFromFile(file) {
+  if (servicePreviewUrl) URL.revokeObjectURL(servicePreviewUrl);
+  servicePreviewUrl = URL.createObjectURL(file);
+  servicePreview.src = servicePreviewUrl;
+  servicePreviewWrap.hidden = false;
+}
+
+function showServicePreviewFromStorage(fileId) {
+  if (servicePreviewUrl) {
+    URL.revokeObjectURL(servicePreviewUrl);
+    servicePreviewUrl = null;
+  }
+  servicePreview.src = imageViewUrl(fileId);
+  servicePreviewWrap.hidden = false;
+}
+
+serviceImageInput.addEventListener('change', () => {
+  const file = serviceImageInput.files && serviceImageInput.files[0];
+  if (!file) {
+    if (editingService && editingService.imageId) {
+      showServicePreviewFromStorage(editingService.imageId);
+    } else {
+      clearServicePreview();
+    }
+    return;
+  }
+  const problem = validateImageFile(file);
+  if (problem) {
+    showServicesMessage('error', problem);
+    serviceImageInput.value = '';
+    if (editingService && editingService.imageId) {
+      showServicePreviewFromStorage(editingService.imageId);
+    } else {
+      clearServicePreview();
+    }
+    return;
+  }
+  clearServicesMessage();
+  showServicePreviewFromFile(file);
+});
+
+/* ---------- Éditeur de prestations (une ligne par prestation) ---------- */
+
+function renderServiceItems(focusIndex) {
+  serviceItemsList.innerHTML = '';
+
+  serviceItems.forEach((value, index) => {
+    const li = document.createElement('li');
+    li.className = 'admin-item-row';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 255;
+    input.value = value;
+    input.placeholder = 'Ex. : Logo';
+    input.setAttribute('aria-label', `Prestation ${index + 1}`);
+    input.addEventListener('input', () => {
+      serviceItems[index] = input.value;
+    });
+    li.appendChild(input);
+
+    const actions = document.createElement('span');
+    actions.className = 'admin-gallery-actions';
+
+    [
+      { action: 'item-up', text: 'Monter', disabled: index === 0 },
+      { action: 'item-down', text: 'Descendre', disabled: index === serviceItems.length - 1 },
+      { action: 'item-remove', text: 'Supprimer', danger: true },
+    ].forEach(({ action, text, disabled, danger }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'admin-btn admin-btn-small ' + (danger ? 'admin-btn-danger' : 'admin-btn-secondary');
+      btn.dataset.action = action;
+      btn.dataset.index = String(index);
+      btn.textContent = text;
+      btn.disabled = Boolean(disabled);
+      btn.setAttribute('aria-label', `${text} la prestation ${index + 1}`);
+      actions.appendChild(btn);
+    });
+
+    li.appendChild(actions);
+    serviceItemsList.appendChild(li);
+  });
+
+  if (typeof focusIndex === 'number') {
+    const inputs = serviceItemsList.querySelectorAll('input');
+    if (inputs[focusIndex]) inputs[focusIndex].focus();
+  }
+}
+
+serviceItemsList.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn || serviceSaving) return;
+  const index = Number(btn.dataset.index);
+  if (!(index in serviceItems)) return;
+
+  if (btn.dataset.action === 'item-up' && index > 0) {
+    [serviceItems[index - 1], serviceItems[index]] = [serviceItems[index], serviceItems[index - 1]];
+  } else if (btn.dataset.action === 'item-down' && index < serviceItems.length - 1) {
+    [serviceItems[index + 1], serviceItems[index]] = [serviceItems[index], serviceItems[index + 1]];
+  } else if (btn.dataset.action === 'item-remove') {
+    serviceItems.splice(index, 1);
+  }
+  renderServiceItems();
+});
+
+serviceItemAddBtn.addEventListener('click', () => {
+  serviceItems.push('');
+  renderServiceItems(serviceItems.length - 1);
+});
+
+/* ---------- Ouverture / fermeture du formulaire ---------- */
+
+function openServiceForm(service) {
+  editingService = service || null;
+  serviceForm.reset();
+  clearServicePreview();
+  clearServicesMessage();
+
+  if (editingService) {
+    serviceFormTitle.textContent = 'Modifier un service';
+    serviceImageHint.textContent = '(laisser vide pour conserver l’image actuelle)';
+    serviceTitleInput.value = editingService.title || '';
+    serviceAltInput.value = editingService.altText || '';
+    serviceActiveInput.checked = editingService.isActive !== false;
+    if (editingService.imageId) showServicePreviewFromStorage(editingService.imageId);
+    serviceItems = [...(editingService.items || [])];
+  } else {
+    serviceFormTitle.textContent = 'Ajouter un service';
+    serviceImageHint.textContent = '(obligatoire)';
+    serviceActiveInput.checked = true;
+    serviceItems = [''];
+  }
+  renderServiceItems();
+
+  serviceForm.hidden = false;
+  serviceAddBtn.hidden = true;
+  serviceTitleInput.focus();
+}
+
+function closeServiceForm() {
+  if (!serviceForm) return;
+  serviceForm.reset();
+  serviceForm.hidden = true;
+  if (serviceAddBtn) serviceAddBtn.hidden = false;
+  editingService = null;
+  serviceItems = [];
+  renderServiceItems();
+  clearServicePreview();
+}
+
+serviceAddBtn.addEventListener('click', () => openServiceForm(null));
+serviceCancelBtn.addEventListener('click', () => closeServiceForm());
+
+/* ---------- Chargement de la liste ---------- */
+
+async function fetchServices() {
+  const result = await tablesDB.listRows({
+    databaseId: APPWRITE_DATABASE_ID,
+    tableId: APPWRITE_SERVICES_TABLE_ID,
+    queries: [Query.orderAsc('position'), Query.limit(100)],
+  });
+  services = result.rows;
+  renderServices();
+}
+
+async function loadServices() {
+  if (!isAuthenticated) return;
+
+  setServicesLoading(true);
+
+  try {
+    await fetchServices();
+
+    if (!services.length && !servicesMigrationAttempted) {
+      servicesMigrationAttempted = true;
+      await runServicesImport();
+      return;
+    }
+  } catch (err) {
+    console.error('[admin] chargement des services impossible :', err);
+    if (isSessionError(err)) {
+      handleSessionExpired();
+      return;
+    }
+    logNetworkDiagnostic(err);
+    showServicesMessage('error', friendlyOperationError(err, 'Le chargement des services a échoué. Recharge la page pour réessayer.'));
+  } finally {
+    setServicesLoading(false);
+  }
+}
+
+/* ---------- Import automatique des services statiques ---------- */
+
+async function runServicesImport() {
+  if (!isAuthenticated) return;
+
+  servicesImportRetry.hidden = true;
+  clearServicesMessage();
+  setServicesLoading(true, 'Importation des services actuels…');
+
+  let outcome = null;
+  let fatalError = null;
+
+  try {
+    outcome = await migrateStaticServices((current, total) => {
+      setServicesLoading(true, `Importation des services actuels… (${current} sur ${total})`);
+    });
+  } catch (err) {
+    fatalError = err;
+  }
+
+  if (fatalError && isSessionError(fatalError)) {
+    return handleSessionExpired();
+  }
+
+  try {
+    await fetchServices();
+  } catch (err) {
+    console.error('[admin] rechargement après import impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+  } finally {
+    setServicesLoading(false);
+  }
+
+  if (fatalError) {
+    console.error('[admin] import des services impossible :', fatalError);
+    logNetworkDiagnostic(fatalError);
+    showServicesMessage('error',
+      'L’import automatique des services a échoué. Les cartes statiques restent visibles sur le site public. Clique sur « Réessayer l’import ».');
+    servicesImportRetry.hidden = false;
+    return;
+  }
+
+  if (outcome.failures.length > 0) {
+    showServicesMessage('error',
+      `Import partiel : ${outcome.imported} service(s) importé(s) sur ${outcome.total}, `
+      + `${outcome.skipped} déjà présent(s), ${outcome.failures.length} en échec. `
+      + 'Les cartes statiques restent visibles sur le site public. Clique sur « Réessayer l’import ».');
+    servicesImportRetry.hidden = false;
+    return;
+  }
+
+  const detail = outcome.skipped > 0
+    ? `${outcome.imported} ajouté(s), ${outcome.skipped} déjà présent(s).`
+    : `${outcome.imported} ajouté(s).`;
+  showServicesMessage('success', `Services actuels importés : ${detail}`);
+}
+
+servicesImportRetry.addEventListener('click', () => {
+  runServicesImport();
+});
+
+/* ---------- Rendu de la liste ---------- */
+
+function renderServices() {
+  servicesList.innerHTML = '';
+
+  if (!services.length) {
+    servicesEmpty.hidden = false;
+    servicesList.hidden = true;
+    return;
+  }
+
+  servicesEmpty.hidden = true;
+  servicesList.hidden = false;
+
+  services.forEach((service, index) => {
+    const li = document.createElement('li');
+    li.className = 'admin-slide' + (service.isActive ? '' : ' admin-slide-off');
+    li.dataset.id = service.$id;
+
+    const thumbWrap = document.createElement('div');
+    thumbWrap.className = 'admin-slide-thumb';
+    const thumb = document.createElement('img');
+    thumb.loading = 'lazy';
+    thumb.alt = service.altText || service.title;
+    thumb.src = imageViewUrl(service.imageId);
+    thumb.addEventListener('error', () => {
+      thumbWrap.classList.add('admin-slide-thumb-broken');
+      thumb.remove();
+    });
+    thumbWrap.appendChild(thumb);
+
+    const info = document.createElement('div');
+    info.className = 'admin-slide-info';
+
+    const name = document.createElement('p');
+    name.className = 'admin-slide-name';
+    name.textContent = service.title;
+
+    const items = service.items || [];
+    const desc = document.createElement('p');
+    desc.className = 'admin-slide-desc';
+    desc.textContent = truncateText(items.join(', '), 90);
+
+    const meta = document.createElement('p');
+    meta.className = 'admin-slide-meta';
+    const badge = document.createElement('span');
+    badge.className = 'admin-badge ' + (service.isActive ? 'admin-badge-on' : 'admin-badge-off');
+    badge.textContent = service.isActive ? 'Visible' : 'Masqué';
+    meta.appendChild(badge);
+    meta.appendChild(document.createTextNode(
+      ` Position ${index + 1} sur ${services.length} · ${items.length} prestation(s)`
+    ));
+
+    info.appendChild(name);
+    if (items.length) info.appendChild(desc);
+    info.appendChild(meta);
+
+    const actions = document.createElement('div');
+    actions.className = 'admin-slide-actions';
+
+    [
+      { action: 'up', label: 'Monter', disabled: index === 0 },
+      { action: 'down', label: 'Descendre', disabled: index === services.length - 1 },
+      { action: 'edit', label: 'Modifier' },
+      { action: 'toggle', label: service.isActive ? 'Masquer' : 'Afficher' },
+      { action: 'delete', label: 'Supprimer', danger: true },
+    ].forEach(({ action, label, disabled, danger }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'admin-btn admin-btn-small ' + (danger ? 'admin-btn-danger' : 'admin-btn-secondary');
+      btn.dataset.action = action;
+      btn.textContent = label;
+      btn.disabled = Boolean(disabled);
+      btn.setAttribute('aria-label', `${label} : ${service.title}`);
+      actions.appendChild(btn);
+    });
+
+    li.appendChild(thumbWrap);
+    li.appendChild(info);
+    li.appendChild(actions);
+    servicesList.appendChild(li);
+  });
+}
+
+function setServicesListBusy(busy) {
+  servicesListBusy = busy;
+  servicesList.setAttribute('aria-busy', busy ? 'true' : 'false');
+  servicesList.querySelectorAll('button').forEach((btn) => {
+    btn.disabled = busy;
+  });
+  if (!busy) renderServices();
+}
+
+/* ---------- Enregistrement (création et modification) ---------- */
+
+function nextServicePosition() {
+  if (!services.length) return 0;
+  return Math.max(...services.map((s) => Number(s.position) || 0)) + 1;
+}
+
+serviceForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (serviceSaving || !isAuthenticated) return;
+
+  clearServicesMessage();
+
+  const title = serviceTitleInput.value.trim();
+  if (!title) {
+    showServicesMessage('error', 'Merci de renseigner un titre.');
+    serviceTitleInput.focus();
+    return;
+  }
+
+  const file = serviceImageInput.files && serviceImageInput.files[0];
+
+  if (!editingService && !file) {
+    showServicesMessage('error', 'Merci de choisir une image.');
+    serviceImageInput.focus();
+    return;
+  }
+
+  if (file) {
+    const problem = validateImageFile(file);
+    if (problem) {
+      showServicesMessage('error', problem);
+      return;
+    }
+  }
+
+  const data = {
+    title,
+    altText: serviceAltInput.value.trim() || null,
+    items: serviceItems.map((s) => s.trim()).filter(Boolean), // prestations vides ignorées
+    isActive: serviceActiveInput.checked,
+  };
+
+  serviceSaving = true;
+  serviceSaveBtn.disabled = true;
+  serviceCancelBtn.disabled = true;
+  serviceSaveBtn.textContent = file ? 'Envoi de l’image…' : 'Enregistrement…';
+
+  try {
+    if (!editingService) {
+      await createService(data, file);
+      showServicesMessage('success', 'Service ajouté.');
+    } else {
+      await updateService(editingService, data, file);
+      showServicesMessage('success', 'Service mis à jour.');
+    }
+    closeServiceForm();
+    await loadServices();
+  } catch (err) {
+    console.error('[admin] enregistrement du service impossible :', err);
+    if (isSessionError(err)) {
+      handleSessionExpired();
+    } else {
+      showServicesMessage('error', friendlyOperationError(err, 'L’enregistrement a échoué. Réessaie.'));
+    }
+  } finally {
+    serviceSaving = false;
+    serviceSaveBtn.disabled = false;
+    serviceCancelBtn.disabled = false;
+    serviceSaveBtn.textContent = 'Enregistrer';
+  }
+});
+
+async function createService(data, file) {
+  const imageId = await uploadImage(file);
+  serviceSaveBtn.textContent = 'Enregistrement…';
+  try {
+    await tablesDB.createRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_SERVICES_TABLE_ID,
+      rowId: ID.unique(),
+      data: { ...data, imageId, position: nextServicePosition() },
+    });
+  } catch (err) {
+    await tryDeleteFile(imageId, 'orphelin (création de service annulée)');
+    throw err;
+  }
+}
+
+async function updateService(service, data, file) {
+  if (!file) {
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_SERVICES_TABLE_ID,
+      rowId: service.$id,
+      data,
+    });
+    return;
+  }
+
+  const oldImageId = service.imageId;
+  const newImageId = await uploadImage(file);
+  serviceSaveBtn.textContent = 'Enregistrement…';
+
+  try {
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_SERVICES_TABLE_ID,
+      rowId: service.$id,
+      data: { ...data, imageId: newImageId },
+    });
+  } catch (err) {
+    await tryDeleteFile(newImageId, 'nouveau (mise à jour de service annulée)');
+    throw err;
+  }
+
+  if (oldImageId && oldImageId !== newImageId) {
+    const deleted = await tryDeleteFile(oldImageId, 'ancien (service)');
+    if (!deleted) {
+      showServicesMessage('error', 'Service mis à jour, mais l’ancienne image n’a pas pu être supprimée du stockage.');
+    }
+  }
+}
+
+/* ---------- Actions sur la liste (déléguées) ---------- */
+
+servicesList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn || servicesListBusy || !isAuthenticated) return;
+
+  const li = btn.closest('li[data-id]');
+  const service = services.find((s) => s.$id === li?.dataset.id);
+  if (!service) return;
+
+  const action = btn.dataset.action;
+
+  if (action === 'edit') {
+    openServiceForm(service);
+    serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+
+  if (action === 'toggle') return toggleService(service);
+  if (action === 'up') return moveService(service, -1);
+  if (action === 'down') return moveService(service, 1);
+  if (action === 'delete') return deleteService(service);
+});
+
+async function toggleService(service) {
+  clearServicesMessage();
+  setServicesListBusy(true);
+  try {
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_SERVICES_TABLE_ID,
+      rowId: service.$id,
+      data: { isActive: !service.isActive },
+    });
+    showServicesMessage('success', service.isActive ? 'Service masqué sur le site.' : 'Service affiché sur le site.');
+    await loadServices();
+  } catch (err) {
+    console.error('[admin] changement de visibilité impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+    showServicesMessage('error', friendlyOperationError(err, 'Le changement de visibilité a échoué. Réessaie.'));
+  } finally {
+    setServicesListBusy(false);
+  }
+}
+
+async function moveService(service, direction) {
+  const index = services.indexOf(service);
+  const other = services[index + direction];
+  if (!other) return;
+
+  clearServicesMessage();
+  setServicesListBusy(true);
+
+  let posA = Number(service.position) || 0;
+  let posB = Number(other.position) || 0;
+  if (posA === posB) {
+    posA = index;
+    posB = index + direction;
+  }
+
+  try {
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_SERVICES_TABLE_ID,
+      rowId: service.$id,
+      data: { position: posB },
+    });
+    try {
+      await tablesDB.updateRow({
+        databaseId: APPWRITE_DATABASE_ID,
+        tableId: APPWRITE_SERVICES_TABLE_ID,
+        rowId: other.$id,
+        data: { position: posA },
+      });
+    } catch (err) {
+      console.error('[admin] échange de positions incomplet :', err);
+      try {
+        await tablesDB.updateRow({
+          databaseId: APPWRITE_DATABASE_ID,
+          tableId: APPWRITE_SERVICES_TABLE_ID,
+          rowId: service.$id,
+          data: { position: posA },
+        });
+      } catch (revertErr) {
+        console.error('[admin] retour arrière impossible :', revertErr);
+      }
+      throw err;
+    }
+    await loadServices();
+  } catch (err) {
+    if (isSessionError(err)) return handleSessionExpired();
+    showServicesMessage('error', friendlyOperationError(err, 'Le déplacement a échoué. L’ordre n’a pas été modifié.'));
+    await loadServices();
+  } finally {
+    setServicesListBusy(false);
+  }
+}
+
+async function deleteService(service) {
+  const confirmed = window.confirm(
+    `Supprimer définitivement le service « ${service.title} » ?\n`
+    + 'Le service et son image seront supprimés. Cette action est irréversible.'
+  );
+  if (!confirmed) return;
+
+  clearServicesMessage();
+  setServicesListBusy(true);
+
+  try {
+    await tablesDB.deleteRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_SERVICES_TABLE_ID,
+      rowId: service.$id,
+    });
+
+    let message = 'Service supprimé.';
+    if (service.imageId) {
+      const deleted = await tryDeleteFile(service.imageId, 'du service supprimé');
+      if (!deleted) {
+        message = 'Service supprimé, mais son image n’a pas pu être supprimée du stockage.';
+      }
+    }
+    showServicesMessage(message.includes('pas pu') ? 'error' : 'success', message);
+    await loadServices();
+  } catch (err) {
+    console.error('[admin] suppression du service impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+    showServicesMessage('error', friendlyOperationError(err, 'La suppression a échoué. Réessaie.'));
+  } finally {
+    setServicesListBusy(false);
   }
 }
 

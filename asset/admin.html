@@ -114,6 +114,91 @@
                 <ul id="carouselList" class="admin-slide-list" hidden></ul>
             </section>
 
+            <section class="admin-section" id="servicesSection" aria-labelledby="servicesSectionTitle">
+                <h2 id="servicesSectionTitle" class="admin-section-title">Gestion des services</h2>
+                <p class="admin-section-hint">
+                    Ajouter, modifier, masquer, supprimer et réordonner les cartes de la
+                    section « Nos Services » (image, titre et liste de prestations).
+                </p>
+
+                <p id="servicesMessage" class="admin-message" role="status" aria-live="polite" hidden></p>
+
+                <button type="button" id="servicesImportRetry"
+                        class="admin-btn admin-btn-secondary admin-btn-auto admin-retry-btn" hidden>
+                    Réessayer l’import
+                </button>
+
+                <div class="admin-toolbar">
+                    <button type="button" id="serviceAddBtn" class="admin-btn admin-btn-primary admin-btn-auto">
+                        Ajouter un service
+                    </button>
+                </div>
+
+                <form id="serviceForm" class="admin-form" hidden novalidate>
+                    <h3 id="serviceFormTitle" class="admin-form-title">Ajouter un service</h3>
+
+                    <div class="admin-form-grid">
+                        <div class="admin-field">
+                            <label for="serviceTitle">Titre (obligatoire)</label>
+                            <input type="text" id="serviceTitle" maxlength="255" required
+                                   placeholder="Ex. : Création Graphique">
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="serviceAlt">Texte alternatif de l'image</label>
+                            <input type="text" id="serviceAlt" maxlength="255"
+                                   placeholder="Description de l'image">
+                        </div>
+
+                        <div class="admin-field admin-field-full">
+                            <label for="serviceImage">Image
+                                <span id="serviceImageHint" class="admin-label-hint">(obligatoire)</span>
+                            </label>
+                            <input type="file" id="serviceImage" accept="image/jpeg,image/png,image/webp,image/avif">
+                            <div id="servicePreviewWrap" class="admin-preview" hidden>
+                                <img id="servicePreview" alt="Aperçu de l'image du service">
+                            </div>
+                        </div>
+
+                        <div class="admin-field admin-field-full">
+                            <span class="admin-items-label" id="serviceItemsLabel">Prestations (une ligne par prestation)</span>
+                            <ul id="serviceItemsList" class="admin-items-list"
+                                aria-labelledby="serviceItemsLabel"></ul>
+                            <button type="button" id="serviceItemAddBtn"
+                                    class="admin-btn admin-btn-secondary admin-btn-small">
+                                Ajouter une prestation
+                            </button>
+                        </div>
+
+                        <div class="admin-field admin-field-check admin-field-full">
+                            <input type="checkbox" id="serviceActive" checked>
+                            <label for="serviceActive">Afficher ce service sur le site</label>
+                        </div>
+                    </div>
+
+                    <div class="admin-form-actions">
+                        <button type="submit" id="serviceSaveBtn" class="admin-btn admin-btn-primary admin-btn-auto">
+                            Enregistrer
+                        </button>
+                        <button type="button" id="serviceCancelBtn" class="admin-btn admin-btn-secondary">
+                            Annuler
+                        </button>
+                    </div>
+                </form>
+
+                <div id="servicesLoading" class="admin-list-loading" hidden>
+                    <div class="admin-spinner admin-spinner-small" aria-hidden="true"></div>
+                    <p>Chargement des services…</p>
+                </div>
+
+                <p id="servicesEmpty" class="admin-placeholder" hidden>
+                    Aucun service pour le moment.
+                    Clique sur « Ajouter un service » pour créer le premier.
+                </p>
+
+                <ul id="servicesList" class="admin-slide-list" hidden></ul>
+            </section>
+
             <section class="admin-section" id="projectsSection" aria-labelledby="projectsSectionTitle">
                 <h2 id="projectsSectionTitle" class="admin-section-title">Gestion des réalisations</h2>
                 <p class="admin-section-hint">
