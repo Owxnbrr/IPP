@@ -1,7 +1,8 @@
 // asset/js/admin.js
-// Page d'administration IPP.
-// Étape 1 : authentification Appwrite (session gérée par le SDK, rien en localStorage).
-// Étape 2 : gestion complète des images du carrousel (table carousel_slides + bucket).
+// Tableau de bord de l'administration IPP (page protégée).
+// La connexion se fait sur ./login.html : ici, toute absence de session valide
+// provoque une redirection immédiate. La session est gérée par le SDK Appwrite,
+// rien n'est stocké manuellement (pas de localStorage).
 
 import {
   account,
@@ -10,6 +11,7 @@ import {
   Query,
   ID,
   AppwriteException,
+  logNetworkDiagnostic,
 } from './appwrite-client.js';
 
 import {
@@ -18,69 +20,40 @@ import {
   APPWRITE_BUCKET_ID,
 } from './appwrite-config.js';
 
+import { migrateStaticCarousel } from './carousel-migration.js';
+
+const LOGIN_PAGE = './login.html';
+
 const loadingEl = document.getElementById('adminLoading');
-const loginView = document.getElementById('loginView');
 const dashboardView = document.getElementById('dashboardView');
-
-const loginForm = document.getElementById('loginForm');
-const emailInput = document.getElementById('loginEmail');
-const passwordInput = document.getElementById('loginPassword');
-const loginBtn = document.getElementById('loginBtn');
-const loginError = document.getElementById('loginError');
-
 const logoutBtn = document.getElementById('logoutBtn');
 const userEmailEl = document.getElementById('adminUserEmail');
 const dashboardMessage = document.getElementById('dashboardMessage');
 
-let submitting = false;
 let isAuthenticated = false;
 
-/* ---------- Affichage des vues ---------- */
+/* ---------- Garde de session ---------- */
 
-function showLoading() {
-  loadingEl.hidden = false;
-  loginView.hidden = true;
-  dashboardView.hidden = true;
-}
-
-function showLogin() {
+function redirectToLogin() {
   isAuthenticated = false;
-  loadingEl.hidden = true;
-  loginView.hidden = false;
-  dashboardView.hidden = true;
-  userEmailEl.textContent = '';
-  passwordInput.value = '';
-  closeSlideForm();
-  emailInput.focus();
-}
-
-function showDashboard(user) {
-  isAuthenticated = true;
-  loadingEl.hidden = true;
-  loginView.hidden = true;
-  dashboardView.hidden = false;
-  userEmailEl.textContent = user && user.email ? user.email : '';
-  loadSlides();
-}
-
-// Session expirée pendant une opération : retour propre à l'écran de connexion.
-function handleSessionExpired() {
-  showLogin();
-  showLoginError('Ta session a expiré. Reconnecte-toi pour continuer.');
+  window.location.replace(LOGIN_PAGE);
 }
 
 function isSessionError(err) {
   return err instanceof AppwriteException && err.code === 401;
 }
 
-function showLoginError(message) {
-  loginError.textContent = message;
-  loginError.hidden = false;
+// Session expirée pendant une opération : on arrête tout et on repart au login.
+function handleSessionExpired() {
+  redirectToLogin();
 }
 
-function clearLoginError() {
-  loginError.textContent = '';
-  loginError.hidden = true;
+function showDashboard(user) {
+  isAuthenticated = true;
+  loadingEl.hidden = true;
+  dashboardView.hidden = false;
+  userEmailEl.textContent = user && user.email ? user.email : '';
+  loadSlides();
 }
 
 function showDashboardMessage(message) {
@@ -88,75 +61,16 @@ function showDashboardMessage(message) {
   dashboardMessage.hidden = !message;
 }
 
-/* ---------- Messages d'erreur en français ---------- */
-
-function friendlyErrorMessage(err) {
-  if (err instanceof AppwriteException) {
-    if (err.code === 401 || err.type === 'user_invalid_credentials') {
-      return 'E-mail ou mot de passe incorrect.';
-    }
-    if (err.code === 429) {
-      return 'Trop de tentatives. Réessaie dans quelques minutes.';
-    }
-    if (err.type === 'user_blocked') {
-      return 'Ce compte est bloqué. Contacte le responsable du site.';
-    }
-    if (err.code >= 500) {
-      return 'Le serveur est momentanément indisponible. Réessaie plus tard.';
-    }
-    return 'La connexion a échoué. Vérifie tes identifiants et réessaie.';
-  }
-  // Erreur réseau (fetch impossible, hors ligne, etc.)
-  return 'Impossible de contacter le serveur. Vérifie ta connexion internet.';
-}
-
-/* ---------- Session ---------- */
-
+// Le tableau de bord n'est jamais affiché avant la validation de la session.
 async function checkSession() {
-  showLoading();
   try {
-    const user = await account.get();
-    showDashboard(user);
-  } catch (_err) {
-    // Pas de session valide (ou réseau indisponible) : on affiche le formulaire.
-    showLogin();
-  }
-}
-
-/* ---------- Connexion ---------- */
-
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  if (submitting) return;
-
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  clearLoginError();
-
-  if (!email || !password) {
-    showLoginError('Merci de renseigner l’e-mail et le mot de passe.');
-    return;
-  }
-
-  submitting = true;
-  loginBtn.disabled = true;
-  loginBtn.textContent = 'Connexion…';
-
-  try {
-    await account.createEmailPasswordSession({ email, password });
-    passwordInput.value = '';
     const user = await account.get();
     showDashboard(user);
   } catch (err) {
-    showLoginError(friendlyErrorMessage(err));
-    passwordInput.value = '';
-  } finally {
-    submitting = false;
-    loginBtn.disabled = false;
-    loginBtn.textContent = 'Se connecter';
+    logNetworkDiagnostic(err);
+    redirectToLogin();
   }
-});
+}
 
 /* ---------- Déconnexion ---------- */
 
@@ -165,17 +79,11 @@ logoutBtn.addEventListener('click', async () => {
   showDashboardMessage('');
   try {
     await account.deleteSession({ sessionId: 'current' });
-    showLogin();
   } catch (err) {
-    if (err instanceof AppwriteException && err.code === 401) {
-      // La session avait déjà expiré : retour à l'écran de connexion.
-      showLogin();
-    } else {
-      showDashboardMessage('La déconnexion a échoué. Vérifie ta connexion et réessaie.');
-    }
-  } finally {
-    logoutBtn.disabled = false;
+    // Session déjà expirée ou erreur : on repart quand même au login.
+    console.error('[admin] déconnexion :', err);
   }
+  redirectToLogin();
 });
 
 /* ==========================================================================
@@ -364,32 +272,119 @@ slideImageInput.addEventListener('change', () => {
 
 /* ---------- Chargement et affichage de la liste ---------- */
 
+const carouselImportRetry = document.getElementById('carouselImportRetry');
+const carouselLoadingText = carouselLoading.querySelector('p');
+
+let migrationAttempted = false; // un seul import automatique par chargement de page
+
+function setCarouselLoading(visible, text) {
+  carouselLoading.hidden = !visible;
+  carouselLoadingText.textContent = text || 'Chargement des images du carrousel…';
+  if (visible) {
+    carouselEmpty.hidden = true;
+    carouselList.hidden = true;
+  }
+}
+
+// Lecture + rendu de la liste, sans logique d'import (utilisé partout).
+async function fetchSlides() {
+  const result = await tablesDB.listRows({
+    databaseId: APPWRITE_DATABASE_ID,
+    tableId: APPWRITE_CAROUSEL_TABLE_ID,
+    queries: [Query.orderAsc('position'), Query.limit(SLIDES_LIMIT)],
+  });
+  slides = result.rows;
+  renderSlides();
+}
+
 async function loadSlides() {
   if (!isAuthenticated) return;
 
-  carouselLoading.hidden = false;
-  carouselEmpty.hidden = true;
-  carouselList.hidden = true;
+  setCarouselLoading(true);
 
   try {
-    const result = await tablesDB.listRows({
-      databaseId: APPWRITE_DATABASE_ID,
-      tableId: APPWRITE_CAROUSEL_TABLE_ID,
-      queries: [Query.orderAsc('position'), Query.limit(SLIDES_LIMIT)],
-    });
-    slides = result.rows;
-    renderSlides();
+    await fetchSlides();
+
+    // Table vide alors que le site public a déjà un carrousel statique :
+    // import automatique unique des slides existantes.
+    if (!slides.length && !migrationAttempted) {
+      migrationAttempted = true;
+      await runCarouselImport();
+      return;
+    }
   } catch (err) {
     console.error('[admin] chargement du carrousel impossible :', err);
     if (isSessionError(err)) {
       handleSessionExpired();
       return;
     }
+    logNetworkDiagnostic(err);
     showCarouselMessage('error', friendlyOperationError(err, 'Le chargement des images a échoué. Recharge la page pour réessayer.'));
   } finally {
-    carouselLoading.hidden = true;
+    setCarouselLoading(false);
   }
 }
+
+/* ---------- Import automatique du carrousel statique ---------- */
+
+async function runCarouselImport() {
+  if (!isAuthenticated) return;
+
+  carouselImportRetry.hidden = true;
+  clearCarouselMessage();
+  setCarouselLoading(true, 'Importation du carrousel actuel…');
+
+  let outcome = null;
+  let fatalError = null;
+
+  try {
+    outcome = await migrateStaticCarousel((current, total) => {
+      setCarouselLoading(true, `Importation du carrousel actuel… (image ${current} sur ${total})`);
+    });
+  } catch (err) {
+    fatalError = err;
+  }
+
+  if (fatalError && isSessionError(fatalError)) {
+    return handleSessionExpired();
+  }
+
+  // On affiche l'état réel de la table, import réussi ou non.
+  try {
+    await fetchSlides();
+  } catch (err) {
+    console.error('[admin] rechargement après import impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+  } finally {
+    setCarouselLoading(false);
+  }
+
+  if (fatalError) {
+    console.error('[admin] import du carrousel impossible :', fatalError);
+    logNetworkDiagnostic(fatalError);
+    showCarouselMessage('error',
+      'L’import automatique du carrousel a échoué. Les images statiques restent visibles sur le site public. Clique sur « Réessayer l’import ».');
+    carouselImportRetry.hidden = false;
+    return;
+  }
+
+  if (outcome.failures.length > 0) {
+    showCarouselMessage('error',
+      `Import partiel : ${outcome.imported} image(s) importée(s) sur ${outcome.total}, ${outcome.failures.length} en échec. `
+      + 'Les images statiques restent visibles sur le site public. Clique sur « Réessayer l’import » pour les images manquantes.');
+    carouselImportRetry.hidden = false;
+    return;
+  }
+
+  const detail = outcome.skipped > 0
+    ? `${outcome.imported} image(s) ajoutée(s), ${outcome.skipped} déjà présente(s).`
+    : `${outcome.imported} image(s) ajoutée(s).`;
+  showCarouselMessage('success', `Carrousel actuel importé : ${detail}`);
+}
+
+carouselImportRetry.addEventListener('click', () => {
+  runCarouselImport();
+});
 
 function slideLabel(slide) {
   return slide.title || slide.altText || 'Image sans titre';

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Connexion — Administration IPP</title>
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Vérification d'une session déjà ouverte -->
+    <div id="loginLoading" class="admin-loading">
+        <div class="admin-spinner" aria-hidden="true"></div>
+        <p>Vérification de la session…</p>
+    </div>
+
+    <!-- Formulaire de connexion (seule vue de cette page) -->
+    <main id="loginView" class="admin-login-view" hidden>
+        <form id="loginForm" class="admin-login-card" novalidate>
+            <p class="admin-login-brand">IPP</p>
+            <h1 class="admin-login-title">Connexion à l’administration</h1>
+            <p class="admin-login-subtitle">Réservé au responsable du site.</p>
+
+            <div class="admin-field">
+                <label for="loginEmail">Adresse e-mail</label>
+                <input type="email" id="loginEmail" name="email"
+                       autocomplete="username" required
+                       placeholder="admin@exemple.fr">
+            </div>
+
+            <div class="admin-field">
+                <label for="loginPassword">Mot de passe</label>
+                <input type="password" id="loginPassword" name="password"
+                       autocomplete="current-password" required
+                       placeholder="••••••••">
+            </div>
+
+            <p id="loginError" class="admin-error" role="alert" aria-live="polite" hidden></p>
+
+            <button type="submit" id="loginBtn" class="admin-btn admin-btn-primary">
+                Se connecter
+            </button>
+        </form>
+    </main>
+
+    <script type="module" src="./js/login.js"></script>
+</body>
+</html>

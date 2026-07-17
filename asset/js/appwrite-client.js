@@ -25,4 +25,19 @@ const account = new Account(client);
 const tablesDB = new TablesDB(client);
 const storage = new Storage(client);
 
-export { client, account, tablesDB, storage, Query, ID, AppwriteException };
+// Diagnostic console pour les erreurs réseau type "Failed to fetch"
+// (jamais affiché dans l'interface). Cause la plus fréquente : l'origin
+// courant n'est pas déclaré comme plateforme Web dans le projet Appwrite.
+function logNetworkDiagnostic(err) {
+  if (err instanceof AppwriteException) return;
+  console.error(
+    '[appwrite] Requête réseau impossible.',
+    '\n  Origin actuel :', window.location.origin,
+    '\n  Endpoint utilisé :', APPWRITE_ENDPOINT,
+    '\n  Vérifie que le hostname de cet origin (sans https://) est déclaré',
+    'comme plateforme Web dans le projet Appwrite (CORS).',
+    '\n  Erreur :', err
+  );
+}
+
+export { client, account, tablesDB, storage, Query, ID, AppwriteException, logNetworkDiagnostic };

@@ -9,41 +9,14 @@
 </head>
 <body class="admin-body">
 
-    <!-- Écran de chargement initial (vérification de session) -->
+    <!-- Écran temporaire : vérification de la session avant tout affichage.
+         Sans session valide, admin.js redirige immédiatement vers ./login.html. -->
     <div id="adminLoading" class="admin-loading">
         <div class="admin-spinner" aria-hidden="true"></div>
         <p>Vérification de la session…</p>
     </div>
 
-    <!-- Écran de connexion -->
-    <main id="loginView" class="admin-login-view" hidden>
-        <form id="loginForm" class="admin-login-card" novalidate>
-            <h1 class="admin-login-title">Administration IPP</h1>
-            <p class="admin-login-subtitle">Connecte-toi pour gérer le contenu du site.</p>
-
-            <div class="admin-field">
-                <label for="loginEmail">Adresse e-mail</label>
-                <input type="email" id="loginEmail" name="email"
-                       autocomplete="username" required
-                       placeholder="admin@exemple.fr">
-            </div>
-
-            <div class="admin-field">
-                <label for="loginPassword">Mot de passe</label>
-                <input type="password" id="loginPassword" name="password"
-                       autocomplete="current-password" required
-                       placeholder="••••••••">
-            </div>
-
-            <p id="loginError" class="admin-error" role="alert" aria-live="polite" hidden></p>
-
-            <button type="submit" id="loginBtn" class="admin-btn admin-btn-primary">
-                Se connecter
-            </button>
-        </form>
-    </main>
-
-    <!-- Tableau de bord (visible uniquement avec une session valide) -->
+    <!-- Tableau de bord (affiché uniquement après validation de la session) -->
     <div id="dashboardView" class="admin-dashboard" hidden>
         <header class="admin-header">
             <div class="admin-header-inner">
@@ -68,6 +41,11 @@
                 </p>
 
                 <p id="carouselMessage" class="admin-message" role="status" aria-live="polite" hidden></p>
+
+                <button type="button" id="carouselImportRetry"
+                        class="admin-btn admin-btn-secondary admin-btn-auto admin-retry-btn" hidden>
+                    Réessayer l’import
+                </button>
 
                 <div class="admin-toolbar">
                     <button type="button" id="slideAddBtn" class="admin-btn admin-btn-primary admin-btn-auto">

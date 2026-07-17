@@ -1,0 +1,4 @@
+# URLs propres pour l'administration IPP.
+# Les redirections /success et /cancel (Stripe) restent gérées par netlify.main.toml.
+/login    /login.html    200
+/admin    /admin.html    200

@@ -71,6 +71,15 @@
   box-sizing: border-box;
 }
 
+.admin-login-brand {
+  margin: 0 0 4px;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: var(--admin-primary);
+  text-align: center;
+}
+
 .admin-login-title {
   margin: 0 0 6px;
   font-size: 24px;
@@ -261,6 +270,10 @@
 
 .admin-toolbar {
   margin-bottom: 18px;
+}
+
+.admin-retry-btn {
+  margin-bottom: 16px;
 }
 
 .admin-btn-auto {
