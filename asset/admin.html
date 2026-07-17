@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Administration IPP</title>
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- Écran de chargement initial (vérification de session) -->
+    <div id="adminLoading" class="admin-loading">
+        <div class="admin-spinner" aria-hidden="true"></div>
+        <p>Vérification de la session…</p>
+    </div>
+
+    <!-- Écran de connexion -->
+    <main id="loginView" class="admin-login-view" hidden>
+        <form id="loginForm" class="admin-login-card" novalidate>
+            <h1 class="admin-login-title">Administration IPP</h1>
+            <p class="admin-login-subtitle">Connecte-toi pour gérer le contenu du site.</p>
+
+            <div class="admin-field">
+                <label for="loginEmail">Adresse e-mail</label>
+                <input type="email" id="loginEmail" name="email"
+                       autocomplete="username" required
+                       placeholder="admin@exemple.fr">
+            </div>
+
+            <div class="admin-field">
+                <label for="loginPassword">Mot de passe</label>
+                <input type="password" id="loginPassword" name="password"
+                       autocomplete="current-password" required
+                       placeholder="••••••••">
+            </div>
+
+            <p id="loginError" class="admin-error" role="alert" aria-live="polite" hidden></p>
+
+            <button type="submit" id="loginBtn" class="admin-btn admin-btn-primary">
+                Se connecter
+            </button>
+        </form>
+    </main>
+
+    <!-- Tableau de bord (visible uniquement avec une session valide) -->
+    <div id="dashboardView" class="admin-dashboard" hidden>
+        <header class="admin-header">
+            <div class="admin-header-inner">
+                <h1 class="admin-header-title">Administration IPP</h1>
+                <div class="admin-header-actions">
+                    <span id="adminUserEmail" class="admin-user-email"></span>
+                    <button type="button" id="logoutBtn" class="admin-btn admin-btn-secondary">
+                        Se déconnecter
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main">
+            <p id="dashboardMessage" class="admin-notice" role="status" aria-live="polite" hidden></p>
+
+            <section class="admin-section" id="carouselSection" aria-labelledby="carouselSectionTitle">
+                <h2 id="carouselSectionTitle" class="admin-section-title">Gestion du carrousel</h2>
+                <p class="admin-section-hint">
+                    Ajouter, modifier, masquer, supprimer et réordonner les images du
+                    carrousel de la page d'accueil.
+                </p>
+
+                <p id="carouselMessage" class="admin-message" role="status" aria-live="polite" hidden></p>
+
+                <div class="admin-toolbar">
+                    <button type="button" id="slideAddBtn" class="admin-btn admin-btn-primary admin-btn-auto">
+                        Ajouter une image
+                    </button>
+                </div>
+
+                <form id="slideForm" class="admin-form" hidden novalidate>
+                    <h3 id="slideFormTitle" class="admin-form-title">Ajouter une image</h3>
+
+                    <div class="admin-form-grid">
+                        <div class="admin-field admin-field-full">
+                            <label for="slideImage">Image <span id="slideImageHint" class="admin-label-hint">(obligatoire)</span></label>
+                            <input type="file" id="slideImage" accept="image/jpeg,image/png,image/webp,image/avif">
+                            <div id="slidePreviewWrap" class="admin-preview" hidden>
+                                <img id="slidePreview" alt="Aperçu de l'image sélectionnée">
+                            </div>
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="slideTitle">Titre (facultatif)</label>
+                            <input type="text" id="slideTitle" maxlength="255">
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="slideSubtitle">Sous-titre (facultatif)</label>
+                            <input type="text" id="slideSubtitle" maxlength="255">
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="slideAlt">Texte alternatif (description de l'image)</label>
+                            <input type="text" id="slideAlt" maxlength="255" placeholder="Ex. : Flyers imprimés par IPP">
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="slideLink">Lien (facultatif)</label>
+                            <input type="text" id="slideLink" placeholder="https://… , /page ou tarifs.html">
+                        </div>
+
+                        <div class="admin-field admin-field-check admin-field-full">
+                            <input type="checkbox" id="slideActive" checked>
+                            <label for="slideActive">Afficher cette image sur le site</label>
+                        </div>
+                    </div>
+
+                    <div class="admin-form-actions">
+                        <button type="submit" id="slideSaveBtn" class="admin-btn admin-btn-primary admin-btn-auto">
+                            Enregistrer
+                        </button>
+                        <button type="button" id="slideCancelBtn" class="admin-btn admin-btn-secondary">
+                            Annuler
+                        </button>
+                    </div>
+                </form>
+
+                <div id="carouselLoading" class="admin-list-loading" hidden>
+                    <div class="admin-spinner admin-spinner-small" aria-hidden="true"></div>
+                    <p>Chargement des images du carrousel…</p>
+                </div>
+
+                <p id="carouselEmpty" class="admin-placeholder" hidden>
+                    Aucune image dans le carrousel pour le moment.
+                    Clique sur « Ajouter une image » pour créer la première.
+                </p>
+
+                <ul id="carouselList" class="admin-slide-list" hidden></ul>
+            </section>
+
+            <section class="admin-section" id="projectsSection" aria-labelledby="projectsSectionTitle">
+                <h2 id="projectsSectionTitle" class="admin-section-title">Gestion des réalisations</h2>
+                <p class="admin-section-hint">
+                    Ajouter, modifier, masquer, supprimer et réordonner les réalisations,
+                    avec une image principale et une galerie d'images par projet.
+                </p>
+                <div class="admin-placeholder">
+                    Les outils de gestion des réalisations seront ajoutés à l'étape suivante.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="./js/admin.js"></script>
+</body>
+</html>
