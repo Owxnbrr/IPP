@@ -17,10 +17,12 @@ import {
 import {
   APPWRITE_DATABASE_ID,
   APPWRITE_CAROUSEL_TABLE_ID,
+  APPWRITE_PROJECTS_TABLE_ID,
   APPWRITE_BUCKET_ID,
 } from './appwrite-config.js';
 
 import { migrateStaticCarousel } from './carousel-migration.js';
+import { migrateStaticProjects } from './projects-migration.js';
 
 const LOGIN_PAGE = './login.html';
 
@@ -61,7 +63,9 @@ function showDashboard(user) {
   setSessionLoading(false);
   dashboardView.hidden = false;
   userEmailEl.textContent = user && user.email ? user.email : '';
+  // Chargements indépendants et non bloquants l'un pour l'autre.
   loadSlides();
+  loadProjects();
 }
 
 function showDashboardMessage(message) {
@@ -770,6 +774,767 @@ async function deleteSlide(slide) {
     showCarouselMessage('error', friendlyOperationError(err, 'La suppression a échoué. Réessaie.'));
   } finally {
     setListBusy(false);
+  }
+}
+
+/* ==========================================================================
+   Gestion des réalisations (table projects + bucket Storage)
+   ========================================================================== */
+
+const projectAddBtn = document.getElementById('projectAddBtn');
+const projectForm = document.getElementById('projectForm');
+const projectFormTitle = document.getElementById('projectFormTitle');
+const projectTitleInput = document.getElementById('projectTitle');
+const projectDescriptionInput = document.getElementById('projectDescription');
+const projectCategoryInput = document.getElementById('projectCategory');
+const projectCoverInput = document.getElementById('projectCover');
+const projectCoverHint = document.getElementById('projectCoverHint');
+const projectCoverPreviewWrap = document.getElementById('projectCoverPreviewWrap');
+const projectCoverPreview = document.getElementById('projectCoverPreview');
+const projectCoverAltInput = document.getElementById('projectCoverAlt');
+const projectGalleryInput = document.getElementById('projectGalleryInput');
+const projectGalleryList = document.getElementById('projectGalleryList');
+const projectActiveInput = document.getElementById('projectActive');
+const projectSaveBtn = document.getElementById('projectSaveBtn');
+const projectCancelBtn = document.getElementById('projectCancelBtn');
+const projectsMessage = document.getElementById('projectsMessage');
+const projectsImportRetry = document.getElementById('projectsImportRetry');
+const projectsLoading = document.getElementById('projectsLoading');
+const projectsLoadingText = projectsLoading.querySelector('p');
+const projectsEmpty = document.getElementById('projectsEmpty');
+const projectsList = document.getElementById('projectsList');
+
+let projects = [];              // lignes triées par position croissante
+let editingProject = null;      // ligne en cours de modification (null = création)
+let projectSaving = false;
+let projectsListBusy = false;
+let projectsMigrationAttempted = false;
+let coverPreviewUrl = null;
+// Galerie du formulaire : tableau ordonné d'éléments
+// { kind: 'existing', fileId } ou { kind: 'new', file, url }.
+let galleryItems = [];
+
+/* ---------- Messages et états ---------- */
+
+function showProjectsMessage(kind, message) {
+  projectsMessage.textContent = message;
+  projectsMessage.classList.remove('admin-message-success', 'admin-message-error');
+  projectsMessage.classList.add(kind === 'success' ? 'admin-message-success' : 'admin-message-error');
+  projectsMessage.hidden = false;
+}
+
+function clearProjectsMessage() {
+  projectsMessage.textContent = '';
+  projectsMessage.hidden = true;
+}
+
+function setProjectsLoading(visible, text) {
+  projectsLoading.hidden = !visible;
+  projectsLoadingText.textContent = text || 'Chargement des réalisations…';
+  if (visible) {
+    projectsEmpty.hidden = true;
+    projectsList.hidden = true;
+  }
+}
+
+/* ---------- Aperçus du formulaire ---------- */
+
+function clearCoverPreview() {
+  if (coverPreviewUrl) {
+    URL.revokeObjectURL(coverPreviewUrl);
+    coverPreviewUrl = null;
+  }
+  projectCoverPreview.removeAttribute('src');
+  projectCoverPreviewWrap.hidden = true;
+}
+
+function showCoverPreviewFromFile(file) {
+  if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl);
+  coverPreviewUrl = URL.createObjectURL(file);
+  projectCoverPreview.src = coverPreviewUrl;
+  projectCoverPreviewWrap.hidden = false;
+}
+
+function showCoverPreviewFromStorage(fileId) {
+  if (coverPreviewUrl) {
+    URL.revokeObjectURL(coverPreviewUrl);
+    coverPreviewUrl = null;
+  }
+  projectCoverPreview.src = imageViewUrl(fileId);
+  projectCoverPreviewWrap.hidden = false;
+}
+
+function clearGalleryItems() {
+  galleryItems.forEach((item) => {
+    if (item.kind === 'new' && item.url) URL.revokeObjectURL(item.url);
+  });
+  galleryItems = [];
+  renderGalleryEditor();
+}
+
+/* ---------- Éditeur de galerie (ordre, retrait, ajouts) ---------- */
+
+function renderGalleryEditor() {
+  projectGalleryList.innerHTML = '';
+
+  galleryItems.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.className = 'admin-gallery-item';
+
+    const thumb = document.createElement('img');
+    thumb.className = 'admin-gallery-thumb';
+    thumb.loading = 'lazy';
+    thumb.alt = `Image de galerie ${index + 1}`;
+    thumb.src = item.kind === 'existing' ? imageViewUrl(item.fileId) : item.url;
+    li.appendChild(thumb);
+
+    const label = document.createElement('span');
+    label.className = 'admin-gallery-label';
+    label.textContent = item.kind === 'existing'
+      ? `Image ${index + 1}`
+      : `Image ${index + 1} — nouvelle (${item.file.name})`;
+    li.appendChild(label);
+
+    const actions = document.createElement('span');
+    actions.className = 'admin-gallery-actions';
+
+    [
+      { action: 'gallery-up', text: 'Monter', disabled: index === 0 },
+      { action: 'gallery-down', text: 'Descendre', disabled: index === galleryItems.length - 1 },
+      { action: 'gallery-remove', text: 'Retirer', danger: true },
+    ].forEach(({ action, text, disabled, danger }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'admin-btn admin-btn-small ' + (danger ? 'admin-btn-danger' : 'admin-btn-secondary');
+      btn.dataset.action = action;
+      btn.dataset.index = String(index);
+      btn.textContent = text;
+      btn.disabled = Boolean(disabled);
+      btn.setAttribute('aria-label', `${text} l'image de galerie ${index + 1}`);
+      actions.appendChild(btn);
+    });
+
+    li.appendChild(actions);
+    projectGalleryList.appendChild(li);
+  });
+}
+
+projectGalleryList.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn || projectSaving) return;
+  const index = Number(btn.dataset.index);
+  const item = galleryItems[index];
+  if (!item) return;
+
+  if (btn.dataset.action === 'gallery-up' && index > 0) {
+    [galleryItems[index - 1], galleryItems[index]] = [galleryItems[index], galleryItems[index - 1]];
+  } else if (btn.dataset.action === 'gallery-down' && index < galleryItems.length - 1) {
+    [galleryItems[index + 1], galleryItems[index]] = [galleryItems[index], galleryItems[index + 1]];
+  } else if (btn.dataset.action === 'gallery-remove') {
+    if (item.kind === 'new' && item.url) URL.revokeObjectURL(item.url);
+    galleryItems.splice(index, 1);
+  }
+  renderGalleryEditor();
+});
+
+projectGalleryInput.addEventListener('change', () => {
+  const files = Array.from(projectGalleryInput.files || []);
+  projectGalleryInput.value = ''; // la sélection est transférée dans la liste
+  if (!files.length) return;
+
+  const rejected = [];
+  files.forEach((file) => {
+    const problem = validateImageFile(file);
+    if (problem) {
+      rejected.push(`${file.name} (${problem})`);
+    } else {
+      galleryItems.push({ kind: 'new', file, url: URL.createObjectURL(file) });
+    }
+  });
+
+  if (rejected.length) {
+    showProjectsMessage('error', `Fichier(s) refusé(s) : ${rejected.join(' ; ')}`);
+  } else {
+    clearProjectsMessage();
+  }
+  renderGalleryEditor();
+});
+
+projectCoverInput.addEventListener('change', () => {
+  const file = projectCoverInput.files && projectCoverInput.files[0];
+  if (!file) {
+    if (editingProject && editingProject.coverImageId) {
+      showCoverPreviewFromStorage(editingProject.coverImageId);
+    } else {
+      clearCoverPreview();
+    }
+    return;
+  }
+  const problem = validateImageFile(file);
+  if (problem) {
+    showProjectsMessage('error', problem);
+    projectCoverInput.value = '';
+    if (editingProject && editingProject.coverImageId) {
+      showCoverPreviewFromStorage(editingProject.coverImageId);
+    } else {
+      clearCoverPreview();
+    }
+    return;
+  }
+  clearProjectsMessage();
+  showCoverPreviewFromFile(file);
+});
+
+/* ---------- Ouverture / fermeture du formulaire ---------- */
+
+function openProjectForm(project) {
+  editingProject = project || null;
+  projectForm.reset();
+  clearCoverPreview();
+  clearGalleryItems();
+  clearProjectsMessage();
+
+  if (editingProject) {
+    projectFormTitle.textContent = 'Modifier une réalisation';
+    projectCoverHint.textContent = '(laisser vide pour conserver l’image actuelle)';
+    projectTitleInput.value = editingProject.title || '';
+    projectDescriptionInput.value = editingProject.description || '';
+    projectCategoryInput.value = editingProject.category || '';
+    projectCoverAltInput.value = editingProject.coverAlt || '';
+    projectActiveInput.checked = editingProject.isActive !== false;
+    if (editingProject.coverImageId) showCoverPreviewFromStorage(editingProject.coverImageId);
+    galleryItems = (editingProject.galleryImageIds || []).map((fileId) => ({ kind: 'existing', fileId }));
+    renderGalleryEditor();
+  } else {
+    projectFormTitle.textContent = 'Ajouter une réalisation';
+    projectCoverHint.textContent = '(obligatoire)';
+    projectActiveInput.checked = true;
+  }
+
+  projectForm.hidden = false;
+  projectAddBtn.hidden = true;
+  projectTitleInput.focus();
+}
+
+function closeProjectForm() {
+  if (!projectForm) return;
+  projectForm.reset();
+  projectForm.hidden = true;
+  if (projectAddBtn) projectAddBtn.hidden = false;
+  editingProject = null;
+  clearCoverPreview();
+  clearGalleryItems();
+}
+
+projectAddBtn.addEventListener('click', () => openProjectForm(null));
+projectCancelBtn.addEventListener('click', () => closeProjectForm());
+
+/* ---------- Chargement de la liste ---------- */
+
+async function fetchProjects() {
+  const result = await tablesDB.listRows({
+    databaseId: APPWRITE_DATABASE_ID,
+    tableId: APPWRITE_PROJECTS_TABLE_ID,
+    queries: [Query.orderAsc('position'), Query.limit(100)],
+  });
+  projects = result.rows;
+  renderProjects();
+}
+
+async function loadProjects() {
+  if (!isAuthenticated) return;
+
+  setProjectsLoading(true);
+
+  try {
+    await fetchProjects();
+
+    if (!projects.length && !projectsMigrationAttempted) {
+      projectsMigrationAttempted = true;
+      await runProjectsImport();
+      return;
+    }
+  } catch (err) {
+    console.error('[admin] chargement des réalisations impossible :', err);
+    if (isSessionError(err)) {
+      handleSessionExpired();
+      return;
+    }
+    logNetworkDiagnostic(err);
+    showProjectsMessage('error', friendlyOperationError(err, 'Le chargement des réalisations a échoué. Recharge la page pour réessayer.'));
+  } finally {
+    setProjectsLoading(false);
+  }
+}
+
+/* ---------- Import automatique des réalisations statiques ---------- */
+
+async function runProjectsImport() {
+  if (!isAuthenticated) return;
+
+  projectsImportRetry.hidden = true;
+  clearProjectsMessage();
+  setProjectsLoading(true, 'Importation des réalisations actuelles…');
+
+  let outcome = null;
+  let fatalError = null;
+
+  try {
+    outcome = await migrateStaticProjects((current, total) => {
+      setProjectsLoading(true, `Importation des réalisations actuelles… (${current} sur ${total})`);
+    });
+  } catch (err) {
+    fatalError = err;
+  }
+
+  if (fatalError && isSessionError(fatalError)) {
+    return handleSessionExpired();
+  }
+
+  try {
+    await fetchProjects();
+  } catch (err) {
+    console.error('[admin] rechargement après import impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+  } finally {
+    setProjectsLoading(false);
+  }
+
+  if (fatalError) {
+    console.error('[admin] import des réalisations impossible :', fatalError);
+    logNetworkDiagnostic(fatalError);
+    showProjectsMessage('error',
+      'L’import automatique des réalisations a échoué. Les cartes statiques restent visibles sur le site public. Clique sur « Réessayer l’import ».');
+    projectsImportRetry.hidden = false;
+    return;
+  }
+
+  if (outcome.failures.length > 0) {
+    showProjectsMessage('error',
+      `Import partiel : ${outcome.imported} réalisation(s) importée(s) sur ${outcome.total}, ${outcome.failures.length} en échec. `
+      + 'Les cartes statiques restent visibles sur le site public. Clique sur « Réessayer l’import ».');
+    projectsImportRetry.hidden = false;
+    return;
+  }
+
+  const detail = outcome.skipped > 0
+    ? `${outcome.imported} ajoutée(s), ${outcome.skipped} déjà présente(s).`
+    : `${outcome.imported} ajoutée(s).`;
+  showProjectsMessage('success', `Réalisations actuelles importées : ${detail}`);
+}
+
+projectsImportRetry.addEventListener('click', () => {
+  runProjectsImport();
+});
+
+/* ---------- Rendu de la liste ---------- */
+
+function truncateText(text, max) {
+  if (!text) return '';
+  return text.length > max ? text.slice(0, max - 1).trimEnd() + '…' : text;
+}
+
+function renderProjects() {
+  projectsList.innerHTML = '';
+
+  if (!projects.length) {
+    projectsEmpty.hidden = false;
+    projectsList.hidden = true;
+    return;
+  }
+
+  projectsEmpty.hidden = true;
+  projectsList.hidden = false;
+
+  projects.forEach((project, index) => {
+    const li = document.createElement('li');
+    li.className = 'admin-slide' + (project.isActive ? '' : ' admin-slide-off');
+    li.dataset.id = project.$id;
+
+    const thumbWrap = document.createElement('div');
+    thumbWrap.className = 'admin-slide-thumb';
+    const thumb = document.createElement('img');
+    thumb.loading = 'lazy';
+    thumb.alt = project.coverAlt || project.title;
+    thumb.src = imageViewUrl(project.coverImageId);
+    thumb.addEventListener('error', () => {
+      thumbWrap.classList.add('admin-slide-thumb-broken');
+      thumb.remove();
+    });
+    thumbWrap.appendChild(thumb);
+
+    const info = document.createElement('div');
+    info.className = 'admin-slide-info';
+
+    const name = document.createElement('p');
+    name.className = 'admin-slide-name';
+    name.textContent = project.title;
+
+    const desc = document.createElement('p');
+    desc.className = 'admin-slide-desc';
+    desc.textContent = truncateText(project.description, 90);
+
+    const meta = document.createElement('p');
+    meta.className = 'admin-slide-meta';
+    const badge = document.createElement('span');
+    badge.className = 'admin-badge ' + (project.isActive ? 'admin-badge-on' : 'admin-badge-off');
+    badge.textContent = project.isActive ? 'Visible' : 'Masquée';
+    meta.appendChild(badge);
+    const galleryCount = (project.galleryImageIds || []).length;
+    let metaText = ` Position ${index + 1} sur ${projects.length} · ${galleryCount} image(s) de galerie`;
+    if (project.category) metaText += ` · ${project.category}`;
+    meta.appendChild(document.createTextNode(metaText));
+
+    info.appendChild(name);
+    if (project.description) info.appendChild(desc);
+    info.appendChild(meta);
+
+    const actions = document.createElement('div');
+    actions.className = 'admin-slide-actions';
+
+    [
+      { action: 'up', label: 'Monter', disabled: index === 0 },
+      { action: 'down', label: 'Descendre', disabled: index === projects.length - 1 },
+      { action: 'edit', label: 'Modifier' },
+      { action: 'toggle', label: project.isActive ? 'Masquer' : 'Afficher' },
+      { action: 'delete', label: 'Supprimer', danger: true },
+    ].forEach(({ action, label, disabled, danger }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'admin-btn admin-btn-small ' + (danger ? 'admin-btn-danger' : 'admin-btn-secondary');
+      btn.dataset.action = action;
+      btn.textContent = label;
+      btn.disabled = Boolean(disabled);
+      btn.setAttribute('aria-label', `${label} : ${project.title}`);
+      actions.appendChild(btn);
+    });
+
+    li.appendChild(thumbWrap);
+    li.appendChild(info);
+    li.appendChild(actions);
+    projectsList.appendChild(li);
+  });
+}
+
+function setProjectsListBusy(busy) {
+  projectsListBusy = busy;
+  projectsList.setAttribute('aria-busy', busy ? 'true' : 'false');
+  projectsList.querySelectorAll('button').forEach((btn) => {
+    btn.disabled = busy;
+  });
+  if (!busy) renderProjects();
+}
+
+/* ---------- Enregistrement (création et modification) ---------- */
+
+function nextProjectPosition() {
+  if (!projects.length) return 0;
+  return Math.max(...projects.map((p) => Number(p.position) || 0)) + 1;
+}
+
+projectForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (projectSaving || !isAuthenticated) return;
+
+  clearProjectsMessage();
+
+  const title = projectTitleInput.value.trim();
+  if (!title) {
+    showProjectsMessage('error', 'Merci de renseigner un titre.');
+    projectTitleInput.focus();
+    return;
+  }
+
+  const coverFile = projectCoverInput.files && projectCoverInput.files[0];
+
+  if (!editingProject && !coverFile) {
+    showProjectsMessage('error', 'Merci de choisir une image principale.');
+    projectCoverInput.focus();
+    return;
+  }
+
+  if (coverFile) {
+    const problem = validateImageFile(coverFile);
+    if (problem) {
+      showProjectsMessage('error', problem);
+      return;
+    }
+  }
+
+  const data = {
+    title,
+    description: projectDescriptionInput.value.trim() || null,
+    category: projectCategoryInput.value.trim() || null,
+    coverAlt: projectCoverAltInput.value.trim() || null,
+    isActive: projectActiveInput.checked,
+  };
+
+  projectSaving = true;
+  projectSaveBtn.disabled = true;
+  projectCancelBtn.disabled = true;
+  projectSaveBtn.textContent = 'Envoi des images…';
+
+  try {
+    let cleanupFailed = false;
+    if (!editingProject) {
+      await createProject(data, coverFile);
+      showProjectsMessage('success', 'Réalisation ajoutée.');
+    } else {
+      cleanupFailed = await updateProject(editingProject, data, coverFile);
+      if (cleanupFailed) {
+        showProjectsMessage('error', 'Réalisation mise à jour, mais certaines anciennes images n’ont pas pu être supprimées du stockage.');
+      } else {
+        showProjectsMessage('success', 'Réalisation mise à jour.');
+      }
+    }
+    closeProjectForm();
+    await loadProjects();
+  } catch (err) {
+    console.error('[admin] enregistrement de la réalisation impossible :', err);
+    if (isSessionError(err)) {
+      handleSessionExpired();
+    } else {
+      showProjectsMessage('error', friendlyOperationError(err, 'L’enregistrement a échoué. Réessaie.'));
+    }
+  } finally {
+    projectSaving = false;
+    projectSaveBtn.disabled = false;
+    projectCancelBtn.disabled = false;
+    projectSaveBtn.textContent = 'Enregistrer';
+  }
+});
+
+async function createProject(data, coverFile) {
+  const uploaded = [];
+  try {
+    const coverImageId = await uploadImage(coverFile);
+    uploaded.push(coverImageId);
+
+    const galleryImageIds = [];
+    for (const item of galleryItems) {
+      if (item.kind !== 'new') continue;
+      const id = await uploadImage(item.file);
+      uploaded.push(id);
+      galleryImageIds.push(id);
+    }
+
+    projectSaveBtn.textContent = 'Enregistrement…';
+
+    await tablesDB.createRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_PROJECTS_TABLE_ID,
+      rowId: ID.unique(),
+      data: { ...data, coverImageId, galleryImageIds, position: nextProjectPosition() },
+    });
+  } catch (err) {
+    // Aucune ligne partielle : on supprime tout ce qui vient d'être envoyé.
+    for (const fileId of new Set(uploaded)) {
+      await tryDeleteFile(fileId, 'orphelin (création de réalisation annulée)');
+    }
+    throw err;
+  }
+}
+
+// Retourne true si le nettoyage des anciens fichiers a partiellement échoué.
+async function updateProject(project, data, coverFile) {
+  const newUploads = [];
+  let coverImageId = project.coverImageId;
+  let galleryImageIds;
+
+  try {
+    if (coverFile) {
+      coverImageId = await uploadImage(coverFile);
+      newUploads.push(coverImageId);
+    }
+
+    galleryImageIds = [];
+    for (const item of galleryItems) {
+      if (item.kind === 'existing') {
+        galleryImageIds.push(item.fileId);
+      } else {
+        const id = await uploadImage(item.file);
+        newUploads.push(id);
+        galleryImageIds.push(id);
+      }
+    }
+
+    projectSaveBtn.textContent = 'Enregistrement…';
+
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_PROJECTS_TABLE_ID,
+      rowId: project.$id,
+      data: { ...data, coverImageId, galleryImageIds },
+    });
+  } catch (err) {
+    // Mise à jour échouée : les nouveaux fichiers sont supprimés,
+    // les anciens restent intacts.
+    for (const fileId of new Set(newUploads)) {
+      await tryDeleteFile(fileId, 'nouveau (mise à jour de réalisation annulée)');
+    }
+    throw err;
+  }
+
+  // Suppression des anciens fichiers retirés, uniquement après la réussite de
+  // la mise à jour. Le Set "keep" protège la cover et toute image encore
+  // utilisée (y compris une cover présente aussi dans la galerie).
+  const keep = new Set([coverImageId, ...galleryImageIds]);
+  const candidates = new Set();
+  if (project.coverImageId && !keep.has(project.coverImageId)) {
+    candidates.add(project.coverImageId);
+  }
+  (project.galleryImageIds || []).forEach((fileId) => {
+    if (fileId && !keep.has(fileId)) candidates.add(fileId);
+  });
+
+  let cleanupFailed = false;
+  for (const fileId of candidates) {
+    const deleted = await tryDeleteFile(fileId, 'ancien (réalisation mise à jour)');
+    if (!deleted) cleanupFailed = true;
+  }
+  return cleanupFailed;
+}
+
+/* ---------- Actions sur la liste (déléguées) ---------- */
+
+projectsList.addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-action]');
+  if (!btn || projectsListBusy || !isAuthenticated) return;
+
+  const li = btn.closest('li[data-id]');
+  const project = projects.find((p) => p.$id === li?.dataset.id);
+  if (!project) return;
+
+  const action = btn.dataset.action;
+
+  if (action === 'edit') {
+    openProjectForm(project);
+    projectForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+
+  if (action === 'toggle') return toggleProject(project);
+  if (action === 'up') return moveProject(project, -1);
+  if (action === 'down') return moveProject(project, 1);
+  if (action === 'delete') return deleteProject(project);
+});
+
+async function toggleProject(project) {
+  clearProjectsMessage();
+  setProjectsListBusy(true);
+  try {
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_PROJECTS_TABLE_ID,
+      rowId: project.$id,
+      data: { isActive: !project.isActive },
+    });
+    showProjectsMessage('success', project.isActive ? 'Réalisation masquée sur le site.' : 'Réalisation affichée sur le site.');
+    await loadProjects();
+  } catch (err) {
+    console.error('[admin] changement de visibilité impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+    showProjectsMessage('error', friendlyOperationError(err, 'Le changement de visibilité a échoué. Réessaie.'));
+  } finally {
+    setProjectsListBusy(false);
+  }
+}
+
+async function moveProject(project, direction) {
+  const index = projects.indexOf(project);
+  const other = projects[index + direction];
+  if (!other) return;
+
+  clearProjectsMessage();
+  setProjectsListBusy(true);
+
+  // Échange des positions ; si elles sont identiques (valeur par défaut 0),
+  // on retombe sur les index actuels pour les distinguer.
+  let posA = Number(project.position) || 0;
+  let posB = Number(other.position) || 0;
+  if (posA === posB) {
+    posA = index;
+    posB = index + direction;
+  }
+
+  try {
+    await tablesDB.updateRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_PROJECTS_TABLE_ID,
+      rowId: project.$id,
+      data: { position: posB },
+    });
+    try {
+      await tablesDB.updateRow({
+        databaseId: APPWRITE_DATABASE_ID,
+        tableId: APPWRITE_PROJECTS_TABLE_ID,
+        rowId: other.$id,
+        data: { position: posA },
+      });
+    } catch (err) {
+      console.error('[admin] échange de positions incomplet :', err);
+      try {
+        await tablesDB.updateRow({
+          databaseId: APPWRITE_DATABASE_ID,
+          tableId: APPWRITE_PROJECTS_TABLE_ID,
+          rowId: project.$id,
+          data: { position: posA },
+        });
+      } catch (revertErr) {
+        console.error('[admin] retour arrière impossible :', revertErr);
+      }
+      throw err;
+    }
+    await loadProjects();
+  } catch (err) {
+    if (isSessionError(err)) return handleSessionExpired();
+    showProjectsMessage('error', friendlyOperationError(err, 'Le déplacement a échoué. L’ordre n’a pas été modifié.'));
+    await loadProjects();
+  } finally {
+    setProjectsListBusy(false);
+  }
+}
+
+async function deleteProject(project) {
+  const confirmed = window.confirm(
+    `Supprimer définitivement la réalisation « ${project.title} » ?\n`
+    + 'La réalisation ET toutes ses images seront supprimées. Cette action est irréversible.'
+  );
+  if (!confirmed) return;
+
+  clearProjectsMessage();
+  setProjectsListBusy(true);
+
+  try {
+    await tablesDB.deleteRow({
+      databaseId: APPWRITE_DATABASE_ID,
+      tableId: APPWRITE_PROJECTS_TABLE_ID,
+      rowId: project.$id,
+    });
+
+    // Fichiers à supprimer : cover + galerie, sans doublons.
+    const fileIds = new Set(
+      [project.coverImageId, ...(project.galleryImageIds || [])].filter(Boolean)
+    );
+    let filesFailed = 0;
+    for (const fileId of fileIds) {
+      const deleted = await tryDeleteFile(fileId, 'de la réalisation supprimée');
+      if (!deleted) filesFailed++;
+    }
+
+    if (filesFailed > 0) {
+      showProjectsMessage('error',
+        `Réalisation supprimée, mais ${filesFailed} fichier(s) n’ont pas pu être supprimés du stockage.`);
+    } else {
+      showProjectsMessage('success', 'Réalisation et images supprimées.');
+    }
+    await loadProjects();
+  } catch (err) {
+    console.error('[admin] suppression de la réalisation impossible :', err);
+    if (isSessionError(err)) return handleSessionExpired();
+    showProjectsMessage('error', friendlyOperationError(err, 'La suppression a échoué. Réessaie.'));
+  } finally {
+    setProjectsListBusy(false);
   }
 }
 

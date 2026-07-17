@@ -179,19 +179,34 @@
             showImage(container, prevIndex);
         }
         
-        document.querySelectorAll('.service-image-container').forEach(container => {
-            container.addEventListener('click', function(e) {
-                if (e.target.closest('.image-arrow') || e.target.closest('.image-dot')) {
-                    return;
-                }
-                
-                const serviceCard = this.closest('.service-card1');
-                const serviceId = serviceCard.getAttribute('data-id');
-                const activeImage = this.querySelector('.service-image1.active');
-                const activeIndex = parseInt(activeImage.getAttribute('data-index'));
-                
-                openLightbox(serviceId, activeIndex);
-            });
+        // Ouverture de la lightbox par délégation : fonctionne pour les cartes
+        // statiques comme pour les cartes rendues dynamiquement depuis Appwrite,
+        // sans ré-attacher d'écouteurs après un rendu (un seul écouteur global).
+        document.addEventListener('click', function(e) {
+            const container = e.target.closest('.service-image-container');
+            if (!container) return;
+            if (e.target.closest('.image-arrow') || e.target.closest('.image-dot')) {
+                return;
+            }
+
+            const serviceCard = container.closest('.service-card1');
+            if (!serviceCard) return;
+            const serviceId = serviceCard.getAttribute('data-id');
+            const activeImage = container.querySelector('.service-image1.active');
+            if (!serviceId || !activeImage) return;
+
+            const activeIndex = parseInt(activeImage.getAttribute('data-index')) || 0;
+            openLightbox(serviceId, activeIndex);
+        });
+
+        // Fermeture de la lightbox avec la touche Échap.
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'Escape') return;
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox && lightbox.style.display === 'flex') {
+                lightbox.style.display = 'none';
+                document.body.classList.remove('noscroll');
+            }
         });
         
         function openLightbox(serviceId, imageIndex) {
@@ -299,28 +314,9 @@
     // localStorage, hérité du vieil admin. Il aurait écrasé les images
     // Appwrite chez les navigateurs ayant utilisé l'ancienne page admin.)
 
-    window.addEventListener("DOMContentLoaded", () => {
-    const cards = JSON.parse(localStorage.getItem("cards") || "[]");
-    const container = document.getElementById("customInsertZone");
-
-    cards.forEach(card => {
-        const points = card.points.map(p => `<li>${p}</li>`).join("");
-        const html = `
-        <div class="service-card1">
-            <img src="${card.image}" alt="${card.title}" class="service-image1" onclick="openLightbox(this)">
-            <div class="service-content1">
-                <h3 class="service-title1">${card.title}</h3>
-                <p class="service-description1">${card.description}</p>
-                <ul class="service-benefits1">${points}</ul>
-                <div class="service-footer1">
-                <a href="tarifs.html#devis" class="cta-btn">Demander un devis</a>
-                </div>
-            </div>
-        </div>
-        `;
-        container.innerHTML += html;
-    });
-    });
+    // (Supprimé : l'ancien bloc localStorage("cards") qui injectait des
+    // réalisations avec un markup incompatible, hérité du vieil admin.
+    // Les réalisations dynamiques viennent désormais de public-projects.js.)
 
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');

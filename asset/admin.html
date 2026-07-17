@@ -120,9 +120,91 @@
                     Ajouter, modifier, masquer, supprimer et réordonner les réalisations,
                     avec une image principale et une galerie d'images par projet.
                 </p>
-                <div class="admin-placeholder">
-                    Les outils de gestion des réalisations seront ajoutés à l'étape suivante.
+
+                <p id="projectsMessage" class="admin-message" role="status" aria-live="polite" hidden></p>
+
+                <button type="button" id="projectsImportRetry"
+                        class="admin-btn admin-btn-secondary admin-btn-auto admin-retry-btn" hidden>
+                    Réessayer l’import
+                </button>
+
+                <div class="admin-toolbar">
+                    <button type="button" id="projectAddBtn" class="admin-btn admin-btn-primary admin-btn-auto">
+                        Ajouter une réalisation
+                    </button>
                 </div>
+
+                <form id="projectForm" class="admin-form" hidden novalidate>
+                    <h3 id="projectFormTitle" class="admin-form-title">Ajouter une réalisation</h3>
+
+                    <div class="admin-form-grid">
+                        <div class="admin-field admin-field-full">
+                            <label for="projectTitle">Titre (obligatoire)</label>
+                            <input type="text" id="projectTitle" maxlength="255" required>
+                        </div>
+
+                        <div class="admin-field admin-field-full">
+                            <label for="projectDescription">Description</label>
+                            <textarea id="projectDescription" rows="3"
+                                      placeholder="Description affichée sous le titre de la réalisation"></textarea>
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="projectCategory">Catégorie (facultatif)</label>
+                            <input type="text" id="projectCategory" maxlength="255" placeholder="Ex. : Signalétique">
+                        </div>
+
+                        <div class="admin-field">
+                            <label for="projectCoverAlt">Texte alternatif de l'image principale</label>
+                            <input type="text" id="projectCoverAlt" maxlength="255"
+                                   placeholder="Description de l'image principale">
+                        </div>
+
+                        <div class="admin-field admin-field-full">
+                            <label for="projectCover">Image principale
+                                <span id="projectCoverHint" class="admin-label-hint">(obligatoire)</span>
+                            </label>
+                            <input type="file" id="projectCover" accept="image/jpeg,image/png,image/webp,image/avif">
+                            <div id="projectCoverPreviewWrap" class="admin-preview" hidden>
+                                <img id="projectCoverPreview" alt="Aperçu de l'image principale">
+                            </div>
+                        </div>
+
+                        <div class="admin-field admin-field-full">
+                            <label for="projectGalleryInput">Images de galerie (plusieurs fichiers possibles)</label>
+                            <input type="file" id="projectGalleryInput"
+                                   accept="image/jpeg,image/png,image/webp,image/avif" multiple>
+                            <ul id="projectGalleryList" class="admin-gallery-list"
+                                aria-label="Images de la galerie, dans leur ordre d'affichage"></ul>
+                        </div>
+
+                        <div class="admin-field admin-field-check admin-field-full">
+                            <input type="checkbox" id="projectActive" checked>
+                            <label for="projectActive">Afficher cette réalisation sur le site</label>
+                        </div>
+                    </div>
+
+                    <div class="admin-form-actions">
+                        <button type="submit" id="projectSaveBtn" class="admin-btn admin-btn-primary admin-btn-auto">
+                            Enregistrer
+                        </button>
+                        <button type="button" id="projectCancelBtn" class="admin-btn admin-btn-secondary">
+                            Annuler
+                        </button>
+                    </div>
+                </form>
+
+                <div id="projectsLoading" class="admin-list-loading" hidden>
+                    <div class="admin-spinner admin-spinner-small" aria-hidden="true"></div>
+                    <p>Chargement des réalisations…</p>
+                </div>
+
+                <p id="projectsEmpty" class="admin-placeholder" hidden>
+                    Aucune réalisation pour le moment.
+                    Clique sur « Ajouter une réalisation » pour créer la première.
+                </p>
+
+                <ul id="projectsList" class="admin-slide-list" hidden></ul>
             </section>
         </main>
     </div>
