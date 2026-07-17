@@ -24,6 +24,14 @@
   min-height: 100vh;
 }
 
+/* L'attribut hidden doit toujours l'emporter, y compris sur les éléments qui
+   ont un display explicite (flex, inline-block, …). Sans cette règle, le CSS
+   auteur écrase le [hidden]{display:none} du navigateur et les éléments
+   "masqués" (spinner de chargement, liste, boutons) restent visibles. */
+.admin-body [hidden] {
+  display: none !important;
+}
+
 /* ---------- Écran de chargement ---------- */
 
 .admin-loading {
